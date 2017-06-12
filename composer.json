@@ -1,0 +1,31 @@
+{
+    "name": "c975l/events-bundle",
+    "type": "symfony-bundle",
+    "description": "Tool to manage events and display a carousel",
+    "keywords": ["symfony", "bundle", "twig", "events"],
+    "homepage": "https://github.com/975L/EventsBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Laurent Marquet",
+            "email": "laurent.marquet@laposte.net",
+            "homepage": "https://github.com/Laurent3170",
+            "role": "Developer"
+        },
+        {
+            "name": "975L Community",
+            "homepage": "https://github.com/975L"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "symfony/framework-bundle": "3.*",
+        "sensio/framework-extra-bundle": "3.*",
+        "symfony/assetic-bundle": "2.*"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": { "c975L\\EventsBundle\\": ""
+        }
+    }
+}
