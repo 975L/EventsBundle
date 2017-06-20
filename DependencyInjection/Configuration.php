@@ -21,9 +21,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('number')
-                    ->defaultValue('3')
-                ->end()
                 ->scalarNode('roleNeeded')
                     ->defaultValue('ROLE_ADMIN')
                 ->end()

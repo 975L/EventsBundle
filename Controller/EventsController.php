@@ -313,11 +313,11 @@ class EventsController extends Controller
 
 //CAROUSEL
     /**
-     * @Route("/events/carousel",
+     * @Route("/events/carousel/{number}",
      *      name="events_carousel")
      * @Method({"GET", "HEAD"})
      */
-    public function carouselAction()
+    public function carouselAction($number)
     {
         //Gets the manager
         $em = $this->getDoctrine()->getManager();
@@ -326,7 +326,7 @@ class EventsController extends Controller
         $repository = $em->getRepository('c975LEventsBundle:Event');
 
         //Loads from DB
-        $events = $repository->findForCarousel($this->getParameter('c975_l_events.number'));
+        $events = $repository->findForCarousel($number);
 
         //Assigns picture
         foreach ($events as $event) {

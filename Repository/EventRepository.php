@@ -12,8 +12,9 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
         $qb->select('e')
-            ->where('e.startDate >= :currentDate')
-            ->setParameter('currentDate', new \Datetime('-1 day'))
+            ->where('e.endDate >= :currentDate')
+            ->andwhere('e.suppressed is NULL')
+            ->setParameter('currentDate', new \Datetime())
             ->orderBy('e.startDate', 'ASC')
             ->orderBy('e.startTime', 'ASC')
             ->setMaxResults($number)

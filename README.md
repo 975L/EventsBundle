@@ -60,13 +60,12 @@ class AppKernel extends Kernel
 Step 3: Configure the Bundle
 ----------------------------
 
-Then, in the `app/config.yml` file of your project, define `number` (number of upcoming events you want to display in the carousel) and `roleNeeded` (The user's role needed to enable access to the edition of events).
+Then, in the `app/config.yml` file of your project, define `roleNeeded` (the user's role needed to enable access to the edition of events) and `folderPIctures` (where the events's pictures will be saved).
 
 ```yml
 #app/config/config.yml
 
 c975_l_events:
-    number: 3
     roleNeeded: 'ROLE_ADMIN'
     folderPictures: 'events' #The full path to this folder has to be added to .gitignore if Git is used
 ```
@@ -164,4 +163,4 @@ The different Routes (naming self-explanatory) available are:
 - events_dashboard
 - events_help
 
-To include the carousel in a page, simply use `{{ render(controller('c975LEventsBundle:Events:carousel')) }}` where you want it to appear.
+To include the carousel in a page, simply use `{{ render(controller('c975LEventsBundle:Events:carousel', {'number': 3})) }}` where you want it to appear.

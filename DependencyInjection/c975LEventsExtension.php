@@ -31,7 +31,6 @@ class c975LEventsExtension extends Extension
         $configuration = new Configuration();
         $processedConfig = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('c975_l_events.number', $processedConfig['number']);
         $container->setParameter('c975_l_events.roleNeeded', $processedConfig['roleNeeded']);
         $container->setParameter('c975_l_events.folderPictures', $processedConfig['folderPictures']);
     }
