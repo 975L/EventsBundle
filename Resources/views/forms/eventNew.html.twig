@@ -1,0 +1,70 @@
+{% extends "@c975LEvents/layout.html.twig" %}
+{% trans_default_domain 'events' %}
+
+{% block events_content %}
+    <div class="container">
+{# Toolbar #}
+        <div class="text-center">
+            <div class="btn-group btn-group-md" role="group">
+{# Brand #}
+                <span class="btn btn-success"><strong>Events</strong></span>
+
+{# Dashboard #}
+                <a href="{{ path('events_dashboard') }}" class="btn btn-info" title="{{ 'label.dashboard'|trans }}" role="button">
+                    <span class="glyphicon glyphicon-dashboard"></span></a>
+
+{# Help #}
+                <a href="{{ path('events_help') }}" class="btn btn-info" title="{{ 'label.help'|trans }}" role="button">
+                    <span class="glyphicon glyphicon-flag"></span></a>
+            </div>
+        </div>
+
+{# Form #}
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <div class="form-group">
+                <button type="submit" name="submit" title="{{ 'label.new_event'|trans }}" class="btn btn-lg btn-primary btn-block">
+                    <span class="glyphicon glyphicon-plus"></span> {{ 'label.new_event'|trans }}
+                </button>
+            </div>
+        {{ form_end(form) }}
+
+{# Cancel #}
+        <p class="text-center">
+            <a href="javascript:history.back()">
+                {{ 'label.cancel'|trans }}</a>
+        </p>
+    </div>
+
+{# Javascript #}
+    <script type="text/javascript">
+        $(document).ready(function() {
+{# DatePicker #}
+            $('.js-datepicker').datepicker({
+                todayHighlight: true,
+                autoclose: true,
+                language: '{{ app.request.locale }}'
+            });
+
+
+/*
+remove dates past than chosen startDate
+
+*/
+
+{# Update semantic url #}
+            $('#event_title')
+                .change(function() {
+                    var slugUrl = '{{ absolute_url(path('events_slug', {'text': 'TEXT'})) }}';
+                    var slug = $.post(slugUrl.replace('TEXT', $('#event_title').val()));
+                    slug.done(function(data) {
+                        if (data.a != 'false') {
+                            $('#event_slug')
+                                .val(data.a);
+                        }
+                    });
+                });
+        });
+    </script>
+{% endblock %}

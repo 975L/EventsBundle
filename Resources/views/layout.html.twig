@@ -1,0 +1,92 @@
+{% spaceless %}
+<!DOCTYPE html>
+    <head>
+        {% block head %}
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+            <meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=no" />
+            <meta name="format-detection" content="telephone=no" />
+            <title>Events ({{ title }})</title>
+            <base />
+
+{# Css #}
+            {% block css %}
+{# Bootstrap - http://getbootstrap.com #}
+                <link rel="stylesheet"
+                    type="text/css"
+                    href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+                    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+                    crossorigin="anonymous" />
+{# DatePicker - https://github.com/uxsolutions/bootstrap-datepicker #}
+                <link rel="stylesheet"
+                    type="text/css"
+                    href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/css/bootstrap-datepicker3.min.css" />
+            {% endblock %}
+
+{# Javascript #}
+            {% block javascript %}
+{# jQuery - https://jquery.com #}
+                <script type="text/javascript"
+                    src="//code.jquery.com/jquery-3.2.1.min.js"
+                    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                    crossorigin="anonymous">
+                </script>
+
+{# Bootstrap - http://getbootstrap.com #}
+                <script type="text/javascript"
+                    src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                    crossorigin="anonymous">
+                </script>
+
+{# DatePicker - https://github.com/uxsolutions/bootstrap-datepicker #}
+                <script type="text/javascript"
+                    src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/js/bootstrap-datepicker.min.js">
+                </script>
+{# Include here locale file #}
+{#
+                <script type="text/javascript"
+                    src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/locales/bootstrap-datepicker.fr.min.js">
+                </script>
+#}
+
+{# TinyMce - https://www.tinymce.com #}
+                <script type="text/javascript"
+                    src="//cloud.tinymce.com/stable/tinymce.min.js{# ?apiKey=YOUR_API_KEY #}">
+                </script>
+{# TinyMce Initialization #}
+                <script type="text/javascript">
+                    tinymce.init({
+                        selector: 'textarea.tinymce',
+                        statusbar: true,
+                        menubar: false,
+                        browser_spellcheck: true,
+                        contextmenu: false,
+                        schema: 'html5 strict',
+                        image_advtab: true,
+                        content_css : [
+                            'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
+                        ],
+                        //language_url : 'http://example.com/js/tinymce/fr_FR.js',
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                            'searchreplace wordcount visualblocks visualchars code fullscreen',
+                            'insertdatetime media nonbreaking save table contextmenu directionality',
+                            'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help',
+                        ],
+                        toolbar: [
+                            'styleselect | removeformat bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+                            'undo redo | cut copy paste | insert link image imagetools emoticons table | print preview code | fullscreen help',
+                        ],
+                    });
+                </script>
+            {% endblock %}
+        {% endblock %}
+    </head>
+
+    <body>
+        {% block events_content %}
+        {% endblock %}
+    </body>
+</html>
+{% endspaceless %}

@@ -1,0 +1,18 @@
+<div class="text-center">
+    <div class="btn-group btn-group-md" role="group">
+{# Brand #}
+        <span class="btn btn-success"><strong>Events</strong></span>
+
+{# Modify #}
+        <a href="{{ path('events_edit', {'event': event, 'id': id}) }}" class="btn btn-default" title="{{ 'label.modify'|trans }}" role="button">
+            <span class="glyphicon glyphicon-pencil"></span></a>
+
+{# New #}
+        <a href="{{ path('events_new') }}" class="btn btn-default" title="{{ 'label.new_event'|trans }}" role="button">
+            <span class="glyphicon glyphicon-plus"></span></a>
+
+{# Delete #}
+        <a href="{{ path('events_delete', {'event': event, 'id': id}) }}" class="btn btn-default" title="{{ 'label.delete'|trans }}" role="button">
+            <span class="glyphicon glyphicon-trash"></span></a>
+    </div>
+</div>

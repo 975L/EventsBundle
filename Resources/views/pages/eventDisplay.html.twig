@@ -1,0 +1,52 @@
+{% extends "@c975LEvents/layout.html.twig" %}
+{% trans_default_domain 'events' %}
+
+{% set title = event.title %}
+
+{% block events_content %}
+    {% block toolbar %}
+        {{ toolbar|raw }}
+    {% endblock %}
+    <div class="container text-center">
+{# Picture #}
+        {% if event.picture != null %}
+            <p>
+                <br />
+                <img src="{{ asset(event.picture) }}" class="img-responsive img-thumbnail center-block" alt="{{ event.title }}" title="{{ event.title }}" />
+                <br />
+            </p>
+        {% endif %}
+
+{# Place #}
+        <p>
+            {{ 'label.place'|trans }} : <strong>{{ event.place }}</strong>
+        </p>
+
+{# Date and time #}
+        <p>
+            {{ 'label.start_date'|trans }} : <strong>{{ event.startDate|localizeddate('long', 'none') }} - {{ event.startTime|localizeddate('none', 'short') }}</strong>
+        </p>
+
+        <p>
+            {{ 'label.end_date'|trans }} : <strong>{{ event.endDate|localizeddate('long', 'none') }} - {{ event.endTime|localizeddate('none', 'short') }}</strong>
+        </p>
+
+{# Add to calendar #}
+        <p>
+            <a href="{{ path('events_ical', {'event': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
+                <span class="glyphicon glyphicon-calendar"></span> {{'label.add_to_calendar'|trans }}</a>
+        </p>
+
+{# Description #}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ 'label.description'|trans }}</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    {{ event.description|raw|nl2br }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

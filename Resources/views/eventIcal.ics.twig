@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//975L - Events//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+SUMMARY:{{ event.title }}
+UID:{{event.slug }}-{{ event.id }}
+SEQUENCE:0
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+PRIORITY:5
+CLASS:PUBLIC
+DTSTART;TZID={{ event.startTime|date('e') }}:{{ event.startDate|date('Ymd') }}T{{ event.startTime|date('His') }}
+DTEND;TZID={{ event.startTime|date('e') }}:{{ event.endDate|date('Ymd') }}T{{ event.endTime|date('His') }}
+LOCATION:{{ event.place }}
+DESCRIPTION:{{ event.description|striptags }}
+URL:{{ absolute_url(path('events_display', {'event': event.slug, 'id': event.id})) }}
+BEGIN:VALARM
+TRIGGER:-PT60M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+END:VCALENDAR

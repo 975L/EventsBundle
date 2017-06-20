@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="events.en.xlf">
+        <body>
+            <trans-unit id="1">
+                <source>label.description</source>
+                <target>Description</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>label.modify</source>
+                <target>Modifier</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>label.cancel</source>
+                <target>Annuler</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>label.new_event</source>
+                <target>Nouvel événement</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>label.delete</source>
+                <target>Supprimer</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>label.title</source>
+                <target>Titre</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>label.semantic_url</source>
+                <target>Url sémantique</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>text.semantic_url</source>
+                <target>Nom de l'événement dans l'url</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>text.delete_event</source>
+                <target>L'événement suivant sera supprimé. Tout appel futur de la page renverra un code d'erreur HTTP 410 (Gone).</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>label.start_date</source>
+                <target>Date de début</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>label.end_date</source>
+                <target>Date de fin</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>label.start_time</source>
+                <target>Heure de début</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>label.end_time</source>
+                <target>Heure de fin</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>label.place</source>
+                <target>Lieu</target>
+            </trans-unit>
+            <trans-unit id="15">
+                <source>label.dashboard</source>
+                <target>Tableau de bord</target>
+            </trans-unit>
+            <trans-unit id="16">
+                <source>label.help</source>
+                <target>Aide</target>
+            </trans-unit>
+            <trans-unit id="17">
+                <source>label.add_to_calendar</source>
+                <target>Ajouter au calendrier</target>
+            </trans-unit>
+            <trans-unit id="18">
+                <source>label.display</source>
+                <target>Affichage</target>
+            </trans-unit>
+            <trans-unit id="19">
+                <source>text.list_events</source>
+                <target>Liste des événements</target>
+            </trans-unit>
+            <trans-unit id="20">
+                <source>label.picture</source>
+                <target>Image (600 x 400 px)</target>
+            </trans-unit>
+            <trans-unit id="21">
+                <source>label.suppressed</source>
+                <target>Supprimé</target>
+            </trans-unit>
+            <trans-unit id="22">
+                <source>label.previous</source>
+                <target>Précédent</target>
+            </trans-unit>
+            <trans-unit id="23">
+                <source>label.next</source>
+                <target>Suivant</target>
+            </trans-unit>
+            <trans-unit id="24">
+                <source>label.carousel</source>
+                <target>Carrousel</target>
+            </trans-unit>
+            <trans-unit id="25">
+                <source>label.all_events</source>
+                <target>Tous nos événements</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
