@@ -32,7 +32,7 @@
             </trans-unit>
             <trans-unit id="8">
                 <source>text.semantic_url</source>
-                <target>Nombre de la página en la url</target>
+                <target>Nombre del evento en la url</target>
             </trans-unit>
             <trans-unit id="9">
                 <source>text.delete_event</source>
@@ -101,6 +101,10 @@
             <trans-unit id="25">
                 <source>label.all_events</source>
                 <target>Todos nuestros eventos</target>
+            </trans-unit>
+            <trans-unit id="26">
+                <source>label.no_events</source>
+                <target>No eventos</target>
             </trans-unit>
         </body>
     </file>

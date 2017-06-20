@@ -32,9 +32,9 @@
         </div>
 
 {# Picture #}
-        {% if picturePath != null %}
+        {% if eventPicture != null %}
             <p class="text-center">
-                <img src="{{ asset(picturePath) }}" width="600" class="img-responsive center-block" alt="{{ event.title }}" title="{{ event.title }}" />
+                <img src="{{ asset(eventPicture) }}" class="img-responsive img-thumbnail center-block" alt="{{ event.title }}" title="{{ event.title }}" />
             </p>
         {% endif %}
 
@@ -63,6 +63,8 @@
             $('.js-datepicker').datepicker({
                 todayHighlight: true,
                 autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
                 language: '{{ app.request.locale }}'
             });
         });

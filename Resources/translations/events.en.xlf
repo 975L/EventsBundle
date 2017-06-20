@@ -102,6 +102,10 @@
                 <source>label.all_events</source>
                 <target>All our events</target>
             </trans-unit>
+            <trans-unit id="26">
+                <source>label.no_events</source>
+                <target>No events</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

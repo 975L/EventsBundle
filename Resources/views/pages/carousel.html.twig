@@ -1,45 +1,50 @@
-{% extends "@c975LEvents/layout.html.twig" %}
 {% trans_default_domain 'events' %}
 
 {% block events_content %}
     <div>
-        <style>.img-carousel {margin: 0 auto;width: auto;max-height: 400px;}</style>
-        <div id="events-carousel" class="carousel slide" data-ride="carousel">
-            {# Indicators #}
-            <ol class="carousel-indicators">
-                {% for event in events %}
-                    <li data-target="#events-carousel" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %}class="active"{% endif %}></li>
-                {% endfor %}
-            </ol>
+        {% if events is not empty %}
+            <style>.img-carousel {margin: 0 auto;width: auto;max-height: 400px;}</style>
+            <div id="events-carousel" class="carousel slide" data-ride="carousel">
+                {# Indicators #}
+                <ol class="carousel-indicators">
+                    {% for event in events %}
+                        <li data-target="#events-carousel" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %}class="active"{% endif %}></li>
+                    {% endfor %}
+                </ol>
 
-            {# Wrapper for slides #}
-            <div class="carousel-inner text-center" role="listbox">
-                {% for event in events %}
-                    <div class="item {% if loop.index0 == 0 %}active{% endif %}">
-                        <a href="{{ absolute_url(path('events_display', {'event': event.slug, 'id': event.id})) }}">
-                            {% if event.picture != null %}
-                                <img src="{{ asset(event.picture) }}" alt="{{ event.title }}" title="{{ event.title }}" class="img-carousel" />
-                            {% endif %}
-                            <div class="carousel-caption">
-                                <h3>
-                                    {{ event.title }}
-                                </h3>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
-                <a href="{{ path('events_all') }}">{{ 'label.all_events'|trans }}</a>
+                {# Wrapper for slides #}
+                <div class="carousel-inner text-center" role="listbox">
+                    {% for event in events %}
+                        <div class="item {% if loop.index0 == 0 %}active{% endif %}">
+                            <a href="{{ absolute_url(path('events_display', {'event': event.slug, 'id': event.id})) }}">
+                                {% if event.picture != null %}
+                                    <img src="{{ asset(event.picture) }}" alt="{{ event.title }}" title="{{ event.title }}" class="img-carousel" />
+                                {% endif %}
+                                <div class="carousel-caption">
+                                    <h3>
+                                        {{ event.title }}
+                                    </h3>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                    <a href="{{ path('events_all') }}">{{ 'label.all_events'|trans }}</a>
+                </div>
+
+                {# Controls #}
+                <a class="left carousel-control" href="#events-carousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">{{ 'label.previous'|trans }}</span>
+                </a>
+                <a class="right carousel-control" href="#events-carousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">{{ 'label.next'|trans }}</span>
+                </a>
             </div>
-
-            {# Controls #}
-            <a class="left carousel-control" href="#events-carousel" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">{{ 'label.previous'|trans }}</span>
-            </a>
-            <a class="right carousel-control" href="#events-carousel" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">{{ 'label.next'|trans }}</span>
-            </a>
-        </div>
+        {% else %}
+            <p class="text-center">
+                {{ 'label.no_events'|trans }}
+            </p>
+        {% endif %}
     </div>
 {% endblock %}

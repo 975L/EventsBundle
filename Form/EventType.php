@@ -25,6 +25,7 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $disabled = $options['data']->getAction() == 'delete' ? true : false;
+        $requiredImage = $options['data']->getPicture() !== null ? false : true;
 
         $builder
             ->add('title', TextType::class, array(
@@ -46,7 +47,7 @@ class EventType extends AbstractType
             $builder
                 ->add('picture', FileType::class, array(
                     'label' => 'label.picture',
-                    'required' => true,
+                    'required' => $requiredImage,
                     ))
             ;
         }

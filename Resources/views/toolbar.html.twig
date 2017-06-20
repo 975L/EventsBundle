@@ -1,3 +1,5 @@
+{% trans_default_domain 'events' %}
+
 <div class="text-center">
     <div class="btn-group btn-group-md" role="group">
 {# Brand #}
@@ -14,5 +16,15 @@
 {# Delete #}
         <a href="{{ path('events_delete', {'event': event, 'id': id}) }}" class="btn btn-default" title="{{ 'label.delete'|trans }}" role="button">
             <span class="glyphicon glyphicon-trash"></span></a>
+
+
+{# Dashboard #}
+                <a href="{{ path('events_dashboard') }}" class="btn btn-info" title="{{ 'label.dashboard'|trans }}" role="button">
+                    <span class="glyphicon glyphicon-dashboard"></span></a>
+
+{# Help #}
+                <a href="{{ path('events_help') }}" class="btn btn-info" title="{{ 'label.help'|trans }}" role="button">
+                    <span class="glyphicon glyphicon-flag"></span></a>
+            </div>
     </div>
 </div>

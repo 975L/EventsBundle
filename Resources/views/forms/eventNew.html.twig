@@ -44,15 +44,10 @@
             $('.js-datepicker').datepicker({
                 todayHighlight: true,
                 autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
                 language: '{{ app.request.locale }}'
             });
-
-
-/*
-remove dates past than chosen startDate
-
-*/
-
 {# Update semantic url #}
             $('#event_title')
                 .change(function() {

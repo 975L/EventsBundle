@@ -168,8 +168,9 @@ class EventsController extends Controller
 
             //Gets the existing picture
             $this->setPicture($event);
-            if ($event->getPicture() !== null) {
-                $event->setPicture(new File($event->getPicture()));
+            $eventPicture = $event->getPicture();
+            if ($eventPicture !== null) {
+                $event->setPicture(new File($eventPicture));
             }
 
             //Defines form
@@ -187,6 +188,8 @@ class EventsController extends Controller
                 $event->setSlug($this->slugify($form->getData()->getSlug()));
 
                 //Renames picture file if slug has changed
+                $folderPath = $this->getParameter('kernel.root_dir') . '/../web/images/' . $this->getParameter('c975_l_events.folderPictures') . '/';
+                $picture = $folderPath . $event->getSlug() . '-' . $event->getId() . '.jpg';
                 if ($fs->exists($picture) && $originalSlug != $event->getSlug()) {
                     $fs->rename($picture, $folderPath . $event->getSlug() . '-' . $event->getId() . '.jpg');
                 }
@@ -211,6 +214,7 @@ class EventsController extends Controller
             return $this->render('@c975LEvents/forms/eventEdit.html.twig', array(
                 'form' => $form->createView(),
                 'event' => $event,
+                'eventPicture' => $eventPicture,
                 'title' => $this->get('translator')->trans('label.modify', array(), 'events') . ' "' . $event->getTitle() . '"',
             ));
         }
