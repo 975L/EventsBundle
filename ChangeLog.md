@@ -1,5 +1,9 @@
 # Changelog
 
+v.1.3.1
+-----
+- Remove options related to media not used by default (21/06/2017)
+
 v1.3
 ----
 - Add of returning a text inplace of carousel if there are no events (20/06/2017)

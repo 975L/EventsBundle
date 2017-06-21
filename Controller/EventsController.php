@@ -367,6 +367,17 @@ class EventsController extends Controller
             ));
     }
 
+//SLUG
+    /**
+     * @Route("/events/slug/{text}",
+     *      name="events_slug")
+     * @Method({"POST"})
+     */
+    public function slugAction($text)
+    {
+        return $this->json(array('a' => $this->slugify($text)));
+    }
+
 //HELP
     /**
      * @Route("/events/help",
@@ -388,17 +399,6 @@ class EventsController extends Controller
 
         //Access is denied
         throw $this->createAccessDeniedException();
-    }
-
-//SLUG
-    /**
-     * @Route("/events/slug/{text}",
-     *      name="events_slug")
-     * @Method({"POST"})
-     */
-    public function slugAction($text)
-    {
-        return $this->json(array('a' => $this->slugify($text)));
     }
 
 

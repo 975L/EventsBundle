@@ -115,20 +115,19 @@ Example of initialization (see `layout.html.twig` file).
         browser_spellcheck: true,
         contextmenu: false,
         schema: 'html5 strict',
-        image_advtab: true,
         content_css : [
             'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
         ],
         //language_url : 'http://example.com/js/tinymce/fr_FR.js',
         plugins: [
-            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-            'searchreplace wordcount visualblocks visualchars code fullscreen',
-            'insertdatetime media nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help',
+            'advlist autolink lists link charmap print preview hr anchor pagebreak',
+            'searchreplace wordcount visualblocks visualchars fullscreen',
+            'insertdatetime nonbreaking save table contextmenu directionality',
+            'emoticons template paste textcolor colorpicker textpattern toc help',
         ],
         toolbar: [
             'styleselect | removeformat bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
-            'undo redo | cut copy paste | insert link image imagetools emoticons table | print preview code | fullscreen help',
+            'undo redo | cut copy paste | link emoticons table | print preview | fullscreen help',
         ],
     });
 ```

@@ -20,7 +20,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EventType extends AbstractType
 {
-
     //Builds the form
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -114,7 +113,6 @@ class EventType extends AbstractType
         }
     }
 
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
@@ -123,11 +121,4 @@ class EventType extends AbstractType
             'translation_domain' => 'events',
         ));
     }
-
-
-    public function getName()
-    {
-        return 'event';
-    }
-
 }
