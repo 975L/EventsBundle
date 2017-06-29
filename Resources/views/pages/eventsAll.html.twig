@@ -6,10 +6,10 @@
         <table class="table table-hover table-condensed table-responsive">
             <thead>
                 <tr>
-                    <th class="text-center">{{ 'label.title'|trans }}</th>
-                    <th class="text-center">{{ 'label.start_date'|trans }}</th>
-                    <th class="text-center">{{ 'label.end_date'|trans }}</th>
-                    <th class="text-center">{{ 'label.place'|trans }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.start_date'|trans, 'e.start_date') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.end_date'|trans, 'e.end_date') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.place'|trans, 'e.place') }}</th>
                     <th class="text-center">{{ 'label.add_to_calendar'|trans }}</th>
                 </tr>
             </thead>
@@ -45,5 +45,10 @@
                 {% endfor %}
             </tbody>
         </table>
+
+{# Pagination #}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(events) }}
+        </div>
     </div>
 {% endblock %}

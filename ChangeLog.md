@@ -1,5 +1,11 @@
 # Changelog
 
+v1.4
+----
+- Move in a separate file of the initialization of Tinymce (29/06/2017)
+- Add of pagination via KnpPaginator (dashboard + list of all events)
+- Remove of slugify function and replace by cocur/slugify
+
 v.1.3.1
 -----
 - Remove options related to media not used by default (21/06/2017)

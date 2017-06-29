@@ -47,6 +47,7 @@ class AppKernel extends Kernel
     {
         $bundles = [
             // ...
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new c975L\EventsBundle\c975LEventsBundle(),
         ];
 
@@ -65,12 +66,20 @@ Then, in the `app/config.yml` file of your project, define `roleNeeded` (the use
 ```yml
 #app/config/config.yml
 
+#https://github.com/KnpLabs/KnpPaginatorBundle
+knp_paginator:
+    default_options:
+        page_name: p
+        distinct: true
+    template:
+        pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'
+
 c975_l_events:
     roleNeeded: 'ROLE_ADMIN'
     folderPictures: 'events' #The full path to this folder has to be added to .gitignore if Git is used
 ```
 
-** As the pictures will be saved under the `web/images/[folderPictures]`, if you use Git for version control, you need to add the full path to this folder in the `.gitignore`, otherwise all the content will be altered by Git. **
+** If you use Git for version control, you need to add the full path `web/images/[folderPictures]` in the `.gitignore`, otherwise all the content will be altered by Git. **
 
 Step 4: Enable the Routes
 -------------------------
@@ -108,28 +117,30 @@ Information about options is available at [https://www.tinymce.com/docs/get-star
 Example of initialization (see `layout.html.twig` file).
 
 ```javascript
-    tinymce.init({
-        selector: 'textarea.tinymce',
-        statusbar: true,
-        menubar: false,
-        browser_spellcheck: true,
-        contextmenu: false,
-        schema: 'html5 strict',
-        content_css : [
-            'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
-        ],
-        //language_url : 'http://example.com/js/tinymce/fr_FR.js',
-        plugins: [
-            'advlist autolink lists link charmap print preview hr anchor pagebreak',
-            'searchreplace wordcount visualblocks visualchars fullscreen',
-            'insertdatetime nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern toc help',
-        ],
-        toolbar: [
-            'styleselect | removeformat bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
-            'undo redo | cut copy paste | link emoticons table | print preview | fullscreen help',
-        ],
-    });
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea.tinymce',
+            statusbar: true,
+            menubar: false,
+            browser_spellcheck: true,
+            contextmenu: false,
+            schema: 'html5 strict',
+            content_css : [
+                'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
+            ],
+            //language_url : 'http://example.com/js/tinymce/fr_FR.js',
+            plugins: [
+                'advlist autolink lists link charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars fullscreen',
+                'insertdatetime nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern toc help',
+            ],
+            toolbar: [
+                'styleselect | removeformat bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+                'undo redo | cut copy paste | link emoticons table | print preview | fullscreen help',
+            ],
+        });
+    </script>
 ```
 
 Step 7: Link and initialization of Bootstrap DatePicker

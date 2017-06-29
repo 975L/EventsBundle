@@ -7,7 +7,7 @@ use c975L\EventsBundle\Entity\Event;
 
 class EventRepository extends EntityRepository
 {
-    //Finds next $number next events
+    //Finds next $number events
     public function findForCarousel($number)
     {
         $qb = $this->createQueryBuilder('e');
@@ -21,5 +21,19 @@ class EventRepository extends EntityRepository
             ;
 
         return $qb->getQuery()->getResult();
+    }
+
+    //Finds all the events NOT suppressed
+    public function findAllEvents()
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb->select('e')
+            ->where('e.suppressed is NULL')
+            ->orderBy('e.startDate', 'ASC')
+            ->orderBy('e.startTime', 'ASC')
+            ;
+
+        return $qb;
+
     }
 }

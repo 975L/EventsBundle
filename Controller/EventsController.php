@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Cocur\Slugify\Slugify;
 use c975L\EventsBundle\Entity\Event;
 use c975L\EventsBundle\Form\EventType;
 
@@ -30,7 +31,7 @@ class EventsController extends Controller
      *      name="events_dashboard")
      * @Method({"GET", "HEAD"})
      */
-    public function dashboardAction()
+    public function dashboardAction(Request $request)
     {
         //Gets the user
         $user = $this->getUser();
@@ -43,12 +44,20 @@ class EventsController extends Controller
             //Gets repository
             $repository = $em->getRepository('c975LEventsBundle:Event');
 
-            //Loads from DB
-            $events = $repository->findBySuppressed(null);
+            //Gets the events
+            $events = $repository->findAllEvents();
+
+            //Pagination
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $events,
+                $request->query->getInt('p', 1),
+                5
+            );
 
             //Returns the dashboard
             return $this->render('@c975LEvents/pages/dashboard.html.twig', array(
-                'events' => $events,
+                'events' => $pagination,
                 'title' => $this->get('translator')->trans('label.dashboard', array(), 'events'),
             ));
         }
@@ -350,7 +359,7 @@ class EventsController extends Controller
      *      name="events_all")
      * @Method({"GET", "HEAD"})
      */
-    public function allAction()
+    public function allAction(Request $request)
     {
         //Gets the manager
         $em = $this->getDoctrine()->getManager();
@@ -358,11 +367,19 @@ class EventsController extends Controller
         //Gets repository
         $repository = $em->getRepository('c975LEventsBundle:Event');
 
-        //Loads from DB
-        $events = $repository->findBySuppressed(null);
+        //Gets the events
+        $events = $repository->findAllEvents();
+
+        //Pagination
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $events,
+            $request->query->getInt('p', 1),
+            5
+        );
 
         return $this->render('@c975LEvents/pages/eventsAll.html.twig', array(
-            'events' => $events,
+            'events' => $pagination,
             'title' => $this->get('translator')->trans('label.all_events', array(), 'events'),
             ));
     }
@@ -522,18 +539,10 @@ class EventsController extends Controller
     }
 
 
-    //Slugify function - https://gist.github.com/umidjons/9757010
+    //Slugify function - https://github.com/cocur/slugify
     public function slugify($text)
     {
-        $slug = preg_replace('/\s\s+/', ' ', trim(mb_strtolower($text)));
-        $slug = str_replace(array(',',';','.',':','·','(',')','[',']','{','}','+','\\','/','#','~','&','$','£','µ','@','=','<','>','$','^','°','|'),'', $slug);
-        $slug = str_replace(array('œ','Œ'), 'oe', $slug);
-        $slug = str_replace(array('æ','Æ'), 'ae', $slug);
-        $slug = str_replace(array(' '), '-', $slug);
-        $search =  array('ª','à','á','â','ã','ä','å','ç','è','é','ê','ë','ì','í','î','ï','ñ','º','ò','ó','ô','õ','ö','ø','ù','ú','û','ü','ŭ','µ','ý','ÿ','ß','æ','œ','_','"',"'");
-        $replace = array('a','a','a','a','a','a','a','c','e','e','e','e','i','i','i','i','n','o','o','o','o','o','o','o','u','u','u','u','u','u','y','y','s','a','o','-','-','-');
-        $slug = str_replace($search, $replace, $slug);
-        $slug = str_replace(array('--', '--', '--'), '-', $slug);
-        return $slug;
+        $slugify = new Slugify();
+        return $slugify->slugify($text);
     }
 }

@@ -24,8 +24,8 @@
             <table class="table table-hover table-condensed table-responsive">
                 <thead>
                     <tr>
-                        <th class="text-center">Id</th>
-                        <th class="text-center">{{ 'label.title'|trans }}</th>
+                        <th class="text-center">{{ knp_pagination_sortable(events, 'Id', 'e.id') }}</th>
+                        <th class="text-center">{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}</th>
                         <th class="text-center"><span class="glyphicon glyphicon-eye-open"></span> {{ 'label.display'|trans }}</th>
                         <th class="text-center"><span class="glyphicon glyphicon-pencil"></span> {{ 'label.modify'|trans }}</th>
                         <th class="text-center"><span class="glyphicon glyphicon-trash"></span> {{ 'label.delete'|trans }}</th>
@@ -58,6 +58,11 @@
                     {% endfor %}
                 </tbody>
             </table>
+
+{# Pagination #}
+            <div class="navigation text-center">
+                {{ knp_pagination_render(events) }}
+            </div>
         </div>
     </div>
 {% endblock %}

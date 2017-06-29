@@ -2,6 +2,8 @@
 {% trans_default_domain 'events' %}
 
 {% block events_content %}
+    {{ include('@c975LEvents/forms/tinymceInit.html.twig') }}
+
     <div class="container">
 {# Toolbar #}
         <div class="text-center">
