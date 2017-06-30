@@ -11,6 +11,8 @@ EventsBundle does the following:
 
 This Bundle relies on the use of [TinyMce](https://www.tinymce.com/), [jQuery](https://jquery.com/), [Bootstrap](http://getbootstrap.com/) and [Bootstrap DatePicker](https://github.com/uxsolutions/bootstrap-datepicker) and requires Twig/Extensions for localizing dates and time.
 
+[Dedicated web page](https://975l.com/en/pages/events-bundle).
+
 Bundle installation
 ===================
 
@@ -31,10 +33,10 @@ $ composer update
 
 This command requires you to have Composer installed globally, as explained in the [installation chapter](https://getcomposer.org/doc/00-intro.md) of the Composer documentation.
 
-Step 2: Enable the Bundle
--------------------------
+Step 2: Enable the Bundles
+--------------------------
 
-Then, enable the bundle by adding it to the list of registered bundles in the `app/AppKernel.php` file of your project:
+Then, enable the bundles by adding them to the list of registered bundles in the `app/AppKernel.php` file of your project:
 
 ```php
 <?php
@@ -58,8 +60,8 @@ class AppKernel extends Kernel
 }
 ```
 
-Step 3: Configure the Bundle
-----------------------------
+Step 3: Configure the Bundles
+-----------------------------
 
 Then, in the `app/config.yml` file of your project, define `roleNeeded` (the user's role needed to enable access to the edition of events) and `folderPIctures` (where the events's pictures will be saved).
 
@@ -75,8 +77,8 @@ knp_paginator:
         pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'
 
 c975_l_events:
-    roleNeeded: 'ROLE_ADMIN'
     folderPictures: 'events' #The full path to this folder has to be added to .gitignore if Git is used
+    roleNeeded: 'ROLE_ADMIN'
 ```
 
 ** If you use Git for version control, you need to add the full path `web/images/[folderPictures]` in the `.gitignore`, otherwise all the content will be altered by Git. **
@@ -106,15 +108,13 @@ Step 6: Link and initialization of TinyMce
 
 It is strongly recommend to use the [Override Templates from Third-Party Bundles feature](http://symfony.com/doc/current/templating/overriding.html) to integrate fully with your site.
 
-For this, simply, create the following structure `app/Resources/c975LEventsBundle/views/` in your app and then duplicate the file `layout.html.twig` in it, to override the existing Bundle file.
+For this, simply, create the following structure `app/Resources/c975LEventsBundle/views/` in your app and then duplicate the files `layout.html.twig` and `tinymceInit.html.twig` in it, to override the existing Bundle files, then aply your needed changes, such as language, etc.
 
-In the overridding file, you must add a link to the cloud version (recommended) `https://cloud.tinymce.com/stable/tinymce.min.js` of TinyMce. You will need a free API key (available from the download link) **OR** download and link to your project [https://www.tinymce.com/download/](https://www.tinymce.com/download/).
+In `layout.html.twig`, you must add a link to the cloud version (recommended) `https://cloud.tinymce.com/stable/tinymce.min.js` of TinyMce. You will need a free API key (available from the download link) **OR** download and link to your project [https://www.tinymce.com/download/](https://www.tinymce.com/download/).
 
-You also need to initialize TinyMce ([language pack](https://www.tinymce.com/download/language-packages/) via `language_url`, css used by site via `content_css`, tools, etc.).
+You also need to initialize TinyMce via `tinymceInit.html.twig` for [options](https://www.tinymce.com/docs/get-started-cloud/editor-and-features/), [language pack](https://www.tinymce.com/download/language-packages/) via `language_url`, css used by site via `content_css`, tools, etc.
 
-Information about options is available at [https://www.tinymce.com/docs/get-started-cloud/editor-and-features/](https://www.tinymce.com/docs/get-started-cloud/editor-and-features/).
-
-Example of initialization (see `layout.html.twig` file).
+Example of initialization (see `tinymceInit.html.twig` file).
 
 ```javascript
     <script type="text/javascript">
@@ -128,6 +128,7 @@ Example of initialization (see `layout.html.twig` file).
             content_css : [
                 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
             ],
+            //language_url : '{# absolute_url(asset('vendor/tinymce/fr_FR.js')) #}',
             //language_url : 'http://example.com/js/tinymce/fr_FR.js',
             plugins: [
                 'advlist autolink lists link charmap print preview hr anchor pagebreak',
@@ -139,6 +140,7 @@ Example of initialization (see `layout.html.twig` file).
                 'styleselect | removeformat bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
                 'undo redo | cut copy paste | link emoticons table | print preview | fullscreen help',
             ],
+            link_context_toolbar: true,
         });
     </script>
 ```
@@ -166,11 +168,11 @@ The different Routes (naming self-explanatory) available are:
 - events_new
 - events_edit
 - events_delete
+- events_dashboard
 - events_carousel
 - events_all
 - events_ical
 - events_slug
-- events_dashboard
 - events_help
 
 To include the carousel in a page, simply use `{{ render(controller('c975LEventsBundle:Events:carousel', {'number': 3})) }}` where you want it to appear.

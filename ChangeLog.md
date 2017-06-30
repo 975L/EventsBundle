@@ -1,5 +1,13 @@
 # Changelog
 
+v1.5
+----
+- Change wording for validate button (30/06/2017)
+- Move `tinymceInit.html.twig` to `views` folder in order to simplify it's overridding as Tinymce can be initialized only once
+- Add options to Tinymce init
+- Add information on help pages
+- Add link to dedicated web page
+
 v1.4
 ----
 - Move in a separate file of the initialization of Tinymce (29/06/2017)
