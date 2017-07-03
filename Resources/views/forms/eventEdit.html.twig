@@ -2,61 +2,34 @@
 {% trans_default_domain 'events' %}
 
 {% block events_content %}
-    {{ include('@c975LEvents/forms/tinymceInit.html.twig') }}
+    {{ include('@c975LEvents/tinymceInit.html.twig') }}
 
-    <div class="container">
 {# Toolbar #}
-        <div class="text-center">
-            <div class="btn-group btn-group-md" role="group">
-{# Brand #}
-                <span class="btn btn-success"><strong>Events</strong></span>
-
-{# Display #}
-                <a href="{{ path('events_display', {'event': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.current_version'|trans }}" role="button">
-                    <span class="glyphicon glyphicon-eye-open"></span></a>
-
-{# New #}
-                <a href="{{ path('events_new') }}" class="btn btn-default" title="{{ 'label.new_page'|trans }}" role="button">
-                    <span class="glyphicon glyphicon-plus"></span></a>
-
-{# Delete #}
-                <a href="{{ path('events_delete', {'event': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.delete'|trans }}" role="button">
-                    <span class="glyphicon glyphicon-trash"></span></a>
-
-{# Dashboard #}
-                <a href="{{ path('events_dashboard') }}" class="btn btn-info" title="{{ 'label.dashboard'|trans }}" role="button">
-                    <span class="glyphicon glyphicon-dashboard"></span></a>
-
-{# Help #}
-                <a href="{{ path('events_help') }}" class="btn btn-info" title="{{ 'label.help'|trans }}" role="button">
-                    <span class="glyphicon glyphicon-flag"></span></a>
-            </div>
-        </div>
+    {{ toolbar|raw }}
 
 {# Picture #}
-        {% if eventPicture != null %}
-            <p class="text-center">
-                <img src="{{ asset(eventPicture) }}" class="img-responsive img-thumbnail center-block" alt="{{ event.title }}" title="{{ event.title }}" />
-            </p>
-        {% endif %}
+    {% if eventPicture != null %}
+        <p class="text-center">
+            <img src="{{ asset(eventPicture) }}" class="img-responsive img-thumbnail center-block" alt="{{ event.title }}" title="{{ event.title }}" />
+        </p>
+    {% endif %}
 
 {# Form #}
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
 
-            <div class="form-group">
-                <button type="submit" name="submit" title="{{ 'label.modify'|trans }}" class="btn btn-lg btn-primary btn-block">
-                    {{ 'label.validate'|trans }}
-                </button>
-            </div>
-        {{ form_end(form) }}
+        <div class="form-group">
+            <button type="submit" name="submit" title="{{ 'label.modify'|trans }}" class="btn btn-lg btn-primary btn-block">
+                {{ 'label.validate'|trans }}
+            </button>
+        </div>
+    {{ form_end(form) }}
 
 {# Cancel #}
-        <p class="text-center">
-            <a href="javascript:history.back()">
-                {{ 'label.cancel'|trans }}</a>
-        </p>
-    </div>
+    <p class="text-center">
+        <a href="javascript:history.back()">
+            {{ 'label.cancel'|trans }}</a>
+    </p>
 
 {# Javascript #}
     <script type="text/javascript">

@@ -102,7 +102,7 @@ class EventType extends AbstractType
                 ->add('description', TextareaType::class, array(
                     'label' => 'label.description',
                     'disabled' => $disabled,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         'class' => 'tinymce',
                         'cols' => 100,

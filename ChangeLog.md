@@ -1,5 +1,15 @@
 # Changelog
 
+v1.6
+----
+- Remove of "<div class="container">" in templates as it extends `layout.html.twig` and this kind of data has to be set site by site (03/07/2017)
+- Move the call of `tinymce.js` and `datePicker.js` to `tinymceInit.html.twig` instead of `layout.html.twig` to avoid calling it for pages that don't need it.
+- Group toolbars in one file
+- Add of semantic url value in dashboard
+- Add of link to dashboard on Events label in toolbar and remove of dashboard button
+- Remove of "required" on textarea.tinymce as it won't submit for a new page, a refresh has to be done - https://github.com/tinymce/tinymce/issues/2584
+- Add a Console Command to create sitemap of managed events
+
 v1.5
 ----
 - Change wording for validate button (30/06/2017)

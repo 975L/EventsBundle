@@ -3,28 +3,41 @@
 <div class="text-center">
     <div class="btn-group btn-group-md" role="group">
 {# Brand #}
-        <span class="btn btn-success"><strong>Events</strong></span>
+        {% if type != 'dashboard' %}
+            <a href="{{ path('events_dashboard') }}" class="btn btn-success" title="Events ({{ 'label.dashboard'|trans }})" role="button">
+                <strong>Events</strong></a>
+        {% else %}
+            <span class="btn btn-success"><strong>Events</strong></span></a>
+        {% endif %}
 
-{# Modify #}
-        <a href="{{ path('events_edit', {'event': event, 'id': id}) }}" class="btn btn-default" title="{{ 'label.modify'|trans }}" role="button">
-            <span class="glyphicon glyphicon-pencil"></span></a>
+{# Display #}
+        {% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'new' %}
+            <a href="{{ path('events_display', {'event': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.current_version'|trans }}" role="button">
+                <span class="glyphicon glyphicon-eye-open"></span></a>
+        {% endif %}
+
+{# Edit #}
+        {% if type != 'dashboard' and type != 'edit' and type != 'help' and type != 'new' %}
+            <a href="{{ path('events_edit', {'event': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.modify'|trans }}" role="button">
+                <span class="glyphicon glyphicon-pencil"></span></a>
+        {% endif %}
 
 {# New #}
-        <a href="{{ path('events_new') }}" class="btn btn-default" title="{{ 'label.new_event'|trans }}" role="button">
-            <span class="glyphicon glyphicon-plus"></span></a>
+        {% if type != 'new' %}
+            <a href="{{ path('events_new') }}" class="btn btn-default" title="{{ 'label.new_event'|trans }}" role="button">
+                <span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
 
 {# Delete #}
-        <a href="{{ path('events_delete', {'event': event, 'id': id}) }}" class="btn btn-default" title="{{ 'label.delete'|trans }}" role="button">
-            <span class="glyphicon glyphicon-trash"></span></a>
-
-
-{# Dashboard #}
-                <a href="{{ path('events_dashboard') }}" class="btn btn-info" title="{{ 'label.dashboard'|trans }}" role="button">
-                    <span class="glyphicon glyphicon-dashboard"></span></a>
+        {% if type != 'dashboard' and type != 'delete' and type != 'help' and type != 'new' %}
+            <a href="{{ path('events_delete', {'event': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.delete'|trans }}" role="button">
+                <span class="glyphicon glyphicon-trash"></span></a>
+        {% endif %}
 
 {# Help #}
-                <a href="{{ path('events_help') }}" class="btn btn-info" title="{{ 'label.help'|trans }}" role="button">
-                    <span class="glyphicon glyphicon-flag"></span></a>
-            </div>
+        {% if type != 'help' %}
+            <a href="{{ path('events_help') }}" class="btn btn-info" title="{{ 'label.help'|trans }}" role="button">
+                <span class="glyphicon glyphicon-flag"></span></a>
+        {% endif %}
     </div>
 </div>

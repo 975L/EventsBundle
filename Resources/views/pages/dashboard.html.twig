@@ -2,67 +2,60 @@
 {% trans_default_domain 'events' %}
 
 {% block events_content %}
-    <div class="container">
 {# Toolbar #}
-        <div class="text-center">
-            <div class="btn-group btn-group-md" role="group">
-{# New #}
-                <a href="{{ path('events_new') }}" class="btn btn-info" title="{{ 'label.new_event'|trans }}" role="button">
-                    <span class="glyphicon glyphicon-plus"></span> {{ 'label.new_event'|trans }}</a>
-
-{# Help #}
-                <a href="{{ path('events_help') }}" class="btn btn-info" title="{{ 'label.help'|trans }}" role="button">
-                    <span class="glyphicon glyphicon-flag"></span> {{ 'label.help'|trans }}</a>
-            </div>
-        </div>
+    {{ toolbar|raw }}
 
 {# List of events and actions #}
-        <div class="text-center">
-            <h2>
-                {{ 'text.list_events'|trans }}
-            </h2>
-            <table class="table table-hover table-condensed table-responsive">
-                <thead>
+    <div class="text-center">
+        <h2>
+            {{ 'text.list_events'|trans }}
+        </h2>
+        <table class="table table-hover table-condensed table-responsive">
+            <thead>
+                <tr>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'Id', 'e.id') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.semantic_url'|trans, 'e.slug') }}</th>
+                    <th class="text-center"><span class="glyphicon glyphicon-eye-open"></span> {{ 'label.display'|trans }}</th>
+                    <th class="text-center"><span class="glyphicon glyphicon-pencil"></span> {{ 'label.modify'|trans }}</th>
+                    <th class="text-center"><span class="glyphicon glyphicon-trash"></span> {{ 'label.delete'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
                     <tr>
-                        <th class="text-center">{{ knp_pagination_sortable(events, 'Id', 'e.id') }}</th>
-                        <th class="text-center">{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}</th>
-                        <th class="text-center"><span class="glyphicon glyphicon-eye-open"></span> {{ 'label.display'|trans }}</th>
-                        <th class="text-center"><span class="glyphicon glyphicon-pencil"></span> {{ 'label.modify'|trans }}</th>
-                        <th class="text-center"><span class="glyphicon glyphicon-trash"></span> {{ 'label.delete'|trans }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for event in events %}
-                        <tr>
 {# Id #}
-                            <td class="text-center">
-                                {{ event.id }}
-                            </td>
+                        <td class="text-center">
+                            {{ event.id }}
+                        </td>
 {# Title #}
-                            <td class="text-center">
-                                {{ event.title }}
-                            </td>
+                        <td class="text-center">
+                            {{ event.title }}
+                        </td>
+{# Slug #}
+                        <td class="text-center">
+                            {{ event.slug }}
+                        </td>
 {# Display #}
-                            <td class="text-center">
-                                <a href="{{ path('events_display', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ 'label.display'|trans }}</a>
-                            </td>
+                        <td class="text-center">
+                            <a href="{{ path('events_display', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ 'label.display'|trans }}</a>
+                        </td>
 {# Edit #}
-                            <td class="text-center">
-                                <a href="{{ path('events_edit', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.modify'|trans }}">{{ 'label.modify'|trans }}</a>
-                            </td>
+                        <td class="text-center">
+                            <a href="{{ path('events_edit', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.modify'|trans }}">{{ 'label.modify'|trans }}</a>
+                        </td>
 {# Delete #}
-                            <td class="text-center">
-                                <a href="{{ path('events_delete', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.delete'|trans }}" class="text-danger">{{ 'label.delete'|trans }}</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                        <td class="text-center">
+                            <a href="{{ path('events_delete', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.delete'|trans }}" class="text-danger">{{ 'label.delete'|trans }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
 {# Pagination #}
-            <div class="navigation text-center">
-                {{ knp_pagination_render(events) }}
-            </div>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(events) }}
         </div>
     </div>
 {% endblock %}

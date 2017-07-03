@@ -2,53 +2,51 @@
 {% trans_default_domain 'events' %}
 
 {% block events_content %}
-    <div class="container text-center">
-        <table class="table table-hover table-condensed table-responsive">
-            <thead>
+    <table class="table table-hover table-condensed table-responsive">
+        <thead>
+            <tr>
+                <th class="text-center">{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}</th>
+                <th class="text-center">{{ knp_pagination_sortable(events, 'label.start_date'|trans, 'e.start_date') }}</th>
+                <th class="text-center">{{ knp_pagination_sortable(events, 'label.end_date'|trans, 'e.end_date') }}</th>
+                <th class="text-center">{{ knp_pagination_sortable(events, 'label.place'|trans, 'e.place') }}</th>
+                <th class="text-center">{{ 'label.add_to_calendar'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
                 <tr>
-                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}</th>
-                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.start_date'|trans, 'e.start_date') }}</th>
-                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.end_date'|trans, 'e.end_date') }}</th>
-                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.place'|trans, 'e.place') }}</th>
-                    <th class="text-center">{{ 'label.add_to_calendar'|trans }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for event in events %}
-                    <tr>
 {# Title #}
-                        <td class="text-center">
-                            <strong><a href="{{ path('events_display', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ event.title }}</a></strong>
-                        </td>
+                    <td class="text-center">
+                        <strong><a href="{{ path('events_display', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ event.title }}</a></strong>
+                    </td>
 {# StartDate and Time #}
-                        <td class="text-center">
-                            {{ event.startDate|localizeddate('long', 'none') }}
-                            <br />
-                            {{ event.startTime|localizeddate('none', 'short') }}
-                        </td>
+                    <td class="text-center">
+                        {{ event.startDate|localizeddate('long', 'none') }}
+                        <br />
+                        {{ event.startTime|localizeddate('none', 'short') }}
+                    </td>
 {# End date and Time #}
-                        <td class="text-center">
-                            {{ event.endDate|localizeddate('long', 'none') }}
-                            <br />
-                            {{ event.endTime|localizeddate('none', 'short') }}
-                        </td>
+                    <td class="text-center">
+                        {{ event.endDate|localizeddate('long', 'none') }}
+                        <br />
+                        {{ event.endTime|localizeddate('none', 'short') }}
+                    </td>
 {# Place #}
-                        <td class="text-center">
-                            {{ event.place }}
-                        </td>
+                    <td class="text-center">
+                        {{ event.place }}
+                    </td>
 {# Add to calendar #}
-                        <td class="text-center">
-                            <a href="{{ path('events_ical', {'event': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
-                                <span class="glyphicon glyphicon-calendar"></span> {{'label.add_to_calendar'|trans }}</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    <td class="text-center">
+                        <a href="{{ path('events_ical', {'event': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
+                            <span class="glyphicon glyphicon-calendar"></span> {{'label.add_to_calendar'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {# Pagination #}
-        <div class="navigation text-center">
-            {{ knp_pagination_render(events) }}
-        </div>
+    <div class="navigation text-center">
+        {{ knp_pagination_render(events) }}
     </div>
 {% endblock %}

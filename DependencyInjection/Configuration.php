@@ -27,6 +27,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('folderPictures')
                     ->defaultValue('events')
                 ->end()
+                ->scalarNode('sitemapBaseUrl')
+                ->end()
+                ->arrayNode('sitemapLanguages')
+                    ->prototype('scalar')->end()
+                    ->defaultValue(array())
+                ->end()
             ->end()
         ;
 

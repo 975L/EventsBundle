@@ -33,5 +33,7 @@ class c975LEventsExtension extends Extension
 
         $container->setParameter('c975_l_events.roleNeeded', $processedConfig['roleNeeded']);
         $container->setParameter('c975_l_events.folderPictures', $processedConfig['folderPictures']);
+        $container->setParameter('c975_l_events.sitemapBaseUrl', $processedConfig['sitemapBaseUrl']);
+        $container->setParameter('c975_l_events.sitemapLanguages', $processedConfig['sitemapLanguages']);
     }
 }

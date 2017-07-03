@@ -52,13 +52,14 @@ class EventsController extends Controller
             $pagination = $paginator->paginate(
                 $events,
                 $request->query->getInt('p', 1),
-                5
+                10
             );
 
             //Returns the dashboard
             return $this->render('@c975LEvents/pages/dashboard.html.twig', array(
                 'events' => $pagination,
                 'title' => $this->get('translator')->trans('label.dashboard', array(), 'events'),
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'dashboard')),
             ));
         }
 
@@ -68,10 +69,10 @@ class EventsController extends Controller
 
 //DISPLAY
     /**
-     * @Route("/events/{event}/{id}",
+     * @Route("/events/{slug}/{id}",
      *      name="events_display",
      *      requirements={
-     *          "event": "^([a-z0-9\-]+)",
+     *          "slug": "^([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
      * @Method({"GET", "HEAD"})
@@ -93,7 +94,7 @@ class EventsController extends Controller
         //Adds toolbar if rights are ok
         $toolbar = null;
         if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            $toolbar = $this->renderView('@c975LEvents/toolbar.html.twig', array('event' => $event->getSlug(), 'id' => $event->getId()));
+            $toolbar = $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'display', 'event' => $event));
         }
 
         return $this->render('@c975LEvents/pages/eventDisplay.html.twig', array(
@@ -147,6 +148,7 @@ class EventsController extends Controller
             return $this->render('@c975LEvents/forms/eventNew.html.twig', array(
                 'form' => $form->createView(),
                 'title' => $this->get('translator')->trans('label.new_event', array(), 'events'),
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'new')),
             ));
         }
 
@@ -225,6 +227,7 @@ class EventsController extends Controller
                 'event' => $event,
                 'eventPicture' => $eventPicture,
                 'title' => $this->get('translator')->trans('label.modify', array(), 'events') . ' "' . $event->getTitle() . '"',
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'edit', 'event' => $event)),
             ));
         }
 
@@ -290,6 +293,7 @@ class EventsController extends Controller
                 'form' => $form->createView(),
                 'title' => $this->get('translator')->trans('label.delete', array(), 'events') . ' "' . $event->getTitle() . '"',
                 'event' => $event,
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'delete', 'event' => $event)),
             ));
         }
 
@@ -375,7 +379,7 @@ class EventsController extends Controller
         $pagination = $paginator->paginate(
             $events,
             $request->query->getInt('p', 1),
-            5
+            10
         );
 
         return $this->render('@c975LEvents/pages/eventsAll.html.twig', array(
@@ -411,6 +415,7 @@ class EventsController extends Controller
             //Returns the help
             return $this->render('@c975LEvents/pages/help.html.twig', array(
                 'title' => $this->get('translator')->trans('label.help', array(), 'events'),
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'help')),
             ));
         }
 
@@ -420,7 +425,7 @@ class EventsController extends Controller
 
 
 //FUNCTIONS
-    //
+    //Defines the picture related to Event
     public function setPicture($event)
     {
         //Gets the FileSystem
@@ -432,7 +437,6 @@ class EventsController extends Controller
             $event->setPicture('images/' . $this->getParameter('c975_l_events.folderPictures') . '/' . $event->getSlug() . '-' . $event->getId() . '.jpg');
         }
     }
-
 
     //Loads the event
     public function loadEvent($id)
@@ -453,7 +457,6 @@ class EventsController extends Controller
 
         return $event;
     }
-
 
     //Resizes the picture
     public function resizeImage($file, $finalFileName)
@@ -537,7 +540,6 @@ class EventsController extends Controller
             }
         }
     }
-
 
     //Slugify function - https://github.com/cocur/slugify
     public function slugify($text)
