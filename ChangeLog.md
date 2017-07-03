@@ -1,5 +1,9 @@
 # Changelog
 
+v1.6.1
+------
+- Rename url parameter 'event' to 'slug' (03/07/2017)
+
 v1.6
 ----
 - Remove of "<div class="container">" in templates as it extends `layout.html.twig` and this kind of data has to be set site by site (03/07/2017)

@@ -33,7 +33,7 @@
 
     {# Add to calendar #}
         <p>
-            <a href="{{ path('events_ical', {'event': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
+            <a href="{{ path('events_ical', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
                 <span class="glyphicon glyphicon-calendar"></span> {{'label.add_to_calendar'|trans }}</a>
         </p>
 

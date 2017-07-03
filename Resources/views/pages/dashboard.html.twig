@@ -38,15 +38,15 @@
                         </td>
 {# Display #}
                         <td class="text-center">
-                            <a href="{{ path('events_display', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ 'label.display'|trans }}</a>
+                            <a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ 'label.display'|trans }}</a>
                         </td>
 {# Edit #}
                         <td class="text-center">
-                            <a href="{{ path('events_edit', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.modify'|trans }}">{{ 'label.modify'|trans }}</a>
+                            <a href="{{ path('events_edit', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.modify'|trans }}">{{ 'label.modify'|trans }}</a>
                         </td>
 {# Delete #}
                         <td class="text-center">
-                            <a href="{{ path('events_delete', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.delete'|trans }}" class="text-danger">{{ 'label.delete'|trans }}</a>
+                            <a href="{{ path('events_delete', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.delete'|trans }}" class="text-danger">{{ 'label.delete'|trans }}</a>
                         </td>
                     </tr>
                 {% endfor %}

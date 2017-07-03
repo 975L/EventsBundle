@@ -139,7 +139,7 @@ class EventsController extends Controller
 
                 //Redirects to the event
                 return $this->redirectToRoute('events_display', array(
-                    'event' => $event->getSlug(),
+                    'slug' => $event->getSlug(),
                     'id' => $event->getId(),
                 ));
             }
@@ -158,15 +158,15 @@ class EventsController extends Controller
 
 //EDIT
     /**
-     * @Route("/events/edit/{event}/{id}",
+     * @Route("/events/edit/{slug}/{id}",
      *      name="events_edit",
      *      requirements={
-     *          "event": "^([a-z0-9\-]+)",
+     *          "slug": "^([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
      * )
      */
-    public function editAction(Request $request, $event, $id)
+    public function editAction(Request $request, $slug, $id)
     {
         //Gets the user
         $user = $this->getUser();
@@ -216,7 +216,7 @@ class EventsController extends Controller
 
                 //Redirects to the event
                 return $this->redirectToRoute('events_display', array(
-                    'event' => $event->getSlug(),
+                    'slug' => $event->getSlug(),
                     'id' => $event->getId(),
                 ));
             }
@@ -237,15 +237,15 @@ class EventsController extends Controller
 
 //DELETE
     /**
-     * @Route("/events/delete/{event}/{id}",
+     * @Route("/events/delete/{slug}/{id}",
      *      name="events_delete",
      *      requirements={
-     *          "event": "^([a-z0-9\-]+)",
+     *          "slug": "^([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
      * )
      */
-    public function deleteAction(Request $request, $event, $id)
+    public function deleteAction(Request $request, $id)
     {
         //Gets the user
         $user = $this->getUser();
@@ -283,7 +283,7 @@ class EventsController extends Controller
 
                 //Redirects to the event
                 return $this->redirectToRoute('events_display', array(
-                    'event' => $event->getSlug(),
+                    'slug' => $event->getSlug(),
                     'id' => $event->getId(),
                 ));
             }
@@ -303,10 +303,10 @@ class EventsController extends Controller
 
 //ICAL
     /**
-     * @Route("/events/ical/{event}/{id}",
+     * @Route("/events/ical/{slug}/{id}",
      *      name="events_ical",
      *      requirements={
-     *          "event": "^([a-z0-9\-]+)",
+     *          "slug": "^([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
      * @Method({"GET", "HEAD"})

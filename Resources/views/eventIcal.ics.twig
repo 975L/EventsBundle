@@ -15,7 +15,7 @@ DTSTART;TZID={{ event.startTime|date('e') }}:{{ event.startDate|date('Ymd') }}T{
 DTEND;TZID={{ event.startTime|date('e') }}:{{ event.endDate|date('Ymd') }}T{{ event.endTime|date('His') }}
 LOCATION:{{ event.place }}
 DESCRIPTION:{{ event.description|striptags }}
-URL:{{ absolute_url(path('events_display', {'event': event.slug, 'id': event.id})) }}
+URL:{{ absolute_url(path('events_display', {'slug': event.slug, 'id': event.id})) }}
 BEGIN:VALARM
 TRIGGER:-PT60M
 ACTION:DISPLAY

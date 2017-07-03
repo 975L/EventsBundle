@@ -17,7 +17,7 @@
                 <tr>
 {# Title #}
                     <td class="text-center">
-                        <strong><a href="{{ path('events_display', {'event': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ event.title }}</a></strong>
+                        <strong><a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ event.title }}</a></strong>
                     </td>
 {# StartDate and Time #}
                     <td class="text-center">
@@ -37,7 +37,7 @@
                     </td>
 {# Add to calendar #}
                     <td class="text-center">
-                        <a href="{{ path('events_ical', {'event': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
+                        <a href="{{ path('events_ical', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
                             <span class="glyphicon glyphicon-calendar"></span> {{'label.add_to_calendar'|trans }}</a>
                     </td>
                 </tr>

@@ -16,7 +16,7 @@
                 <div class="carousel-inner text-center" role="listbox">
                     {% for event in events %}
                         <div class="item {% if loop.index0 == 0 %}active{% endif %}">
-                            <a href="{{ absolute_url(path('events_display', {'event': event.slug, 'id': event.id})) }}">
+                            <a href="{{ absolute_url(path('events_display', {'slug': event.slug, 'id': event.id})) }}">
                                 {% if event.picture != null %}
                                     <img src="{{ asset(event.picture) }}" alt="{{ event.title }}" title="{{ event.title }}" class="img-carousel" />
                                 {% endif %}
