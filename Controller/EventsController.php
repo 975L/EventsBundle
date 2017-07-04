@@ -58,7 +58,6 @@ class EventsController extends Controller
             //Returns the dashboard
             return $this->render('@c975LEvents/pages/dashboard.html.twig', array(
                 'events' => $pagination,
-                'title' => $this->get('translator')->trans('label.dashboard', array(), 'events'),
                 'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'dashboard')),
             ));
         }
@@ -147,7 +146,6 @@ class EventsController extends Controller
             //Returns the form to edit content
             return $this->render('@c975LEvents/forms/eventNew.html.twig', array(
                 'form' => $form->createView(),
-                'title' => $this->get('translator')->trans('label.new_event', array(), 'events'),
                 'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'new')),
             ));
         }
@@ -226,7 +224,7 @@ class EventsController extends Controller
                 'form' => $form->createView(),
                 'event' => $event,
                 'eventPicture' => $eventPicture,
-                'title' => $this->get('translator')->trans('label.modify', array(), 'events') . ' "' . $event->getTitle() . '"',
+                'eventTitle' => $event->getTitle(),
                 'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'edit', 'event' => $event)),
             ));
         }
@@ -291,7 +289,7 @@ class EventsController extends Controller
             //Returns the form to edit content
             return $this->render('@c975LEvents/forms/eventDelete.html.twig', array(
                 'form' => $form->createView(),
-                'title' => $this->get('translator')->trans('label.delete', array(), 'events') . ' "' . $event->getTitle() . '"',
+                'eventTitle' => $event->getTitle(),
                 'event' => $event,
                 'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'delete', 'event' => $event)),
             ));
@@ -353,7 +351,6 @@ class EventsController extends Controller
         //Returns the carousel
         return $this->render('@c975LEvents/pages/carousel.html.twig', array(
             'events' => $events,
-            'title' => $this->get('translator')->trans('label.carousel', array(), 'events'),
         ));
     }
 
@@ -384,7 +381,6 @@ class EventsController extends Controller
 
         return $this->render('@c975LEvents/pages/eventsAll.html.twig', array(
             'events' => $pagination,
-            'title' => $this->get('translator')->trans('label.all_events', array(), 'events'),
             ));
     }
 
@@ -414,7 +410,6 @@ class EventsController extends Controller
         if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             //Returns the help
             return $this->render('@c975LEvents/pages/help.html.twig', array(
-                'title' => $this->get('translator')->trans('label.help', array(), 'events'),
                 'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'help')),
             ));
         }

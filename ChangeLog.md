@@ -1,5 +1,10 @@
 # Changelog
 
+v1.6.2
+------
+- Update of README.md (03/07/2017)
+- Move `title`value in Twig templates in place of Controller, more simple (04/07/2017)
+
 v1.6.1
 ------
 - Rename url parameter 'event' to 'slug' (03/07/2017)
