@@ -58,7 +58,11 @@ class EventsController extends Controller
             //Returns the dashboard
             return $this->render('@c975LEvents/pages/dashboard.html.twig', array(
                 'events' => $pagination,
-                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'dashboard')),
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array(
+                    'type' => 'dashboard',
+                    'dashboardRoute' => $this->getParameter('c975_l_events.dashboardRoute'),
+                    'signoutRoute' => $this->getParameter('c975_l_events.signoutRoute'),
+                )),
             ));
         }
 
@@ -93,7 +97,12 @@ class EventsController extends Controller
         //Adds toolbar if rights are ok
         $toolbar = null;
         if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            $toolbar = $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'display', 'event' => $event));
+            $toolbar = $this->renderView('@c975LEvents/toolbar.html.twig', array(
+                    'type' => 'display',
+                    'event' => $event,
+                    'dashboardRoute' => $this->getParameter('c975_l_events.dashboardRoute'),
+                    'signoutRoute' => $this->getParameter('c975_l_events.signoutRoute'),
+                ));
         }
 
         return $this->render('@c975LEvents/pages/eventDisplay.html.twig', array(
@@ -146,7 +155,13 @@ class EventsController extends Controller
             //Returns the form to edit content
             return $this->render('@c975LEvents/forms/eventNew.html.twig', array(
                 'form' => $form->createView(),
-                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'new')),
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array(
+                    'type' => 'new',
+                    'dashboardRoute' => $this->getParameter('c975_l_events.dashboardRoute'),
+                    'signoutRoute' => $this->getParameter('c975_l_events.signoutRoute'),
+                )),
+                'tinymceApiKey' => $this->getParameter('c975_l_events.tinymceApiKey'),
+                'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
             ));
         }
 
@@ -225,7 +240,14 @@ class EventsController extends Controller
                 'event' => $event,
                 'eventPicture' => $eventPicture,
                 'eventTitle' => $event->getTitle(),
-                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'edit', 'event' => $event)),
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array(
+                    'type' => 'edit',
+                    'event' => $event,
+                    'dashboardRoute' => $this->getParameter('c975_l_events.dashboardRoute'),
+                    'signoutRoute' => $this->getParameter('c975_l_events.signoutRoute'),
+                )),
+                'tinymceApiKey' => $this->getParameter('c975_l_events.tinymceApiKey'),
+                'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
             ));
         }
 
@@ -280,10 +302,7 @@ class EventsController extends Controller
                 $em->flush();
 
                 //Redirects to the event
-                return $this->redirectToRoute('events_display', array(
-                    'slug' => $event->getSlug(),
-                    'id' => $event->getId(),
-                ));
+                return $this->redirectToRoute('events_dashboard');
             }
 
             //Returns the form to edit content
@@ -291,7 +310,12 @@ class EventsController extends Controller
                 'form' => $form->createView(),
                 'eventTitle' => $event->getTitle(),
                 'event' => $event,
-                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'delete', 'event' => $event)),
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array(
+                    'type' => 'delete',
+                    'event' => $event,
+                    'dashboardRoute' => $this->getParameter('c975_l_events.dashboardRoute'),
+                    'signoutRoute' => $this->getParameter('c975_l_events.signoutRoute'),
+                )),
             ));
         }
 
@@ -410,7 +434,11 @@ class EventsController extends Controller
         if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             //Returns the help
             return $this->render('@c975LEvents/pages/help.html.twig', array(
-                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array('type' => 'help')),
+                'toolbar' => $this->renderView('@c975LEvents/toolbar.html.twig', array(
+                    'type' => 'help',
+                    'dashboardRoute' => $this->getParameter('c975_l_events.dashboardRoute'),
+                    'signoutRoute' => $this->getParameter('c975_l_events.signoutRoute'),
+                )),
             ));
         }
 

@@ -110,6 +110,10 @@
                 <source>label.validate</source>
                 <target>Validar</target>
             </trans-unit>
+            <trans-unit id="28">
+                <source>label.signout</source>
+                <target>Desconectar</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

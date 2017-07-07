@@ -73,6 +73,14 @@ c975_l_events:
     sitemapBaseUrl: 'http://example.com'
     #(Optional) Array of available languages of the website
     sitemapLanguages: ['en', 'fr', 'es']
+    #(Optional) Your Tinymce Api key if you use the cloud version
+    tinymceApiKey : 'YOUR_API_KEY' #default null
+    #(Optional) Your tinymce language if you use one, MUST BE placed in 'web/vendor/tinymce/[tinymceLanguage].js'
+    tinymceLanguage: 'fr_FR' #default null
+    #(Optional) Your signout Route if you want to allow sign out from Events toolbar
+    signoutRoute: 'name_of_your_signout_route' #default null
+    #(Optional) Your main dashboard route if you want to allow it from Events toolbar
+    dashboardRoute: 'your_dashboard_route' #default null
 ```
 
 **If you use Git for version control, you need to add the full path `web/images/[folderPictures]` in the `.gitignore`, otherwise all the content will be altered by Git.**
@@ -99,48 +107,25 @@ It is strongly recommended to use the [Override Templates from Third-Party Bundl
 
 For this, simply, create the following structure `app/Resources/c975LEventsBundle/views/` in your app and then duplicate the files `layout.html.twig` and `tinymceInit.html.twig` in it, to override the existing Bundle files, then apply your needed changes, such as language, etc.
 
-In `tinymceInit.html.twig`, you must add a link to the cloud version (recommended) `https://cloud.tinymce.com/stable/tinymce.min.js` of TinyMce. You will need a free API key (available from the download link) **OR** download and link to your project [https://www.tinymce.com/download/](https://www.tinymce.com/download/). You also need to initialize TinyMce for specific tools and options ([language_url pack](https://www.tinymce.com/download/language-packages/), `content_css`, etc.).
+In `layout.html.twig`, it will mainly consist to extend your layout and define specific variables, i.e. :
+```twig
+{% extends 'layout.html.twig' %}
 
-Example of initialization (see `tinymceInit.html.twig` file).
+{# Defines specific variables #}
+{% set title = 'Events (' ~ title ~ ')' %}
 
-```javascript
-{# datePicker - https://github.com/uxsolutions/bootstrap-datepicker #}
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/js/bootstrap-datepicker.min.js"></script>
-{# Include datePicket locale file if neede #}
-{# <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/locales/bootstrap-datepicker.fr.min.js"></script> #}
-
-{# TinyMceCloud - https://www.tinymce.com #}
-<script type="text/javascript" src="//cloud.tinymce.com/stable/tinymce.min.js{# ?apiKey=YOUR_API_KEY #}"></script>
-
-{# TinyMce Initialization #}
-{# For options, see: https://www.tinymce.com/docs/get-started-cloud/editor-and-features/ #}
-<script type="text/javascript">
-    tinymce.init({
-        selector: 'textarea.tinymce',
-        statusbar: true,
-        menubar: false,
-        browser_spellcheck: true,
-        contextmenu: false,
-        schema: 'html5 strict',
-        content_css : [
-            'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
-        ],
-        //language_url : '{# absolute_url(asset('vendor/tinymce/fr_FR.js')) #}',
-        //language_url : 'http://example.com/js/tinymce/fr_FR.js',
-        plugins: [
-            'advlist autolink lists link charmap print preview hr anchor pagebreak',
-            'searchreplace wordcount visualblocks visualchars fullscreen',
-            'insertdatetime nonbreaking save table contextmenu directionality',
-            'emoticons template paste textcolor colorpicker textpattern toc help',
-        ],
-        toolbar: [
-            'styleselect | removeformat bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
-            'undo redo | cut copy paste | link emoticons table | print preview | fullscreen help',
-        ],
-        link_context_toolbar: true,
-    });
-</script>
+{% block content %}
+    <div class="container">
+        {% block events_content %}
+        {% endblock %}
+    </div>
+{% endblock %}
 ```
+
+It is recommended to use [Tinymce Cloud version](https://go.tinymce.com/cloud/). You will need a [free API key](https://store.ephox.com/my-account/api-key-manager/).
+**OR** you can download and link to your project [https://www.tinymce.com/download/](https://www.tinymce.com/download/).
+
+If you want to keep all the available tools and make no change to Tinymce as it is, you don't need to overwrite `tinymceInit.html.twig`. You just need to provide, in `config.yml` your `tinymceApiKey`, if you use the cloud version and the `tinymceLanguage` (+ upload the corresponding file on your server under `web/vendor/tinymce/[tinymceLanguage].js`). Or you can overwrite `tinymceInit.html.twig`.
 
 Step 7: Link and initialization of Bootstrap DatePicker
 -------------------------------------------------------

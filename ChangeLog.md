@@ -1,5 +1,14 @@
 # Changelog
 
+v1.7
+----
+- Update of README.md (06/07/2017)
+- Move of translated help pages to sub-folder `langugages` (07/07/2017)
+- Make `tinymceInit.html.twig` re-usable by setting config keys `tinymceApiKey` and `tinymceLanguage`
+- Redirection to dashboard in case of delete an event, in place of redirecting to the deleted event
+- Add of signout button on toolbar + config signoutRoute
+- Add of main dashboard button on toolbar + config dashboardRoute
+
 v1.6.2
 ------
 - Update of README.md (03/07/2017)
