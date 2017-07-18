@@ -25,7 +25,7 @@ use c975L\EventsBundle\Form\EventType;
 
 class EventsController extends Controller
 {
-//DASHBOARD
+    //DASHBOARD
     /**
      * @Route("/events/dashboard",
      *      name="events_dashboard")
@@ -544,11 +544,16 @@ class EventsController extends Controller
                     $whiteBackground = imagecolorallocate($newPicture, 255, 255, 255);
                     imagefill($newPicture, 0, 0, $whiteBackground);
                 }
-                if ($degree == 90 || $degree == 270) imagecopyresampled($newPicture, $fileSource, 0, 0, 0, 0, $newWidth, $newHeight, $height, $width);
-                else imagecopyresampled($newPicture, $fileSource, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                if ($degree == 90 || $degree == 270) {
+                    imagecopyresampled($newPicture, $fileSource, 0, 0, 0, 0, $newWidth, $newHeight, $height, $width);
+                } else {
+                    imagecopyresampled($newPicture, $fileSource, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                }
 
                 //Saves the picture - JPEG format
-                if ($format == 'jpg') imagejpeg($newPicture, str_replace('jpeg', 'jpg', $filename), $compressionJpg);
+                if ($format == 'jpg') {
+                    imagejpeg($newPicture, str_replace('jpeg', 'jpg', $filename), $compressionJpg);
+                }
 
                 //Destroy picture
                 imagedestroy($newPicture);

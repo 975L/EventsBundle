@@ -39,7 +39,7 @@ class SitemapCreateCommand extends ContainerAwareCommand
         foreach ($eventsList as $event) {
             //Defines data
             if (!empty($languages)) {
-                foreach($languages as $language) {
+                foreach ($languages as $language) {
                     $url = $container->getParameter('c975_l_events.sitemapBaseUrl');
                     $url .= '/' . $language;
                     $url .= '/events/' . $event->getSlug() . '/' . $event->getId();
@@ -49,8 +49,7 @@ class SitemapCreateCommand extends ContainerAwareCommand
                         'priority' => '0.7',
                     );
                 }
-            }
-            else {
+            } else {
                 $url = $container->getParameter('c975_l_events.sitemapBaseUrl');
                 $url .= '/events/' . $event->getSlug() . '/' . $event->getId();
                 $events[]= array(

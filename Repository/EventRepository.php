@@ -41,6 +41,5 @@ class EventRepository extends EntityRepository
             ;
 
         return $qb;
-
     }
 }

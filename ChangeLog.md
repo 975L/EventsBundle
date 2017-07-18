@@ -1,5 +1,11 @@
 # Changelog
 
+v1.7.1
+------
+- Add "Best practice" for tinymceApiKey (08/07/2017)
+- Run PHP CS-Fixer (18/07/2017)
+- Remove of .travis.yml as tests have to be defined before
+
 v1.7
 ----
 - Update of README.md (06/07/2017)
