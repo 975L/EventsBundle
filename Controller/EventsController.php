@@ -160,7 +160,7 @@ class EventsController extends Controller
                     'dashboardRoute' => $this->getParameter('c975_l_events.dashboardRoute'),
                     'signoutRoute' => $this->getParameter('c975_l_events.signoutRoute'),
                 )),
-                'tinymceApiKey' => $this->getParameter('c975_l_events.tinymceApiKey'),
+                'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
                 'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
             ));
         }
@@ -246,7 +246,7 @@ class EventsController extends Controller
                     'dashboardRoute' => $this->getParameter('c975_l_events.dashboardRoute'),
                     'signoutRoute' => $this->getParameter('c975_l_events.signoutRoute'),
                 )),
-                'tinymceApiKey' => $this->getParameter('c975_l_events.tinymceApiKey'),
+                'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
                 'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
             ));
         }

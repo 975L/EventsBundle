@@ -35,7 +35,6 @@ class c975LEventsExtension extends Extension
         $container->setParameter('c975_l_events.folderPictures', $processedConfig['folderPictures']);
         $container->setParameter('c975_l_events.sitemapBaseUrl', $processedConfig['sitemapBaseUrl']);
         $container->setParameter('c975_l_events.sitemapLanguages', $processedConfig['sitemapLanguages']);
-        $container->setParameter('c975_l_events.tinymceApiKey', $processedConfig['tinymceApiKey']);
         $container->setParameter('c975_l_events.tinymceLanguage', $processedConfig['tinymceLanguage']);
         $container->setParameter('c975_l_events.signoutRoute', $processedConfig['signoutRoute']);
         $container->setParameter('c975_l_events.dashboardRoute', $processedConfig['dashboardRoute']);

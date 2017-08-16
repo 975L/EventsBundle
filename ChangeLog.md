@@ -1,5 +1,11 @@
 # Changelog
 
+v1.7.2
+------
+- Separation of information about parameters.yml in `README.md` (16/08/2017)
+- Direct call of Tinymce API key instead of repeating it in `config.yml`
+- Changes in the `README.me` file
+
 v1.7.1
 ------
 - Add "Best practice" for tinymceApiKey (08/07/2017)

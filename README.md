@@ -53,7 +53,19 @@ class AppKernel extends Kernel
 
 Step 3: Configure the Bundles
 -----------------------------
-Then, in the `app/config.yml` file of your project, define `roleNeeded` (the user's role needed to enable access to the edition of events) and `folderPIctures` (where the events's pictures will be saved).
+Setup your Tinymce API key, optional if you use the cloud version, in `parameters.yml`
+```yml
+    #(Optional) Your Tinymce Api key if you use the cloud version
+    #tinymceApiKey: YOUR_API_KEY
+```
+
+And then in `parameters.yml.dist`
+```yml
+    #(Optional) Your Tinymce Api key if you use the cloud version
+    #tinymceApiKey:     ~
+```
+
+Then, in the `app/config.yml` file of your project, define the following:
 
 ```yml
 #https://github.com/KnpLabs/KnpPaginatorBundle
@@ -73,13 +85,6 @@ c975_l_events:
     sitemapBaseUrl: 'http://example.com'
     #(Optional) Array of available languages of the website
     sitemapLanguages: ['en', 'fr', 'es']
-    #(Optional) Your Tinymce Api key if you use the cloud version
-    #As a "Best practice", it's better to set the Api Key in parameters.yml
-    #tinymceApiKey: YOUR_API_KEY
-    #And in parameters.yml.dist
-    #tinymceApiKey:     ~
-    #And report it there
-    tinymceApiKey: '%tinymceApiKey%' #default null
     #(Optional) Your tinymce language if you use one, MUST BE placed in 'web/vendor/tinymce/[tinymceLanguage].js'
     tinymceLanguage: 'fr_FR' #default null
     #(Optional) Your signout Route if you want to allow sign out from Events toolbar
@@ -104,7 +109,7 @@ c975_l_events:
 
 Step 5: Create MySql table
 --------------------------
-- Use `/Resources/sql/events.sql` to create the tables `events`. The `DROP TABLE` is commented to avoid dropping by mistake.
+- Use `/Resources/sql/events.sql` to create the table `events`. The `DROP TABLE` is commented to avoid dropping by mistake.
 
 Step 6: Link and initialization of TinyMce
 ------------------------------------------
