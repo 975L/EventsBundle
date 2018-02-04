@@ -21,9 +21,7 @@ class SitemapCreateCommand extends ContainerAwareCommand
         $container = $this->getContainer();
 
         //Gets the manager
-        //Gets the manager
-        $em = $this->getContainer()
-            ->get('doctrine')
+        $em = $container->get('doctrine')
             ->getManager();
 
         //Gets repository

@@ -1,5 +1,13 @@
 # Changelog
 
+v1.8
+----
+- Correction in `SitemapCreateCommand.php` (17/08/2017)
+- Change about composer download in `README.md` (04/02/2018)
+- Typo in `README.md` (04/02/2018)
+- Add support in `composer.json`+ use of ^ for versions request (04/02/2018)
+- Replace toolbar by use of c975LToolbarBundle (04/02/2018)
+
 v1.7.2
 ------
 - Separation of information about parameters.yml in `README.md` (16/08/2017)

@@ -18,19 +18,10 @@ Bundle installation
 
 Step 1: Download the Bundle
 ---------------------------
-Add the following to your `composer.json > require section`
-```
-"require": {
-    "c975L/events-bundle": "1.*"
-},
-```
-Then open a command console, enter your project directory and update composer, by executing the following command, to download the latest stable version of this bundle:
-
+Use [Composer](https://getcomposer.org) to install the library
 ```bash
-$ composer update
+    composer require c975l/evebts-bundle
 ```
-
-This command requires you to have Composer installed globally, as explained in the [installation chapter](https://getcomposer.org/doc/00-intro.md) of the Composer documentation.
 
 Step 2: Enable the Bundles
 --------------------------
@@ -53,6 +44,7 @@ class AppKernel extends Kernel
 
 Step 3: Configure the Bundles
 -----------------------------
+<<<<<<< HEAD
 Setup your Tinymce API key, optional if you use the cloud version, in `parameters.yml`
 ```yml
     #(Optional) Your Tinymce Api key if you use the cloud version
@@ -66,6 +58,9 @@ And then in `parameters.yml.dist`
 ```
 
 Then, in the `app/config.yml` file of your project, define the following:
+=======
+Then, in the `app/config.yml` file of your project, define `roleNeeded` (the user's role needed to enable access to the edition of events) and `folderPictures` (where the events's pictures will be saved).
+>>>>>>> dev
 
 ```yml
 #https://github.com/KnpLabs/KnpPaginatorBundle
@@ -87,10 +82,6 @@ c975_l_events:
     sitemapLanguages: ['en', 'fr', 'es']
     #(Optional) Your tinymce language if you use one, MUST BE placed in 'web/vendor/tinymce/[tinymceLanguage].js'
     tinymceLanguage: 'fr_FR' #default null
-    #(Optional) Your signout Route if you want to allow sign out from Events toolbar
-    signoutRoute: 'name_of_your_signout_route' #default null
-    #(Optional) Your main dashboard route if you want to allow it from Events toolbar
-    dashboardRoute: 'your_dashboard_route' #default null
 ```
 
 **If you use Git for version control, you need to add the full path `web/images/[folderPictures]` in the `.gitignore`, otherwise all the content will be altered by Git.**
