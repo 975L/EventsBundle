@@ -44,7 +44,19 @@ class AppKernel extends Kernel
 
 Step 3: Configure the Bundles
 -----------------------------
-In the `app/config.yml` file of your project, define the following:
+Setup your Tinymce API key if you use the cloud version, in `parameters.yml`
+```yml
+    #(Optional) Your Tinymce Api key if you use the cloud version
+    #tinymceApiKey: YOUR_API_KEY
+```
+
+And then in `parameters.yml.dist`
+```yml
+    #(Optional) Your Tinymce Api key if you use the cloud version
+    #tinymceApiKey:     ~
+```
+
+Then, in the `app/config.yml` file of your project, define the following:
 
 ```yml
 #https://github.com/KnpLabs/KnpPaginatorBundle
