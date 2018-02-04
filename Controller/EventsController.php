@@ -25,7 +25,7 @@ use c975L\EventsBundle\Form\EventType;
 
 class EventsController extends Controller
 {
-    //DASHBOARD
+//DASHBOARD
     /**
      * @Route("/events/dashboard",
      *      name="events_dashboard")
@@ -94,15 +94,17 @@ class EventsController extends Controller
             throw new HttpException(410);
         }
 
-        //Adds toolbar if rights are ok
-        $toolbar = null;
+        //Defines toolbar
+        $toolbar = '';
         if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            $toolbar = $this->renderView('@c975LEvents/toolbar.html.twig', array(
-                    'type' => 'display',
-                    'event' => $event,
-                    'dashboardRoute' => $this->getParameter('c975_l_events.dashboardRoute'),
-                    'signoutRoute' => $this->getParameter('c975_l_events.signoutRoute'),
-                ));
+            $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
+                'type' => 'display',
+                'event' => $event,
+            ));
+            $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
+                'tools'  => $tools,
+                'product'  => 'events',
+            ))->getContent();
         }
 
         return $this->render('@c975LEvents/pages/eventDisplay.html.twig', array(

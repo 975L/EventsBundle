@@ -1,0 +1,25 @@
+{% trans_default_domain 'toolbar' %}
+
+{# Display #}
+{% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'new' %}
+    <a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.current_version'|trans }}" role="button">
+        <span class="glyphicon glyphicon-eye-open"></span></a>
+{% endif %}
+
+{# Edit #}
+{% if type != 'dashboard' and type != 'edit' and type != 'help' and type != 'new' %}
+    <a href="{{ path('events_edit', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.modify'|trans }}" role="button">
+        <span class="glyphicon glyphicon-pencil"></span></a>
+{% endif %}
+
+{# New #}
+{% if type != 'new' %}
+    <a href="{{ path('events_new') }}" class="btn btn-default" title="{{ 'label.new_event'|trans }}" role="button">
+        <span class="glyphicon glyphicon-plus"></span></a>
+{% endif %}
+
+{# Delete #}
+{% if type != 'dashboard' and type != 'delete' and type != 'help' and type != 'new' %}
+    <a href="{{ path('events_delete', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.delete'|trans }}" role="button">
+        <span class="glyphicon glyphicon-trash"></span></a>
+{% endif %}
