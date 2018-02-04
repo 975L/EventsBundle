@@ -1,5 +1,10 @@
 # Changelog
 
+v1.8.1
+------
+- Correction in the `README.md` file (04/02/2018)
+- Add dates in the `ChangeLog.md` file (04/02/2018)
+
 v1.8
 ----
 - Correction in `SitemapCreateCommand.php` (17/08/2017)
@@ -11,23 +16,23 @@ v1.8
 v1.7.2
 ------
 - Separation of information about parameters.yml in `README.md` (16/08/2017)
-- Direct call of Tinymce API key instead of repeating it in `config.yml`
-- Changes in the `README.me` file
+- Direct call of Tinymce API key instead of repeating it in `config.yml` (16/08/2017)
+- Changes in the `README.md` file (16/08/2017)
 
 v1.7.1
 ------
 - Add "Best practice" for tinymceApiKey (08/07/2017)
 - Run PHP CS-Fixer (18/07/2017)
-- Remove of .travis.yml as tests have to be defined before
+- Remove of .travis.yml as tests have to be defined before (18/07/2017)
 
 v1.7
 ----
 - Update of README.md (06/07/2017)
 - Move of translated help pages to sub-folder `langugages` (07/07/2017)
-- Make `tinymceInit.html.twig` re-usable by setting config keys `tinymceApiKey` and `tinymceLanguage`
-- Redirection to dashboard in case of delete an event, in place of redirecting to the deleted event
-- Add of signout button on toolbar + config signoutRoute
-- Add of main dashboard button on toolbar + config dashboardRoute
+- Make `tinymceInit.html.twig` re-usable by setting config keys `tinymceApiKey` and `tinymceLanguage` (07/07/2017)
+- Redirection to dashboard in case of delete an event, in place of redirecting to the deleted event (07/07/2017)
+- Add of signout button on toolbar + config signoutRoute (07/07/2017)
+- Add of main dashboard button on toolbar + config dashboardRoute (07/07/2017)
 
 v1.6.2
 ------
@@ -41,26 +46,26 @@ v1.6.1
 v1.6
 ----
 - Remove of "<div class="container">" in templates as it extends `layout.html.twig` and this kind of data has to be set site by site (03/07/2017)
-- Move the call of `tinymce.js` and `datePicker.js` to `tinymceInit.html.twig` instead of `layout.html.twig` to avoid calling it for pages that don't need it.
-- Group toolbars in one file
-- Add of semantic url value in dashboard
-- Add of link to dashboard on Events label in toolbar and remove of dashboard button
-- Remove of "required" on textarea.tinymce as it won't submit for a new page, a refresh has to be done - https://github.com/tinymce/tinymce/issues/2584
-- Add a Console Command to create sitemap of managed events
+- Move the call of `tinymce.js` and `datePicker.js` to `tinymceInit.html.twig` instead of `layout.html.twig` to avoid calling it for pages that don't need it (03/07/2017)
+- Group toolbars in one file (03/07/2017)
+- Add of semantic url value in dashboard (03/07/2017)
+- Add of link to dashboard on Events label in toolbar and remove of dashboard button (03/07/2017)
+- Remove of "required" on textarea.tinymce as it won't submit for a new page, a refresh has to be done - https://github.com/tinymce/tinymce/issues/2584 (03/07/2017)
+- Add a Console Command to create sitemap of managed events (03/07/2017)
 
 v1.5
 ----
 - Change wording for validate button (30/06/2017)
-- Move `tinymceInit.html.twig` to `views` folder in order to simplify it's overridding as Tinymce can be initialized only once
-- Add options to Tinymce init
-- Add information on help pages
-- Add link to dedicated web page
+- Move `tinymceInit.html.twig` to `views` folder in order to simplify it's overridding as Tinymce can be initialized only once (30/06/2017)
+- Add options to Tinymce init (30/06/2017)
+- Add information on help pages (30/06/2017)
+- Add link to dedicated web page (30/06/2017)
 
 v1.4
 ----
 - Move in a separate file of the initialization of Tinymce (29/06/2017)
-- Add of pagination via KnpPaginator (dashboard + list of all events)
-- Remove of slugify function and replace by cocur/slugify
+- Add of pagination via KnpPaginator (dashboard + list of all events) (29/06/2017)
+- Remove of slugify function and replace by cocur/slugify (29/06/2017)
 
 v.1.3.1
 -----
@@ -69,23 +74,23 @@ v.1.3.1
 v1.3
 ----
 - Add of returning a text inplace of carousel if there are no events (20/06/2017)
-- Corrections in help files
-- Remove of the extension of layout for Carousel in order to be included in other pages
-- Add of dashboard and help link for toolbar in display mode
-- Misc corrections
-- Remove of require image when editing event ad that a file has already been downloaded
-- Add options for datePicker
+- Corrections in help files (20/06/2017)
+- Remove of the extension of layout for Carousel in order to be included in other pages (20/06/2017)
+- Add of dashboard and help link for toolbar in display mode (20/06/2017)
+- Misc corrections (20/06/2017)
+- Remove of require image when editing event ad that a file has already been downloaded (20/06/2017)
+- Add options for datePicker (20/06/2017)
 
 v1.2
 ----
 - Removed from config.yml of number to set it from url or call from Twig (20/06/2017)
-- Changed the query to retrieve events for Carousel to be based on enddate instead of startDate
-- Added the critria not null for carousel query
+- Changed the query to retrieve events for Carousel to be based on enddate instead of startDate (20/06/2017)
+- Added the critria not null for carousel query (20/06/2017)
 
 v1.1
 ----
 - Add of code files (20/06/2017)
-- Update of README.md
+- Update of README.md (20/06/2017)
 
 v1.0
 ----

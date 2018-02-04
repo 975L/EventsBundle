@@ -44,23 +44,7 @@ class AppKernel extends Kernel
 
 Step 3: Configure the Bundles
 -----------------------------
-<<<<<<< HEAD
-Setup your Tinymce API key, optional if you use the cloud version, in `parameters.yml`
-```yml
-    #(Optional) Your Tinymce Api key if you use the cloud version
-    #tinymceApiKey: YOUR_API_KEY
-```
-
-And then in `parameters.yml.dist`
-```yml
-    #(Optional) Your Tinymce Api key if you use the cloud version
-    #tinymceApiKey:     ~
-```
-
-Then, in the `app/config.yml` file of your project, define the following:
-=======
-Then, in the `app/config.yml` file of your project, define `roleNeeded` (the user's role needed to enable access to the edition of events) and `folderPictures` (where the events's pictures will be saved).
->>>>>>> dev
+In the `app/config.yml` file of your project, define the following:
 
 ```yml
 #https://github.com/KnpLabs/KnpPaginatorBundle
