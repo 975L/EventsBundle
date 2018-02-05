@@ -1,5 +1,9 @@
 # Changelog
 
+v1.8.3
+------
+- Updated ToolbarBundle product -> dashboard (05/02/2018)
+
 v1.8.2
 ------
 - Corrections in `README.md` (04/02/2018)

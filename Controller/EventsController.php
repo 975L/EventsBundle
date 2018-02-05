@@ -103,7 +103,7 @@ class EventsController extends Controller
             ));
             $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
                 'tools'  => $tools,
-                'product'  => 'events',
+                'dashboard'  => 'events',
             ))->getContent();
         }
 
