@@ -16,28 +16,23 @@
                 <br />
             </p>
         {% endif %}
-
-    {# Place #}
+{# Place #}
         <p>
             {{ 'label.place'|trans }} : <strong>{{ event.place }}</strong>
         </p>
-
-    {# Date and time #}
+{# Date and time #}
         <p>
             {{ 'label.start_date'|trans }} : <strong>{{ event.startDate|localizeddate('long', 'none') }} - {{ event.startTime|localizeddate('none', 'short') }}</strong>
         </p>
-
         <p>
             {{ 'label.end_date'|trans }} : <strong>{{ event.endDate|localizeddate('long', 'none') }} - {{ event.endTime|localizeddate('none', 'short') }}</strong>
         </p>
-
-    {# Add to calendar #}
+{# Add to calendar #}
         <p>
             <a href="{{ path('events_ical', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
                 <span class="glyphicon glyphicon-calendar"></span> {{'label.add_to_calendar'|trans }}</a>
         </p>
-
-    {# Description #}
+{# Description #}
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">{{ 'label.description'|trans }}</h3>

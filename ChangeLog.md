@@ -1,5 +1,15 @@
 # Changelog
 
+v1.9
+----
+- Changed forgotten toolbars... (05/02/2018)
+- Converted functions in Controller to Service (05/02/2018)
+- Updated `services.yml` (05/02/2018)
+- Moved link to display event under the name of the event and suppression of the link "display" in the dashboard page (05/02/2018)
+- Added icon for sortable inks in dashboard (05/02/2018)
+- Added "No events" information in dashboard (05/02/2018)
+- Renamed `eventDisplay.html.twig` to `display.html.twig` (05/02/2018)
+
 v1.8.3
 ------
 - Updated ToolbarBundle product -> dashboard (05/02/2018)

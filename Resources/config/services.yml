@@ -1,4 +1,15 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    c975L\EventsBundle\Controller\:
+        resource: '../../Controller/*'
+
+    c975L\EventsBundle\Service\:
+        resource: '../../Service/*'
+
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
         tags:

@@ -1,5 +1,6 @@
 {% trans_default_domain 'toolbar' %}
 
+{% spaceless %}
 {# Display #}
 {% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'new' %}
     <a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.current_version'|trans }}" role="button">
@@ -23,3 +24,4 @@
     <a href="{{ path('events_delete', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.delete'|trans }}" role="button">
         <span class="glyphicon glyphicon-trash"></span></a>
 {% endif %}
+{% endspaceless %}

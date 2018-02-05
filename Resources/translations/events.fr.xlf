@@ -114,6 +114,10 @@
                 <source>label.signout</source>
                 <target>Me déconnecter</target>
             </trans-unit>
+            <trans-unit id="29">
+                <source>label.no_events</source>
+                <target>Pas d'événements</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
