@@ -27,7 +27,6 @@ class EventsService
         $this->em = $em;
     }
 
-//SET PICTURE
     //Defines the picture related to Event
     public function setPicture($event)
     {
@@ -41,7 +40,7 @@ class EventsService
         }
     }
 
-//LOADS EVENT
+    //Loads event
     public function load($id)
     {
         //Loads from DB
@@ -55,7 +54,7 @@ class EventsService
         return $event;
     }
 
-//RESIZES PICTURE
+    //Resizes picture
     public function resizeImage($file, $finalFileName)
     {
         //Defines data
@@ -143,7 +142,7 @@ class EventsService
         }
     }
 
-//SLUGIFY
+    //Slugify
     public function slugify($text)
     {
         $slugify = new Slugify();

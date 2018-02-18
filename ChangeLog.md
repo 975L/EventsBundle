@@ -1,5 +1,19 @@
 # Changelog
 
+v1.10
+-----
+- Adjusted comments in `EventsService.php` (05/02/2018)
+- Update `README.md` (07/02/2018)
+- Renamed templates for forms (17/02/2018)
+- Corrected title in delete template form (17/02/2018)
+- Added `cancel` action to toolbar and removed from bottom of forms (17/02/2018)
+- Put `New` button before `edit` one in toolbar (17/02/2018)
+- Changed wording for submit button for forms (17/02/2018)
+- Added possibility to duplicate an event (17/02/2018)
+- Corrected @return value in Entity (18/02/2018)
+- Renamed `edit` to `modify` (18/02/2018)
+- Removed translations taken from `c975L/ToolbarBundle` (18/02/2018)
+
 v1.9
 ----
 - Changed forgotten toolbars... (05/02/2018)

@@ -7,16 +7,28 @@
         <span class="glyphicon glyphicon-eye-open"></span></a>
 {% endif %}
 
+{# New #}
+{% if type != 'new' %}
+    <a href="{{ path('events_new') }}" class="btn btn-default" title="{{ 'label.new'|trans }}" role="button">
+        <span class="glyphicon glyphicon-plus"></span></a>
+{% endif %}
+
 {# Edit #}
-{% if type != 'dashboard' and type != 'edit' and type != 'help' and type != 'new' %}
-    <a href="{{ path('events_edit', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.modify'|trans }}" role="button">
+{% if type != 'dashboard' and type != 'modify' and type != 'help' and type != 'new' %}
+    <a href="{{ path('events_modify', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.modify'|trans }}" role="button">
         <span class="glyphicon glyphicon-pencil"></span></a>
 {% endif %}
 
-{# New #}
-{% if type != 'new' %}
-    <a href="{{ path('events_new') }}" class="btn btn-default" title="{{ 'label.new_event'|trans }}" role="button">
-        <span class="glyphicon glyphicon-plus"></span></a>
+{# Duplicate #}
+{% if type == 'display' or type == 'modify' %}
+    <a href="{{ path('events_duplicate', {'id': event.id}) }}" class="btn btn-default" title="{{ 'label.duplicate'|trans }}" role="button">
+    <span class="glyphicon glyphicon-duplicate"></span></a>
+{% endif %}
+
+{# Cancel #}
+{% if type != 'dashboard' %}
+    <a href="javascript:history.back()" class="btn btn-default" title="{{ 'label.cancel'|trans }}" role="button">
+        <span class="glyphicon glyphicon-remove-circle"></span></a>
 {% endif %}
 
 {# Delete #}

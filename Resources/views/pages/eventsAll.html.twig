@@ -18,7 +18,7 @@
                 <tr>
 {# Title #}
                     <td class="text-center">
-                        <strong><a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ event.title }}</a></strong>
+                        <strong><a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans({}, 'toolbar') }}">{{ event.title }}</a></strong>
                     </td>
 {# StartDate and Time #}
                     <td class="text-center">

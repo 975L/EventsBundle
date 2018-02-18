@@ -81,7 +81,7 @@ class EventsController extends Controller
      * @Route("/events/{slug}/{id}",
      *      name="events_display",
      *      requirements={
-     *          "slug": "^([a-z0-9\-]+)",
+     *          "slug": "^(?!duplicate)([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
      * @Method({"GET", "HEAD"})
@@ -176,7 +176,7 @@ class EventsController extends Controller
             ))->getContent();
 
             //Returns the form to edit content
-            return $this->render('@c975LEvents/forms/eventNew.html.twig', array(
+            return $this->render('@c975LEvents/forms/new.html.twig', array(
                 'form' => $form->createView(),
                 'toolbar' => $toolbar,
                 'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
@@ -188,17 +188,17 @@ class EventsController extends Controller
         throw $this->createAccessDeniedException();
     }
 
-//EDIT
+//MODIFY
     /**
-     * @Route("/events/edit/{slug}/{id}",
-     *      name="events_edit",
+     * @Route("/events/modify/{slug}/{id}",
+     *      name="events_modify",
      *      requirements={
      *          "slug": "^([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
      * )
      */
-    public function editAction(Request $request, $slug, $id)
+    public function modifyAction(Request $request, $slug, $id)
     {
         //Gets the user
         $user = $this->getUser();
@@ -233,6 +233,10 @@ class EventsController extends Controller
                 //Adjust slug in case of not accepted signs
                 $event->setSlug($eventsService->slugify($form->getData()->getSlug()));
 
+                //Persists data in DB
+                $em->persist($event);
+                $em->flush();
+
                 //Renames picture file if slug has changed
                 $folderPath = $this->getParameter('kernel.root_dir') . '/../web/images/' . $this->getParameter('c975_l_events.folderPictures') . '/';
                 $picture = $folderPath . $event->getSlug() . '-' . $event->getId() . '.jpg';
@@ -245,10 +249,6 @@ class EventsController extends Controller
                     $eventsService->resizeImage($form->getData()->getPicture(), $event->getSlug() . '-' . $event->getId());
                 }
 
-                //Persists data in DB
-                $em->persist($event);
-                $em->flush();
-
                 //Redirects to the event
                 return $this->redirectToRoute('events_display', array(
                     'slug' => $event->getSlug(),
@@ -258,7 +258,7 @@ class EventsController extends Controller
 
             //Defines toolbar
             $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
-                'type' => 'edit',
+                'type' => 'modify',
                 'event' => $event,
             ));
             $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
@@ -266,12 +266,91 @@ class EventsController extends Controller
                 'dashboard'  => 'events',
             ))->getContent();
 
-            //Returns the form to edit content
-            return $this->render('@c975LEvents/forms/eventEdit.html.twig', array(
+            //Returns the form to modify content
+            return $this->render('@c975LEvents/forms/modify.html.twig', array(
                 'form' => $form->createView(),
                 'event' => $event,
                 'eventPicture' => $eventPicture,
                 'eventTitle' => $event->getTitle(),
+                'toolbar' => $toolbar,
+                'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
+                'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+            ));
+        }
+
+        //Access is denied
+        throw $this->createAccessDeniedException();
+    }
+
+//DUPLICATE
+    /**
+     * @Route("/events/duplicate/{id}",
+     *      name="events_duplicate",
+     *      requirements={
+     *          "id": "^[0-9]+$"
+     *      })
+     * @Method({"GET", "HEAD", "POST"})
+     */
+    public function duplicateAction(Request $request, $id)
+    {
+        //Gets the user
+        $user = $this->getUser();
+        if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
+            //Gets the Service
+            $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
+
+            //Gets the event
+            $event = $eventsService->load($id);
+            $originalSlug = $event->getSlug();
+
+            //Defines form
+            $eventClone = clone $event;
+            $eventClone
+                ->setTitle(null)
+                ->setSlug(null)
+            ;
+            $form = $this->createForm(EventType::class, $eventClone);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                //Gets the manager
+                $em = $this->getDoctrine()->getManager();
+
+                //Adjust slug in case of not accepted signs
+                $eventClone->setSlug($eventsService->slugify($form->getData()->getSlug()));
+
+                //Persists data in DB
+                $em->persist($eventClone);
+                $em->flush();
+
+                //Resizes and renames the picture
+                if ($form->getData()->getPicture() !== null) {
+                    $eventsService->resizeImage($form->getData()->getPicture(), $eventClone->getSlug() . '-' . $eventClone->getId());
+                }
+
+                //Redirects to the event
+                return $this->redirectToRoute('events_display', array(
+                    'slug' => $eventClone->getSlug(),
+                    'id' => $eventClone->getId(),
+                ));
+            }
+
+            //Defines toolbar
+            $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
+                'type' => 'duplicate',
+                'event' => $event,
+            ));
+            $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
+                'tools'  => $tools,
+                'dashboard'  => 'events',
+            ))->getContent();
+
+            //Returns the form to duplicate content
+            return $this->render('@c975LEvents/forms/duplicate.html.twig', array(
+                'form' => $form->createView(),
+                'event' => $eventClone,
+                'eventPicture' => null,
+                'title' => $event->getTitle(),
                 'toolbar' => $toolbar,
                 'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
                 'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
@@ -331,7 +410,7 @@ class EventsController extends Controller
                 $em->persist($event);
                 $em->flush();
 
-                //Redirects to the event
+                //Redirects to the dashboard
                 return $this->redirectToRoute('events_dashboard');
             }
 
@@ -345,8 +424,8 @@ class EventsController extends Controller
                 'dashboard'  => 'events',
             ))->getContent();
 
-            //Returns the form to edit content
-            return $this->render('@c975LEvents/forms/eventDelete.html.twig', array(
+            //Returns the form to delete content
+            return $this->render('@c975LEvents/forms/delete.html.twig', array(
                 'form' => $form->createView(),
                 'eventTitle' => $event->getTitle(),
                 'event' => $event,

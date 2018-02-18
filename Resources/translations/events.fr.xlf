@@ -7,20 +7,20 @@
                 <target>Description</target>
             </trans-unit>
             <trans-unit id="2">
-                <source>label.modify</source>
-                <target>Modifier</target>
+                <source>label.next</source>
+                <target>Suivant</target>
             </trans-unit>
             <trans-unit id="3">
-                <source>label.cancel</source>
-                <target>Annuler</target>
+                <source>label.carousel</source>
+                <target>Carrousel</target>
             </trans-unit>
             <trans-unit id="4">
-                <source>label.new_event</source>
-                <target>Nouvel événement</target>
+                <source>label.all_events</source>
+                <target>Tous nos événements</target>
             </trans-unit>
             <trans-unit id="5">
-                <source>label.delete</source>
-                <target>Supprimer</target>
+                <source>label.no_events</source>
+                <target>Pas d'événements</target>
             </trans-unit>
             <trans-unit id="6">
                 <source>label.title</source>
@@ -63,8 +63,8 @@
                 <target>Tableau de bord</target>
             </trans-unit>
             <trans-unit id="16">
-                <source>label.help</source>
-                <target>Aide</target>
+                <source>label.no_events</source>
+                <target>Pas d'événements</target>
             </trans-unit>
             <trans-unit id="17">
                 <source>label.add_to_calendar</source>
@@ -89,34 +89,6 @@
             <trans-unit id="22">
                 <source>label.previous</source>
                 <target>Précédent</target>
-            </trans-unit>
-            <trans-unit id="23">
-                <source>label.next</source>
-                <target>Suivant</target>
-            </trans-unit>
-            <trans-unit id="24">
-                <source>label.carousel</source>
-                <target>Carrousel</target>
-            </trans-unit>
-            <trans-unit id="25">
-                <source>label.all_events</source>
-                <target>Tous nos événements</target>
-            </trans-unit>
-            <trans-unit id="26">
-                <source>label.no_events</source>
-                <target>Pas d'événements</target>
-            </trans-unit>
-            <trans-unit id="27">
-                <source>label.validate</source>
-                <target>Valider</target>
-            </trans-unit>
-            <trans-unit id="28">
-                <source>label.signout</source>
-                <target>Me déconnecter</target>
-            </trans-unit>
-            <trans-unit id="29">
-                <source>label.no_events</source>
-                <target>Pas d'événements</target>
             </trans-unit>
         </body>
     </file>

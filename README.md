@@ -44,6 +44,8 @@ class AppKernel extends Kernel
 
 Step 3: Configure the Bundles
 -----------------------------
+Check [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) for its specific configuration.
+
 Setup your Tinymce API key if you use the cloud version, in `parameters.yml`
 ```yml
     #(Optional) Your Tinymce Api key if you use the cloud version
@@ -59,14 +61,6 @@ And then in `parameters.yml.dist`
 Then, in the `app/config.yml` file of your project, define the following:
 
 ```yml
-#https://github.com/KnpLabs/KnpPaginatorBundle
-knp_paginator:
-    default_options:
-        page_name: p
-        distinct: true
-    template:
-        pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'
-
 c975_l_events:
     #Path where the pictures will be stored. The full path ('web/images/[folderPictures]') has to be added to .gitignore if Git is used
     folderPictures: 'events'
@@ -143,7 +137,8 @@ Link to a page, in Twig, can be done by `<a href="{{ path('events_display', { 's
 The different Routes (naming self-explanatory) available are:
 - events_display
 - events_new
-- events_edit
+- events_modify
+- events_duplicate
 - events_delete
 - events_dashboard
 - events_carousel

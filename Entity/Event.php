@@ -108,7 +108,7 @@ class Event
     /**
      * Set suppressed
      *
-     * @return PageEdit
+     * @return Event
      */
     public function setSuppressed($suppressed)
     {
@@ -130,7 +130,7 @@ class Event
     /**
      * Set action
      *
-     * @return PageEdit
+     * @return Event
      */
     public function setAction($action)
     {

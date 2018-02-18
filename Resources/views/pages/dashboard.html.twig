@@ -1,6 +1,6 @@
 {% extends "@c975LEvents/layout.html.twig" %}
 {% trans_default_domain 'events' %}
-{% set title = 'label.dashboard'|trans %}
+{% set title = 'label.dashboard'|trans({}, 'toolbar') %}
 
 {% block events_content %}
 {# Toolbar #}
@@ -17,8 +17,9 @@
                     <th class="text-center">{{ knp_pagination_sortable(events, 'Id', 'e.id') }}&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
                     <th class="text-center"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
                     <th class="text-center">{{ knp_pagination_sortable(events, 'label.semantic_url'|trans, 'e.slug') }}&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
-                    <th class="text-center"><span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'label.modify'|trans }}</th>
-                    <th class="text-center"><span class="glyphicon glyphicon-trash"></span>&nbsp;{{ 'label.delete'|trans }}</th>
+                    <th class="text-center"><span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'label.modify'|trans({}, 'toolbar') }}</th>
+                    <th class="text-center"><span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'label.duplicate'|trans({}, 'toolbar') }}</th>
+                    <th class="text-center"><span class="glyphicon glyphicon-trash"></span>&nbsp;{{ 'label.delete'|trans({}, 'toolbar') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,19 +31,23 @@
                         </td>
 {# Title & Display #}
                         <td class="text-center">
-                            <a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans }}">{{ event.title }}</a>
+                            <a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans({}, 'toolbar') }}">{{ event.title }}</a>
                         </td>
 {# Slug #}
                         <td class="text-center">
                             {{ event.slug }}
                         </td>
-{# Edit #}
+{# Modify #}
                         <td class="text-center">
-                            <a href="{{ path('events_edit', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.modify'|trans }}">{{ 'label.modify'|trans }}</a>
+                            <a href="{{ path('events_modify', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.modify'|trans({}, 'toolbar') }}">{{ 'label.modify'|trans({}, 'toolbar') }}</a>
+                        </td>
+{# Duplicate #}
+                        <td class="text-center">
+                            <a href="{{ path('events_duplicate', {'id': event.id}) }}" title="{{ 'label.duplicate'|trans({}, 'toolbar') }}">{{ 'label.duplicate'|trans({}, 'toolbar') }}</a>
                         </td>
 {# Delete #}
                         <td class="text-center">
-                            <a href="{{ path('events_delete', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.delete'|trans }}" class="text-danger">{{ 'label.delete'|trans }}</a>
+                            <a href="{{ path('events_delete', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.delete'|trans({}, 'toolbar') }}" class="text-danger">{{ 'label.delete'|trans({}, 'toolbar') }}</a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -1,37 +1,27 @@
 {% extends "@c975LEvents/layout.html.twig" %}
 {% trans_default_domain 'events' %}
-{% set title = 'label.modify'|trans ~ ' "' ~ eventTitle ~ '"' %}
+{% set title = 'label.duplicate'|trans({}, 'toolbar') ~ ' "' ~ title ~ '"' %}
 
 {% block events_content %}
     {{ include('@c975LEvents/tinymceInit.html.twig') }}
-
 {# Toolbar #}
     {{ toolbar|raw }}
-
 {# Picture #}
     {% if eventPicture != null %}
         <p class="text-center">
             <img src="{{ asset(eventPicture) }}" class="img-responsive img-thumbnail center-block" alt="{{ event.title }}" title="{{ event.title }}" />
         </p>
     {% endif %}
-
 {# Form #}
     {{ form_start(form) }}
         {{ form_widget(form) }}
-
+{# Submit #}
         <div class="form-group">
-            <button type="submit" name="submit" title="{{ 'label.modify'|trans }}" class="btn btn-lg btn-primary btn-block">
-                {{ 'label.validate'|trans }}
+            <button type="submit" name="submit" title="{{ 'label.validate'|trans({}, 'toolbar') }}" class="btn btn-lg btn-primary btn-block">
+                {{ 'label.validate'|trans({}, 'toolbar') }}
             </button>
         </div>
     {{ form_end(form) }}
-
-{# Cancel #}
-    <p class="text-center">
-        <a href="javascript:history.back()">
-            {{ 'label.cancel'|trans }}</a>
-    </p>
-
 {# Javascript #}
     <script type="text/javascript">
         $(document).ready(function() {
@@ -43,6 +33,18 @@
                 clearBtn: true,
                 language: '{{ app.request.locale }}'
             });
+{# Update semantic url #}
+            $('#event_title')
+                .change(function() {
+                    var slugUrl = '{{ absolute_url(path('events_slug', {'text': 'TEXT'})) }}';
+                    var slug = $.post(slugUrl.replace('TEXT', $('#event_title').val()));
+                    slug.done(function(data) {
+                        if (data.a != 'false') {
+                            $('#event_slug')
+                                .val(data.a);
+                        }
+                    });
+                });
         });
     </script>
 {% endblock %}
