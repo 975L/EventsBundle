@@ -1,5 +1,9 @@
 # Changelog
 
+v1.10.2
+-------
+- Corrected help pages (19/02/2018)
+
 v1.10.1
 -------
 - Corrected default call for help page (18/02/2018)

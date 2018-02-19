@@ -2,7 +2,7 @@
 
 <h2>Gestion de l'événement</h2>
 <p>
-    Les outils sont accessibles lorsque l'utilisateur/trice est identifié/e et dispose des droits nécessaires. Une barre d'outils apparaît alors sur chaque page. Il est aussi possible de gérer les événements depuis le <a href="{{ path('events_dashboard') }}">{{ 'label.dashboard'|trans({}, 'toolbar') }}</a>.
+    Les outils sont accessibles lorsque l'utilisateur/trice est identifié/e et dispose des droits nécessaires. Une barre d'outils apparaît alors sur chaque événement. Il est aussi possible de gérer les événements depuis le <a href="{{ path('events_dashboard') }}">{{ 'label.dashboard'|trans({}, 'toolbar') }}</a>.
 </p>
 <p>
     <strong>Créer un événement</strong> : utiliser le bouton <span class="glyphicon glyphicon-plus class btn btn-default btn-xs"></span>
@@ -22,7 +22,7 @@
     <br />
     <strong>Titre</strong> : utilisé pour être affiché sur l'événement et envoyé au navigateur.
     <br />
-    <strong>Url sémantique</strong> : lien utilisé pour appeler l'événement, par exemple : http://example.com/pages/<strong>url-semantique</strong>, uniquement des minuscules non accentuées et '-'. Il est défini automatiquement en fonction du titre, mais il peut être modifié.
+    <strong>Url sémantique</strong> : lien utilisé pour appeler l'événement, par exemple : http://example.com/events/<strong>url-semantique</strong>, uniquement des minuscules non accentuées et '-'. Il est défini automatiquement en fonction du titre, il peut être modifié, mais cela est déconseillé afin d'avoir un meilleur référencement.
     <br />
     <strong>Image</strong> : image de l'événement.
     <br />
