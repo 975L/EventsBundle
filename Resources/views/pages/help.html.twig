@@ -1,11 +1,11 @@
 {% extends "@c975LEvents/layout.html.twig" %}
 {% trans_default_domain 'events' %}
-{% set title = 'label.help'|trans({}, 'toolbar') %}
+{% set title = 'label.help'|trans({}, 'toolbar') ~ ' - ' ~ 'label.events'|trans({}, 'toolbar') %}
 
 {% block events_content %}
 {# Toolbar #}
     {{ toolbar|raw }}
 
 {# Help content #}
-    {{ include( ['@c975LEvents/pages/languages/help-' ~ app.request.locale ~ '.html.twig', '@c975LEvents/languages/pages/help-en.html.twig']) }}
+    {{ include( ['@c975LEvents/pages/languages/help-' ~ app.request.locale ~ '.html.twig', '@c975LEvents/pages/languages/help-en.html.twig']) }}
 {% endblock %}

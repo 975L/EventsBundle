@@ -1,5 +1,11 @@
 # Changelog
 
+v1.10.1
+-------
+- Corrected default call for help page (18/02/2018)
+- Corrected english help pages (19/02/2018)
+- Added duplicate option in help pages (19/02/2018)
+
 v1.10
 -----
 - Adjusted comments in `EventsService.php` (05/02/2018)
