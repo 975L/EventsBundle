@@ -2,7 +2,7 @@
 
 <h2>Event Management</h2>
 <p>
-    The tools are accessible when the user is identified and has the necessary rights. A toolbar appears on each page. It is also possible to manage the events from <a href="{{ path('events_dashboard') }}">{{ 'label.dashboard'|trans({}, 'toolbar') }}</a>.
+    The tools are accessible when the user is identified and has the necessary rights. A toolbar appears on each event. It is also possible to manage the events from <a href="{{ path('events_dashboard') }}">{{ 'label.dashboard'|trans({}, 'toolbar') }}</a>.
 </p>
 <p>
     <strong>Create an event</strong>: use the button <span class="glyphicon glyphicon-plus class btn btn-default btn-xs"></span>
@@ -20,9 +20,9 @@
 <p>
     For each event it is necessary to provide
     <br />
-    <strong>Title</strong>: Used to be displayed on the event and sent to the browser.
+    <strong>Title</strong>: used to be displayed on the event and sent to the browser.
     <br />
-    <strong>Semantic url</strong>: link used to call the event, for example: http://example.com/pages/<strong>semantic-url</strong>, only unaccented lowercase letters and '-'. It is set automatically according to the title, but it can be changed.
+    <strong>Semantic url</strong>: link used to call the event, for example: http://example.com/events/<strong>semantic-url</strong>, only unaccented lowercase letters and '-'. It is set automatically according to the title, it can be changed, but this is not recommended in order to have a better referencing.
     <br />
     <strong>Picture</strong> : picture for the event.
     <br />
