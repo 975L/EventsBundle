@@ -2,18 +2,20 @@
 
 <h2>Gestion de l'événement</h2>
 <p>
-    Les outils sont accessibles lorsque l'utilisateur/trice est identifié/e et dispose des droits nécessaires. Une barre d'outils apparaît alors sur chaque événement. Il est aussi possible de gérer les événements depuis le <a href="{{ path('events_dashboard') }}">{{ 'label.dashboard'|trans({}, 'toolbar') }}</a>.
+    Les outils sont accessibles lorsque l'utilisateur/trice est identifié/e et dispose des droits nécessaires. Une barre d'outils apparaît alors sur chaque événement. Il est aussi possible de gérer les événements depuis le tableau de bord.
 </p>
 <p>
-    <strong>Créer un événement</strong> : utiliser le bouton <span class="glyphicon glyphicon-plus class btn btn-default btn-xs"></span>
+    <strong>Créer un événement</strong> : utiliser le bouton {{ toolbar_button('', 'new')|raw }}
     <br />
-    <strong>Modifier un événement</strong> : utiliser le bouton <span class="glyphicon glyphicon-pencil class btn btn-default btn-xs"></span>
+    <strong>Modifier un événement</strong> : utiliser le bouton {{ toolbar_button('', 'modify')|raw }}
     <br />
-    <strong>Dupliquer un événement</strong> : utiliser le bouton <span class="glyphicon glyphicon-duplicate class btn btn-default btn-xs"></span>
+    <strong>Dupliquer un événement</strong> : utiliser le bouton {{ toolbar_button('', 'duplicate')|raw }}
     <br />
-    <strong>Supprimer un événement</strong> : utiliser le bouton <span class="glyphicon glyphicon-trash class btn btn-default btn-xs"></span>
+    <strong>Supprimer un événement</strong> : utiliser le bouton {{ toolbar_button('', 'delete')|raw }}
     <br />
-    <strong>Afficher la version actuelle d'un événement</strong> : utiliser le bouton <span class="glyphicon glyphicon-eye-open class btn btn-default btn-xs"></span>
+    <strong>Afficher la version actuelle d'un événement</strong> : utiliser le bouton {{ toolbar_button('', 'display')|raw }}
+    <br />
+    <strong>Annuler</strong> : utiliser le bouton {{ toolbar_button('', 'cancel')|raw }}
 </p>
 
 <h2>Données nécessaires</h2>

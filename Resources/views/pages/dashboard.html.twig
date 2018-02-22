@@ -14,12 +14,12 @@
         <table class="table table-hover table-condensed table-responsive">
             <thead>
                 <tr>
-                    <th class="text-center">{{ knp_pagination_sortable(events, 'Id', 'e.id') }}&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
-                    <th class="text-center"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
-                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.semantic_url'|trans, 'e.slug') }}&nbsp;<span class="glyphicon glyphicon-sort"></span></th>
-                    <th class="text-center"><span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'label.modify'|trans({}, 'toolbar') }}</th>
-                    <th class="text-center"><span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ 'label.duplicate'|trans({}, 'toolbar') }}</th>
-                    <th class="text-center"><span class="glyphicon glyphicon-trash"></span>&nbsp;{{ 'label.delete'|trans({}, 'toolbar') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'Id', 'e.id') }}&nbsp;<span class="fas fa-sort"></span></th>
+                    <th class="text-center"><span class="fas fa-eye"></span>&nbsp;{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}&nbsp;<span class="fas fa-sort"></span></th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.semantic_url'|trans, 'e.slug') }}&nbsp;<span class="fas fa-sort"></span></th>
+                    <th class="text-center"><span class="fas fa-pencil-alt"></span>&nbsp;{{ 'label.modify'|trans({}, 'toolbar') }}</th>
+                    <th class="text-center"><span class="fas fa-copy"></span>&nbsp;{{ 'label.duplicate'|trans({}, 'toolbar') }}</th>
+                    <th class="text-center"><span class="fas fa-trash"></span>&nbsp;{{ 'label.delete'|trans({}, 'toolbar') }}</th>
                 </tr>
             </thead>
             <tbody>

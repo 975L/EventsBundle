@@ -1,5 +1,10 @@
 # Changelog
 
+v1.11
+-----
+- Added 'Command' part auto-wire to `services.yml` (20/02/2018)
+- Abandoned Glyphicon and replaced by fontawesome (22/02/2018)
+
 v1.10.2
 -------
 - Corrected help pages (19/02/2018)

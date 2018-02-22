@@ -3,37 +3,36 @@
 {% spaceless %}
 {# Display #}
 {% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'new' %}
-    <a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.current_version'|trans }}" role="button">
-        <span class="glyphicon glyphicon-eye-open"></span></a>
+    {{ toolbar_button(path('events_display', {'slug': event.slug, 'id': event.id}), 'display')|raw }}
 {% endif %}
 
 {# New #}
 {% if type != 'new' %}
-    <a href="{{ path('events_new') }}" class="btn btn-default" title="{{ 'label.new'|trans }}" role="button">
-        <span class="glyphicon glyphicon-plus"></span></a>
+    {{ toolbar_button(path('events_new'), 'new')|raw }}
 {% endif %}
 
-{# Edit #}
+{# Modify #}
 {% if type != 'dashboard' and type != 'modify' and type != 'help' and type != 'new' %}
-    <a href="{{ path('events_modify', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.modify'|trans }}" role="button">
-        <span class="glyphicon glyphicon-pencil"></span></a>
+    {{ toolbar_button(path('events_modify', {'slug': event.slug, 'id': event.id}), 'modify')|raw }}
 {% endif %}
 
 {# Duplicate #}
 {% if type == 'display' or type == 'modify' %}
-    <a href="{{ path('events_duplicate', {'id': event.id}) }}" class="btn btn-default" title="{{ 'label.duplicate'|trans }}" role="button">
-    <span class="glyphicon glyphicon-duplicate"></span></a>
+    {{ toolbar_button(path('events_duplicate', {'id': event.id}), 'duplicate')|raw }}
 {% endif %}
 
 {# Cancel #}
 {% if type != 'dashboard' %}
-    <a href="javascript:history.back()" class="btn btn-default" title="{{ 'label.cancel'|trans }}" role="button">
-        <span class="glyphicon glyphicon-remove-circle"></span></a>
+    {{ toolbar_button('cancel', 'cancel')|raw }}
 {% endif %}
 
 {# Delete #}
 {% if type != 'dashboard' and type != 'delete' and type != 'help' and type != 'new' %}
-    <a href="{{ path('events_delete', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-default" title="{{ 'label.delete'|trans }}" role="button">
-        <span class="glyphicon glyphicon-trash"></span></a>
+    {{ toolbar_button(path('events_delete', {'slug': event.slug, 'id': event.id}), 'delete')|raw }}
+{% endif %}
+
+{# Help #}
+{% if type != 'help' %}
+    {{ toolbar_button(path('events_help'), 'help')|raw }}
 {% endif %}
 {% endspaceless %}
