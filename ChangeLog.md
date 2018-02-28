@@ -1,5 +1,9 @@
 # Changelog
 
+v1.12.1
+-------
+- Corrected call for bootstrap in `tinymceInit.html.twig` (28/02/2018)
+
 v1.12
 -----
 - Added c957L/IncludeLibrary to include libraries in `layout.html.twig` (27/02/2018)
