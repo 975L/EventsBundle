@@ -90,6 +90,10 @@
                 <source>label.previous</source>
                 <target>Précédent</target>
             </trans-unit>
+            <trans-unit id="23">
+                <source>label.events</source>
+                <target>Événements</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

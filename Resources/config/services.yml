@@ -13,6 +13,9 @@ services:
     c975L\EventsBundle\Service\:
         resource: '../../Service/*'
 
+    c975L\EventsBundle\Twig\:
+        resource: '../../Twig/*'
+
     twig.text_extension:
         class: Twig_Extensions_Extension_Text
         tags:

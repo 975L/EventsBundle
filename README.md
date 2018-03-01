@@ -141,7 +141,6 @@ The different Routes (naming self-explanatory) available are:
 - events_duplicate
 - events_delete
 - events_dashboard
-- events_carousel
 - events_all
 - events_ical
 - events_slug
@@ -149,7 +148,7 @@ The different Routes (naming self-explanatory) available are:
 
 Include carousel
 ----------------
-To include the carousel in a page, simply use `{{ render(controller('c975LEventsBundle:Events:carousel', {'number': 3})) }}` where you want it to appear.
+To include the carousel in a page, simply use `{{ events_carousel(number) }}` where you want it to appear and where `number` is the number of events to display.
 
 Create Sitemap
 --------------

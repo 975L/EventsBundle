@@ -3,36 +3,36 @@
 {% spaceless %}
 {# Display #}
 {% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'new' %}
-    {{ toolbar_button(path('events_display', {'slug': event.slug, 'id': event.id}), 'display')|raw }}
+    {{ toolbar_button(path('events_display', {'slug': event.slug, 'id': event.id}), 'display') }}
 {% endif %}
 
 {# New #}
 {% if type != 'new' %}
-    {{ toolbar_button(path('events_new'), 'new')|raw }}
+    {{ toolbar_button(path('events_new'), 'new') }}
 {% endif %}
 
 {# Modify #}
 {% if type != 'dashboard' and type != 'modify' and type != 'help' and type != 'new' %}
-    {{ toolbar_button(path('events_modify', {'slug': event.slug, 'id': event.id}), 'modify')|raw }}
+    {{ toolbar_button(path('events_modify', {'slug': event.slug, 'id': event.id}), 'modify') }}
 {% endif %}
 
 {# Duplicate #}
 {% if type == 'display' or type == 'modify' %}
-    {{ toolbar_button(path('events_duplicate', {'id': event.id}), 'duplicate')|raw }}
+    {{ toolbar_button(path('events_duplicate', {'id': event.id}), 'duplicate') }}
 {% endif %}
 
 {# Cancel #}
 {% if type != 'dashboard' %}
-    {{ toolbar_button('cancel', 'cancel')|raw }}
+    {{ toolbar_button('cancel', 'cancel') }}
 {% endif %}
 
 {# Delete #}
 {% if type != 'dashboard' and type != 'delete' and type != 'help' and type != 'new' %}
-    {{ toolbar_button(path('events_delete', {'slug': event.slug, 'id': event.id}), 'delete')|raw }}
+    {{ toolbar_button(path('events_delete', {'slug': event.slug, 'id': event.id}), 'delete') }}
 {% endif %}
 
 {# Help #}
 {% if type != 'help' %}
-    {{ toolbar_button(path('events_help'), 'help')|raw }}
+    {{ toolbar_button(path('events_help'), 'help') }}
 {% endif %}
 {% endspaceless %}

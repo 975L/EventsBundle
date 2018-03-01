@@ -1,5 +1,13 @@
 # Changelog
 
+v1.13
+-----
+- Removed Route `events_carousel` and replaced by a Twig_Extension, more simple [BC-Break] (28/02/2018)
+- Corrected Tinymce call with apiKey (01/03/2018)
+- For the carousel, nothing is displayed if there are no events (01/03/2018)
+- Removed the "|raw" for `toolbar_button` call as safe html is now sent (01/03/2018)
+- included title in `carousel.hhtml.twig` template (01/03/2018)
+
 v1.12.1
 -------
 - Corrected call for bootstrap in `tinymceInit.html.twig` (28/02/2018)

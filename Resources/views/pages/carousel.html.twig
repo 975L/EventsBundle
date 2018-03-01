@@ -5,15 +5,19 @@
     <div>
         {% if events is not empty %}
             <style>.img-carousel {margin: 0 auto;width: auto;max-height: 400px;}</style>
+{# Title #}
+            <h1 class="text-center">
+                {{ 'label.events'|trans }}
+            </h1>
+{# Carousel #}
             <div id="events-carousel" class="carousel slide" data-ride="carousel">
-                {# Indicators #}
+{# Indicators #}
                 <ol class="carousel-indicators">
                     {% for event in events %}
                         <li data-target="#events-carousel" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %}class="active"{% endif %}></li>
                     {% endfor %}
                 </ol>
-
-                {# Wrapper for slides #}
+{# Wrapper for slides #}
                 <div class="carousel-inner text-center" role="listbox">
                     {% for event in events %}
                         <div class="item {% if loop.index0 == 0 %}active{% endif %}">
@@ -29,22 +33,23 @@
                             </a>
                         </div>
                     {% endfor %}
-                    <a href="{{ path('events_all') }}">{{ 'label.all_events'|trans }}</a>
                 </div>
-
-                {# Controls #}
-                <a class="left carousel-control" href="#events-carousel" role="button" data-slide="prev">
-                    <span class="fas fa-angle-left" aria-hidden="true"></span>
-                    <span class="sr-only">{{ 'label.previous'|trans }}</span>
-                </a>
-                <a class="right carousel-control" href="#events-carousel" role="button" data-slide="next">
-                    <span class="fas fa-angle-right" aria-hidden="true"></span>
-                    <span class="sr-only">{{ 'label.next'|trans }}</span>
-                </a>
+{# Controls #}
+                {% if events|length > 0 %}
+                    <a class="left carousel-control" href="#events-carousel" role="button" data-slide="prev" title="{{ 'label.previous'|trans }}">
+                        <span class="fas fa-angle-left" aria-hidden="true"></span>
+                        <span class="sr-only">{{ 'label.previous'|trans }}</span>
+                    </a>
+                    <a class="right carousel-control" href="#events-carousel" role="button" data-slide="next" title="{{ 'label.next'|trans }}">
+                        <span class="fas fa-angle-right" aria-hidden="true"></span>
+                        <span class="sr-only">{{ 'label.next'|trans }}</span>
+                    </a>
+                {% endif %}
             </div>
-        {% else %}
+{# All events #}
             <p class="text-center">
-                {{ 'label.no_events'|trans }}
+                <br />
+                <a href="{{ path('events_all') }}">{{ 'label.all_events'|trans }}</a>
             </p>
         {% endif %}
     </div>

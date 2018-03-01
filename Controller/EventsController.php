@@ -467,37 +467,6 @@ class EventsController extends Controller
         );
     }
 
-//CAROUSEL
-    /**
-     * @Route("/events/carousel/{number}",
-     *      name="events_carousel")
-     * @Method({"GET", "HEAD"})
-     */
-    public function carouselAction($number)
-    {
-        //Gets the manager
-        $em = $this->getDoctrine()->getManager();
-
-        //Gets repository
-        $repository = $em->getRepository('c975LEventsBundle:Event');
-
-        //Loads from DB
-        $events = $repository->findForCarousel($number);
-
-        //Gets the Service
-        $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
-
-        //Assigns picture
-        foreach ($events as $event) {
-            $eventsService->setPicture($event);
-        }
-
-        //Returns the carousel
-        return $this->render('@c975LEvents/pages/carousel.html.twig', array(
-            'events' => $events,
-        ));
-    }
-
 //ALL
     /**
      * @Route("/events/all",
