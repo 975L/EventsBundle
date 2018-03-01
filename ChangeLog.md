@@ -1,5 +1,9 @@
 # Changelog
 
+v1.13.1
+-------
+- Corrected number of events to display controls in carousel (01/03/2018)
+
 v1.13
 -----
 - Removed Route `events_carousel` and replaced by a Twig_Extension, more simple [BC-Break] (28/02/2018)
