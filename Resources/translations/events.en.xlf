@@ -94,6 +94,10 @@
                 <source>label.events</source>
                 <target>Events</target>
             </trans-unit>
+            <trans-unit id="24">
+                <source>label.completed</source>
+                <target>Completed</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

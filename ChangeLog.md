@@ -1,5 +1,9 @@
 # Changelog
 
+v1.13.2
+-------
+- Added test to not display "Add to calendar" in list mode if the evant is finished (01/03/2018)
+
 v1.13.1
 -------
 - Corrected number of events to display controls in carousel (01/03/2018)
