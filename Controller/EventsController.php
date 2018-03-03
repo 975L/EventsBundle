@@ -81,7 +81,7 @@ class EventsController extends Controller
      * @Route("/events/{slug}/{id}",
      *      name="events_display",
      *      requirements={
-     *          "slug": "^(?!duplicate)([a-z0-9\-]+)",
+     *          "slug": "^(?!carousel|duplicate)([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
      * @Method({"GET", "HEAD"})
@@ -467,7 +467,49 @@ class EventsController extends Controller
         );
     }
 
+//CAROUSEL
+    /**
+     * @Route("/events/carousel/{number}",
+     *      name="events_carousel")
+     * @Method({"GET", "HEAD"})
+     */
+    public function carouselAction($number)
+    {
+        //Trigers deprecates
+        @trigger_error('The use of Route "events_carousel" is deprecated since v1.13 and will be removed in 2.0. Use Twig function "events_carousel()" instead.', E_USER_DEPRECATED);
+
+        //Gets the manager
+        $em = $this->getDoctrine()->getManager();
+
+        //Gets repository
+        $repository = $em->getRepository('c975LEventsBundle:Event');
+
+        //Loads from DB
+        $events = $repository->findForCarousel($number);
+
+        //Gets the Service
+        $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
+
+        //Assigns picture
+        foreach ($events as $event) {
+            $eventsService->setPicture($event);
+        }
+
+        //Returns the carousel
+        return $this->render('@c975LEvents/pages/carousel.html.twig', array(
+            'events' => $events,
+        ));
+    }
+
 //ALL
+    /**
+     * @Route("/events")
+     * @Method({"GET", "HEAD"})
+     */
+    public function redirectAllAction()
+    {
+        return $this->redirectToRoute('events_all');
+    }
     /**
      * @Route("/events/all",
      *      name="events_all")

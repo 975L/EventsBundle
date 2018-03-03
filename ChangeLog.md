@@ -1,5 +1,10 @@
 # Changelog
 
+v1.13.3
+-------
+- Added Route for "/events/" to redirect to "events_all" (03/03/2018)
+- Re-Added Route "events_carousel", with "E_USER_DEPRECATED", to respect SEMVER (03/03/2018)
+
 v1.13.2
 -------
 - Added test to not display "Add to calendar" in list mode if the evant is finished (01/03/2018)
