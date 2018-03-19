@@ -136,8 +136,11 @@ class EventsController extends Controller
         //Defines the form
         if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             //Defines form
-            $event = new Event('new');
-            $form = $this->createForm(EventType::class, $event);
+            $event = new Event();
+            $eventConfig = array(
+                'action' => 'new',
+            );
+            $form = $this->createForm(EventType::class, $event, array('eventConfig' => $eventConfig));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -220,7 +223,10 @@ class EventsController extends Controller
             }
 
             //Defines form
-            $form = $this->createForm(EventType::class, $event);
+            $eventConfig = array(
+                'action' => 'modify',
+            );
+            $form = $this->createForm(EventType::class, $event, array('eventConfig' => $eventConfig));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -309,7 +315,10 @@ class EventsController extends Controller
                 ->setTitle(null)
                 ->setSlug(null)
             ;
-            $form = $this->createForm(EventType::class, $eventClone);
+            $eventConfig = array(
+                'action' => 'duplicate',
+            );
+            $form = $this->createForm(EventType::class, $eventClone, array('eventConfig' => $eventConfig));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -383,11 +392,13 @@ class EventsController extends Controller
 
             //Gets the event
             $event = $eventsService->load($id);
-            $event->setAction('delete');
             $eventsService->setPicture($event);
 
             //Defines form
-            $form = $this->createForm(EventType::class, $event);
+            $eventConfig = array(
+                'action' => 'delete',
+            );
+            $form = $this->createForm(EventType::class, $event, array('eventConfig' => $eventConfig));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {

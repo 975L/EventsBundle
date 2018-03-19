@@ -1,5 +1,10 @@
 # Changelog
 
+v1.13.4
+-------
+- Added "_locale requirement" part for multilingual prefix in `routing.yml` in `README.md` (04/03/2018)
+- Removed `action` property on Entity `Event` and passed data with array `eventConfig` to the form (19/03/2018)
+
 v1.13.3
 -------
 - Added Route for "/events/" to redirect to "events_all" (03/03/2018)

@@ -22,8 +22,6 @@ use c975L\EventsBundle\Repository\EventRepository;
 class Event
 {
     /**
-     * @var integer
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -86,14 +84,6 @@ class Event
      */
     protected $picture;
 
-    protected $action;
-
-
-    public function __construct($action = null)
-    {
-        $this->setAction($action);
-    }
-
 
     /**
      * Get id
@@ -125,28 +115,6 @@ class Event
     public function getSuppressed()
     {
         return $this->suppressed;
-    }
-
-    /**
-     * Set action
-     *
-     * @return Event
-     */
-    public function setAction($action)
-    {
-        $this->action = $action;
-
-        return $this;
-    }
-
-    /**
-     * Get action
-     *
-     * @return string
-     */
-    public function getAction()
-    {
-        return $this->action;
     }
 
     /**
