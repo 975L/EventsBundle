@@ -1,5 +1,10 @@
 # Changelog
 
+v1.13.5
+-------
+- Removed unused parenthesis (15/04/2018)
+- Added missing dependencies on doctrine in `composer.json` (15/04/2018)
+
 v1.13.4
 -------
 - Added "_locale requirement" part for multilingual prefix in `routing.yml` in `README.md` (04/03/2018)

@@ -1,6 +1,6 @@
 <?php
 /*
- * (c) 2017: 975l <contact@975l.com>
+ * (c) 2017: 975L <contact@975l.com>
  * (c) 2017: Laurent Marquet <laurent.marquet@laposte.net>
  *
  * This source file is subject to the MIT license that is bundled
@@ -126,7 +126,6 @@ class EventsController extends Controller
     /**
      * @Route("/events/new",
      *      name="events_new")
-     * )
      */
     public function newAction(Request $request)
     {
@@ -199,7 +198,6 @@ class EventsController extends Controller
      *          "slug": "^([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
-     * )
      */
     public function modifyAction(Request $request, $slug, $id)
     {
@@ -301,6 +299,8 @@ class EventsController extends Controller
     {
         //Gets the user
         $user = $this->getUser();
+
+        //Defines the form
         if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             //Gets the Service
             $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
@@ -378,7 +378,6 @@ class EventsController extends Controller
      *          "slug": "^([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
-     * )
      */
     public function deleteAction(Request $request, $id)
     {

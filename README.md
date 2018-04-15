@@ -49,7 +49,7 @@ Check [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) for it
 Setup your Tinymce API key if you use the cloud version, in `parameters.yml`
 ```yml
     #(Optional) Your Tinymce Api key if you use the cloud version
-    #tinymceApiKey: YOUR_API_KEY
+    #tinymceApiKey: 'YOUR_API_KEY'
 ```
 
 And then in `parameters.yml.dist`
@@ -65,7 +65,7 @@ c975_l_events:
     #Path where the pictures will be stored. The full path ('web/images/[folderPictures]') has to be added to .gitignore if Git is used
     folderPictures: 'events'
     #User's role needed to enable access to the edition of page
-    roleNeeded: 'ROLE_ADMIN'
+    roleNeeded: 'ROLE_ADMIN' #default 'ROLE-ADMIN'
     #Base url for sitemap creation without leading slash
     sitemapBaseUrl: 'http://example.com'
     #(Optional) Array of available languages of the website
@@ -83,10 +83,11 @@ Then, enable the routes by adding them to the `app/config/routing.yml` file of y
 ```yml
 c975_l_events:
     resource: "@c975LEventsBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    type: annotation
+    prefix: /
     #Multilingual website use the following
     #prefix: /{_locale}
+    #defaults:   { _locale: %locale% }
     #requirements:
     #    _locale: en|fr|es
 ```
@@ -109,10 +110,8 @@ In `layout.html.twig`, it will mainly consist to extend your layout and define s
 {% set title = 'Events (' ~ title ~ ')' %}
 
 {% block content %}
-    <div class="container">
-        {% block events_content %}
-        {% endblock %}
-    </div>
+    {% block events_content %}
+    {% endblock %}
 {% endblock %}
 ```
 
