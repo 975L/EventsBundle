@@ -1,5 +1,9 @@
 # Changelog
 
+v1.13.6
+-------
+- Replaced submit button by `SubmitType` (16/04/2018)
+
 v1.13.5
 -------
 - Removed unused parenthesis (15/04/2018)
