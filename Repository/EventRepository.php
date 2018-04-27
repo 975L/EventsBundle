@@ -19,8 +19,8 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
         $qb->select('e')
-            ->where('e.endDate >= :currentDate')
-            ->andwhere('e.suppressed is NULL')
+            ->where('e.startDate >= :currentDate OR e.endDate >= :currentDate')
+            ->andwhere('e.suppressed = 0')
             ->setParameter('currentDate', new \Datetime())
             ->orderBy('e.startDate', 'ASC')
             ->orderBy('e.startTime', 'ASC')
@@ -30,14 +30,30 @@ class EventRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    //Finds all the events NOT suppressed
+    //Finds all the events NOT finished and NOT suppressed
     public function findAllEvents()
     {
         $qb = $this->createQueryBuilder('e');
         $qb->select('e')
-            ->where('e.suppressed is NULL')
+            ->where('e.startDate >= :currentDate OR e.endDate >= :currentDate')
+            ->andwhere('e.suppressed = 0')
+            ->setParameter('currentDate', new \Datetime())
             ->orderBy('e.startDate', 'ASC')
             ->orderBy('e.startTime', 'ASC')
+            ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    //Finds all the events finished and NOT suppressed
+    public function findAllFinishedEvents()
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb->select('e')
+            ->where('e.endDate < :currentDate OR (e.endDate IS NULL AND e.startDate < :currentDate)')
+            ->andwhere('e.suppressed = 0')
+            ->setParameter('currentDate', new \Datetime())
+            ->orderBy('e.startDate', 'DESC')
             ;
 
         return $qb;

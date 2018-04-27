@@ -1,6 +1,6 @@
 {% extends "@c975LEvents/layout.html.twig" %}
 {% trans_default_domain 'events' %}
-{% set title = 'label.all_events'|trans %}
+{% set title = 'label.finished_events'|trans %}
 
 {% block events_content %}
 {# No events #}
@@ -8,33 +8,32 @@
     <p class="lead text-center">
         {{ 'label.no_events'|trans }}
     </p>
-{# All events #}
+{# Finished events #}
     {% else %}
         <table class="table table-hover table-condensed table-responsive">
             <thead>
                 <tr>
-                    <th class="text-center">{{ 'label.title'|trans }}</th>
-                    <th class="text-center">{{ 'label.start_date'|trans }}</th>
-                    <th class="text-center">{{ 'label.end_date'|trans }}</th>
-                    <th class="text-center">{{ 'label.place'|trans }}</th>
-                    <th class="text-center">{{ 'label.add_to_calendar'|trans }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}&nbsp;<span class="fas fa-sort"></span></th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.start_date'|trans, 'e.start_date') }}&nbsp;<span class="fas fa-sort"></span></th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.end_date'|trans, 'e.end_date') }}&nbsp;<span class="fas fa-sort"></span></th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.place'|trans, 'e.place') }}&nbsp;<span class="fas fa-sort"></span></th>
                 </tr>
             </thead>
             <tbody>
                 {% for event in events %}
                     <tr>
 {# Title #}
-                        <td class="text-center">
+                        <td class="text-center text-muted">
                             <strong><a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans({}, 'toolbar') }}">{{ event.title }}</a></strong>
                         </td>
 {# StartDate and Time #}
-                        <td class="text-center">
+                        <td class="text-center text-muted">
                             {{ event.startDate|localizeddate('long', 'none') }}
                             <br />
                             {{ event.startTime|localizeddate('none', 'short') }}
                         </td>
 {# End date and Time #}
-                        <td class="text-center">
+                        <td class="text-center text-muted">
                             {% if event.endDate != null %}
                                 {{ event.endDate|localizeddate('long', 'none') }}
                                 <br />
@@ -44,22 +43,21 @@
                             {% endif %}
                         </td>
 {# Place #}
-                        <td class="text-center">
+                        <td class="text-center text-muted">
                             {{ event.place }}
-                        </td>
-{# Add to calendar #}
-                        <td class="text-center">
-                            <a href="{{ path('events_ical', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
-                                <span class="fas fa-calendar-plus"></span> {{'label.add_to_calendar'|trans }}</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+{# Pagination #}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(events) }}
+        </div>
     {% endif %}
-{# Events finished #}
+{# All Events #}
     <p class="text-center">
-        <a href="{{ path('events_finished') }}">
-            {{'label.finished_events'|trans }}</a>
+        <a href="{{ path('events_all') }}">
+            {{'label.all_events'|trans }}</a>
     </p>
 {% endblock %}

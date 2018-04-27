@@ -49,8 +49,7 @@ class EventsCarousel extends \Twig_Extension
         //Loads from DB
         $events = $repository->findForCarousel($number);
 
-        //Displays the carousel
-        //Assigns picture
+        //Defines picture
         foreach ($events as $event) {
             $this->service->setPicture($event);
         }

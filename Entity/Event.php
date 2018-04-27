@@ -28,7 +28,7 @@ class Event
     protected $id;
 
     /**
-     * @ORM\Column(name="suppressed", type="boolean")
+     * @ORM\Column(name="suppressed", type="boolean", options={"default":"0"})
      */
     protected $suppressed;
 
@@ -51,30 +51,30 @@ class Event
     protected $startDate;
 
     /**
-     * @ORM\Column(name="start_time", type="datetime")
+     * @ORM\Column(name="start_time", type="datetime", nullable=true)
      */
     protected $startTime;
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="end_date", type="datetime")
+     * @ORM\Column(name="end_date", type="datetime", nullable=true)
      */
     protected $endDate;
 
     /**
-     * @ORM\Column(name="end_time", type="datetime")
+     * @ORM\Column(name="end_time", type="datetime", nullable=true)
      */
     protected $endTime;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="place", type="string", length=256)
+     * @ORM\Column(name="place", type="string", length=256, nullable=true)
      */
     protected $place;
 
     /**
      * @Assert\NotBlank()
-     * @ORM\Column(name="description", type="string")
+     * @ORM\Column(name="description", type="string", nullable=true)
      */
     protected $description;
 

@@ -14,14 +14,14 @@ SET FOREIGN_KEY_CHECKS=0;
 -- DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `suppressed` bit(1) NULL,
+  `suppressed` bit(1) DEFAULT 0,
   `title` varchar(128) NOT NULL,
   `slug` varchar(128) NOT NULL,
   `start_date` date NOT NULL,
-  `start_time` time NOT NULL,
-  `end_date` date NOT NULL,
-  `end_time` time NOT NULL,
-  `place` varchar(256) NOT NULL,
+  `start_time` time DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `end_time` time DEFAULT NULL,
+  `place` varchar(256) DEFAULT NULL,
   `description` blob DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;

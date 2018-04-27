@@ -98,6 +98,10 @@
                 <source>label.completed</source>
                 <target>Completed</target>
             </trans-unit>
+            <trans-unit id="25">
+                <source>label.finished_events</source>
+                <target>Events finished</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

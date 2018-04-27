@@ -12,7 +12,9 @@ TRANSP:TRANSPARENT
 PRIORITY:5
 CLASS:PUBLIC
 DTSTART;TZID={{ event.startTime|date('e') }}:{{ event.startDate|date('Ymd') }}T{{ event.startTime|date('His') }}
+{% if event.endDate != null %}
 DTEND;TZID={{ event.startTime|date('e') }}:{{ event.endDate|date('Ymd') }}T{{ event.endTime|date('His') }}
+{% endif %}
 LOCATION:{{ event.place }}
 DESCRIPTION:{{ event.description|striptags }}
 URL:{{ absolute_url(path('events_display', {'slug': event.slug, 'id': event.id})) }}

@@ -536,6 +536,28 @@ class EventsController extends Controller
         //Gets the events
         $events = $repository->findAllEvents();
 
+        return $this->render('@c975LEvents/pages/eventsAll.html.twig', array(
+            'events' => $events,
+            ));
+    }
+
+//FINISHED
+    /**
+     * @Route("/events/finished",
+     *      name="events_finished")
+     * @Method({"GET", "HEAD"})
+     */
+    public function finishedAction(Request $request)
+    {
+        //Gets the manager
+        $em = $this->getDoctrine()->getManager();
+
+        //Gets repository
+        $repository = $em->getRepository('c975LEventsBundle:Event');
+
+        //Gets the events
+        $events = $repository->findAllFinishedEvents();
+
         //Pagination
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -544,7 +566,7 @@ class EventsController extends Controller
             10
         );
 
-        return $this->render('@c975LEvents/pages/eventsAll.html.twig', array(
+        return $this->render('@c975LEvents/pages/eventsFinished.html.twig', array(
             'events' => $pagination,
             ));
     }

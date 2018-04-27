@@ -76,7 +76,7 @@ class EventType extends AbstractType
             ->add('endDate', DateType::class, array(
                 'label' => 'label.end_date',
                 'disabled' => $disabled,
-                'required' => true,
+                'required' => false,
                 'widget' => 'single_text',
                 'format' => 'dd-MM-yyyy',
                 'html5' => false,
@@ -88,14 +88,14 @@ class EventType extends AbstractType
             ->add('endTime', TimeType::class, array(
                 'label' => 'label.end_time',
                 'disabled' => $disabled,
-                'required' => true,
+                'required' => false,
                 'attr' => array(
                     'placeholder' => 'label.end_time',
                 )))
             ->add('place', TextType::class, array(
                 'label' => 'label.place',
                 'disabled' => $disabled,
-                'required' => true,
+                'required' => false,
                 'attr' => array(
                     'placeholder' => 'label.place',
                 )))

@@ -3,6 +3,12 @@
 
 {% set title = event.title %}
 
+{# Defines if event is finished #}
+{% set finishedClass = ' class="text-muted"' %}
+{% if event.startDate > date() or event.endDate > date() %}
+    {% set finishedClass = '' %}
+{% endif %}
+
 {% block events_content %}
 {# Toolbar #}
     {{ toolbar|raw }}
@@ -16,31 +22,47 @@
             </p>
         {% endif %}
 {# Place #}
-        <p>
+        <p{{ finishedClass|raw }}>
             {{ 'label.place'|trans }} : <strong>{{ event.place }}</strong>
         </p>
-{# Date and time #}
-        <p>
+{# Start Date and time #}
+        <p{{ finishedClass|raw }}>
             {{ 'label.start_date'|trans }} : <strong>{{ event.startDate|localizeddate('long', 'none') }} - {{ event.startTime|localizeddate('none', 'short') }}</strong>
         </p>
-        <p>
-            {{ 'label.end_date'|trans }} : <strong>{{ event.endDate|localizeddate('long', 'none') }} - {{ event.endTime|localizeddate('none', 'short') }}</strong>
-        </p>
-{# Add to calendar #}
-        <p>
-            <a href="{{ path('events_ical', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
-                <span class="fas fa-calendar-plus"></span> {{'label.add_to_calendar'|trans }}</a>
-        </p>
+{# End Date and time #}
+        {% if event.endDate != null %}
+            <p{{ finishedClass|raw }}>
+                {{ 'label.end_date'|trans }} : <strong>{{ event.endDate|localizeddate('long', 'none') }} - {{ event.endTime|localizeddate('none', 'short') }}</strong>
+            </p>
+        {% endif %}
 {# Description #}
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">{{ 'label.description'|trans }}</h3>
             </div>
             <div class="panel-body">
+{# Event finished #}
+                {% if finishedClass != '' %}
+                    <p class="lead">
+                        {{ 'label.completed'|trans }}
+                    </p>
+                {% endif %}
                 <p>
                     {{ event.description|raw|nl2br }}
                 </p>
             </div>
         </div>
+{# Add to calendar #}
+        {% if finishedClass == '' %}
+            <p>
+                <a href="{{ path('events_ical', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
+                    <span class="fas fa-calendar-plus"></span> {{'label.add_to_calendar'|trans }}</a>
+            </p>
+        {% endif %}
+{# All events #}
+        <p>
+            <a href="{{ path('events_all') }}">
+                {{'label.all_events'|trans }}</a>
+        </p>
     </div>
 {% endblock %}

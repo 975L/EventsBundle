@@ -1,5 +1,15 @@
 # Changelog
 
+v1.14
+-----
+- Made some fields nullable (27/04/2018)
+- Made suppressed field as default false (27/04/2018)
+- Added link to all events in event display (27/04/2018)
+- Removed end date + time if null in display + list of events (27/04/2018)
+- Removed finished events from list of events (27/04/2018)
+- Added list of finished events (27/04/2018)
+- Added class "text-muted" for finished events (27/04/2018)
+
 v1.13.6
 -------
 - Replaced submit button by `SubmitType` (16/04/2018)
