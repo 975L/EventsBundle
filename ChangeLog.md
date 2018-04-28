@@ -1,5 +1,9 @@
 # Changelog
 
+v1.14.1
+-------
+- Moved "add to calendar" in a row below event's data, in display all events view, to allow more space on xs-devices (28/04/2018)
+
 v1.14
 -----
 - Made some fields nullable (27/04/2018)
