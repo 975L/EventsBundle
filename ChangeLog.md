@@ -1,5 +1,9 @@
 # Changelog
 
+v1.14.3
+-------
+- Corrected `tools.html.twig` (13/05/2018)
+
 v1.14.2
 -------
 - Modified toolbars calls due to modification of c975LToolbarBundle (13/05/2018)
