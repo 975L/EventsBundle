@@ -4,8 +4,7 @@
 
 {% block events_content %}
 {# Toolbar #}
-    {{ toolbar|raw }}
-
+    {{ toolbar_display('@c975LEvents/tools.html.twig', 'dashboard', 'md') }}
 {# List of events and actions #}
     <div class="text-center">
         <h2>

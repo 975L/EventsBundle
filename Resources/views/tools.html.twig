@@ -1,6 +1,9 @@
 {% trans_default_domain 'toolbar' %}
 
 {% spaceless %}
+{# Dashboard #}
+{{ toolbar_button(path('events_dashboard'), 'dashboard', 'label.events'|trans) }}
+
 {# Display #}
 {% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'new' %}
     {{ toolbar_button(path('events_display', {'slug': event.slug, 'id': event.id}), 'display') }}
@@ -35,4 +38,10 @@
 {% if type != 'help' %}
     {{ toolbar_button(path('events_help'), 'help') }}
 {% endif %}
+
+{# Signout #}
+{{ toolbar_button(path('user_signout'), 'signout') }}
+
+{# Other dashboards #}
+{{ toolbar_dashboards('md') }}
 {% endspaceless %}

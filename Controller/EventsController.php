@@ -56,19 +56,9 @@ class EventsController extends Controller
                 10
             );
 
-            //Defines toolbar
-            $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
-                'type' => 'dashboard',
-            ));
-            $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
-                'tools'  => $tools,
-                'dashboard'  => 'events',
-            ))->getContent();
-
             //Returns the dashboard
             return $this->render('@c975LEvents/pages/dashboard.html.twig', array(
                 'events' => $pagination,
-                'toolbar' => $toolbar,
             ));
         }
 
@@ -103,21 +93,7 @@ class EventsController extends Controller
         //Gets the user
         $user = $this->getUser();
 
-        //Defines toolbar
-        $toolbar = '';
-        if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
-                'type' => 'display',
-                'event' => $event,
-            ));
-            $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
-                'tools'  => $tools,
-                'dashboard'  => 'events',
-            ))->getContent();
-        }
-
         return $this->render('@c975LEvents/pages/display.html.twig', array(
-            'toolbar' => $toolbar,
             'event' => $event,
         ));
     }
@@ -168,19 +144,9 @@ class EventsController extends Controller
                 ));
             }
 
-            //Defines toolbar
-            $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
-                'type' => 'new',
-            ));
-            $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
-                'tools'  => $tools,
-                'dashboard'  => 'events',
-            ))->getContent();
-
             //Returns the form to edit content
             return $this->render('@c975LEvents/forms/new.html.twig', array(
                 'form' => $form->createView(),
-                'toolbar' => $toolbar,
                 'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
                 'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
             ));
@@ -260,23 +226,12 @@ class EventsController extends Controller
                 ));
             }
 
-            //Defines toolbar
-            $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
-                'type' => 'modify',
-                'event' => $event,
-            ));
-            $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
-                'tools'  => $tools,
-                'dashboard'  => 'events',
-            ))->getContent();
-
             //Returns the form to modify content
             return $this->render('@c975LEvents/forms/modify.html.twig', array(
                 'form' => $form->createView(),
                 'event' => $event,
                 'eventPicture' => $eventPicture,
                 'eventTitle' => $event->getTitle(),
-                'toolbar' => $toolbar,
                 'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
                 'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
             ));
@@ -344,23 +299,12 @@ class EventsController extends Controller
                 ));
             }
 
-            //Defines toolbar
-            $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
-                'type' => 'duplicate',
-                'event' => $event,
-            ));
-            $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
-                'tools'  => $tools,
-                'dashboard'  => 'events',
-            ))->getContent();
-
             //Returns the form to duplicate content
             return $this->render('@c975LEvents/forms/duplicate.html.twig', array(
                 'form' => $form->createView(),
                 'event' => $eventClone,
                 'eventPicture' => null,
                 'title' => $event->getTitle(),
-                'toolbar' => $toolbar,
                 'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
                 'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
             ));
@@ -424,22 +368,11 @@ class EventsController extends Controller
                 return $this->redirectToRoute('events_dashboard');
             }
 
-            //Defines toolbar
-            $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
-                'type' => 'delete',
-                'event' => $event,
-            ));
-            $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
-                'tools'  => $tools,
-                'dashboard'  => 'events',
-            ))->getContent();
-
             //Returns the form to delete content
             return $this->render('@c975LEvents/forms/delete.html.twig', array(
                 'form' => $form->createView(),
                 'eventTitle' => $event->getTitle(),
                 'event' => $event,
-                'toolbar' => $toolbar,
             ));
         }
 
@@ -593,24 +526,9 @@ class EventsController extends Controller
      */
     public function helpAction()
     {
-        //Gets the user
-        $user = $this->getUser();
-
-        //Returns the dashboard content
-        if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Defines toolbar
-            $tools  = $this->renderView('@c975LEvents/tools.html.twig', array(
-                'type' => 'help',
-            ));
-            $toolbar = $this->forward('c975L\ToolbarBundle\Controller\ToolbarController::displayAction', array(
-                'tools'  => $tools,
-                'dashboard'  => 'events',
-            ))->getContent();
-
-            //Returns the help
-            return $this->render('@c975LEvents/pages/help.html.twig', array(
-                'toolbar' => $toolbar,
-            ));
+        //Returns the help
+        if ($this->getUser() !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
+            return $this->render('@c975LEvents/pages/help.html.twig');
         }
 
         //Access is denied

@@ -1,5 +1,9 @@
 # Changelog
 
+v1.14.2
+-------
+- Modified toolbars calls due to modification of c975LToolbarBundle (13/05/2018)
+
 v1.14.1
 -------
 - Moved "add to calendar" in a row below event's data, in display all events view, to allow more space on xs-devices (28/04/2018)
