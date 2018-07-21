@@ -19,9 +19,6 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "symfony/framework-bundle": "^3",
-        "sensio/framework-extra-bundle": "^3",
-        "symfony/assetic-bundle": "^2",
         "doctrine/doctrine-bundle": "^1",
         "doctrine/orm": "^2",
         "twig/extensions": "^1",

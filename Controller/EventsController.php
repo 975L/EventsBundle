@@ -14,14 +14,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Cocur\Slugify\Slugify;
 use c975L\EventsBundle\Entity\Event;
-use c975L\EventsBundle\Service\EventService;
+use c975L\EventsBundle\Service\EventsService;
 use c975L\EventsBundle\Form\EventType;
 
 class EventsController extends Controller
@@ -32,21 +31,15 @@ class EventsController extends Controller
      *      name="events_dashboard")
      * @Method({"GET", "HEAD"})
      */
-    public function dashboardAction(Request $request)
+    public function dashboard(Request $request)
     {
-        //Gets the user
-        $user = $this->getUser();
-
         //Returns the dashboard content
-        if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Gets the manager
-            $em = $this->getDoctrine()->getManager();
-
-            //Gets repository
-            $repository = $em->getRepository('c975LEventsBundle:Event');
-
+        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             //Gets the events
-            $events = $repository->findAllEvents();
+            $events = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('c975LEventsBundle:Event')
+                ->findAllEvents();
 
             //Pagination
             $paginator  = $this->get('knp_paginator');
@@ -76,22 +69,16 @@ class EventsController extends Controller
      *      })
      * @Method({"GET", "HEAD"})
      */
-    public function displayAction($id)
+    public function display(EventsService $eventsService, $id)
     {
-        //Gets the Service
-        $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
-
         //Gets the event
         $event = $eventsService->load($id);
-        $eventsService->setPicture($event);
+        $eventsService->defineImage($event);
 
         //Deleted event
-        if ($event->getSuppressed() === true) {
+        if (true === $event->getSuppressed()) {
             throw new HttpException(410);
         }
-
-        //Gets the user
-        $user = $this->getUser();
 
         return $this->render('@c975LEvents/pages/display.html.twig', array(
             'event' => $event,
@@ -103,39 +90,27 @@ class EventsController extends Controller
      * @Route("/events/new",
      *      name="events_new")
      */
-    public function newAction(Request $request)
+    public function new(Request $request, EventsService $eventsService)
     {
-        //Gets the user
-        $user = $this->getUser();
-
         //Defines the form
-        if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
+        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             //Defines form
             $event = new Event();
-            $eventConfig = array(
-                'action' => 'new',
-            );
+            $eventConfig = array('action' => 'new');
             $form = $this->createForm(EventType::class, $event, array('eventConfig' => $eventConfig));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                //Gets the manager
-                $em = $this->getDoctrine()->getManager();
-
-                //Gets the Service
-                $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
-
                 //Adjust slug in case of not accepted signs
                 $event->setSlug($eventsService->slugify($form->getData()->getSlug()));
 
                 //Persists data in DB
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($event);
                 $em->flush();
 
                 //Resizes and renames the picture
-                if ($form->getData()->getPicture() !== null) {
-                    $eventsService->resizeImage($form->getData()->getPicture(), $event->getSlug() . '-' . $event->getId());
-                }
+                $eventsService->resizeImage($form->getData()->getPicture(), $event->getSlug() . '-' . $event->getId());
 
                 //Redirects to the event
                 return $this->redirectToRoute('events_display', array(
@@ -165,59 +140,33 @@ class EventsController extends Controller
      *          "id": "^([0-9]+)"
      *      })
      */
-    public function modifyAction(Request $request, $slug, $id)
+    public function modify(Request $request, EventsService $eventsService, $slug, $id)
     {
-        //Gets the user
-        $user = $this->getUser();
-
         //Defines the form
-        if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Gets the Service
-            $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
-
+        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             //Gets the event
             $event = $eventsService->load($id);
             $originalSlug = $event->getSlug();
 
             //Gets the existing picture
-            $eventsService->setPicture($event);
-            $eventPicture = $event->getPicture();
-            if ($eventPicture !== null) {
-                $event->setPicture(new File($eventPicture));
-            }
+            $eventsService->defineImage($event);
 
             //Defines form
-            $eventConfig = array(
-                'action' => 'modify',
-            );
+            $eventConfig = array('action' => 'modify');
             $form = $this->createForm(EventType::class, $event, array('eventConfig' => $eventConfig));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                //Gets the manager
-                $em = $this->getDoctrine()->getManager();
-
-                //Gets the FileSystem
-                $fs = new Filesystem();
-
                 //Adjust slug in case of not accepted signs
                 $event->setSlug($eventsService->slugify($form->getData()->getSlug()));
 
                 //Persists data in DB
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($event);
                 $em->flush();
 
-                //Renames picture file if slug has changed
-                $folderPath = $this->getParameter('kernel.root_dir') . '/../web/images/' . $this->getParameter('c975_l_events.folderPictures') . '/';
-                $picture = $folderPath . $event->getSlug() . '-' . $event->getId() . '.jpg';
-                if ($fs->exists($picture) && $originalSlug != $event->getSlug()) {
-                    $fs->rename($picture, $folderPath . $event->getSlug() . '-' . $event->getId() . '.jpg');
-                }
-
-                //Resizes and renames the picture (that will erase existing one)
-                if ($form->getData()->getPicture() !== null) {
-                    $eventsService->resizeImage($form->getData()->getPicture(), $event->getSlug() . '-' . $event->getId());
-                }
+                //Resizes and renames the picture
+                $eventsService->resizeImage($form->getData()->getPicture(), $event->getSlug() . '-' . $event->getId());
 
                 //Redirects to the event
                 return $this->redirectToRoute('events_display', array(
@@ -230,8 +179,6 @@ class EventsController extends Controller
             return $this->render('@c975LEvents/forms/modify.html.twig', array(
                 'form' => $form->createView(),
                 'event' => $event,
-                'eventPicture' => $eventPicture,
-                'eventTitle' => $event->getTitle(),
                 'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
                 'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
             ));
@@ -250,16 +197,10 @@ class EventsController extends Controller
      *      })
      * @Method({"GET", "HEAD", "POST"})
      */
-    public function duplicateAction(Request $request, $id)
+    public function duplicate(Request $request, EventsService $eventsService, $id)
     {
-        //Gets the user
-        $user = $this->getUser();
-
         //Defines the form
-        if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Gets the Service
-            $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
-
+        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             //Gets the event
             $event = $eventsService->load($id);
             $originalSlug = $event->getSlug();
@@ -270,27 +211,21 @@ class EventsController extends Controller
                 ->setTitle(null)
                 ->setSlug(null)
             ;
-            $eventConfig = array(
-                'action' => 'duplicate',
-            );
+            $eventConfig = array('action' => 'duplicate');
             $form = $this->createForm(EventType::class, $eventClone, array('eventConfig' => $eventConfig));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                //Gets the manager
-                $em = $this->getDoctrine()->getManager();
-
                 //Adjust slug in case of not accepted signs
                 $eventClone->setSlug($eventsService->slugify($form->getData()->getSlug()));
 
                 //Persists data in DB
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($eventClone);
                 $em->flush();
 
                 //Resizes and renames the picture
-                if ($form->getData()->getPicture() !== null) {
-                    $eventsService->resizeImage($form->getData()->getPicture(), $eventClone->getSlug() . '-' . $eventClone->getId());
-                }
+                $eventsService->resizeImage($form->getData()->getPicture(), $eventClone->getSlug() . '-' . $eventClone->getId());
 
                 //Redirects to the event
                 return $this->redirectToRoute('events_display', array(
@@ -303,8 +238,6 @@ class EventsController extends Controller
             return $this->render('@c975LEvents/forms/duplicate.html.twig', array(
                 'form' => $form->createView(),
                 'event' => $eventClone,
-                'eventPicture' => null,
-                'title' => $event->getTitle(),
                 'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
                 'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
             ));
@@ -323,44 +256,26 @@ class EventsController extends Controller
      *          "id": "^([0-9]+)"
      *      })
      */
-    public function deleteAction(Request $request, $id)
+    public function delete(Request $request, EventsService $eventsService, $id)
     {
-        //Gets the user
-        $user = $this->getUser();
-
         //Defines the form
-        if ($user !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Gets the Service
-            $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
-
+        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             //Gets the event
             $event = $eventsService->load($id);
-            $eventsService->setPicture($event);
+            $eventsService->defineImage($event);
 
             //Defines form
-            $eventConfig = array(
-                'action' => 'delete',
-            );
+            $eventConfig = array('action' => 'delete');
             $form = $this->createForm(EventType::class, $event, array('eventConfig' => $eventConfig));
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                //Gets the FileSystem
-                $fs = new Filesystem();
-
-                //Gets the manager
-                $em = $this->getDoctrine()->getManager();
-
                 //Deletes picture file
-                $folderPath = $this->getParameter('kernel.root_dir') . '/../web/images/' . $this->getParameter('c975_l_events.folderPictures') . '/';
-                $picture = $folderPath . $event->getSlug() . '-' . $event->getId() . '.jpg';
-                if ($fs->exists($picture)) {
-                    $fs->remove($picture);
-                }
+                $eventsService->deleteImage($event);
 
                 //Persists data in DB
                 $event->setSuppressed(true);
-
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($event);
                 $em->flush();
 
@@ -371,7 +286,6 @@ class EventsController extends Controller
             //Returns the form to delete content
             return $this->render('@c975LEvents/forms/delete.html.twig', array(
                 'form' => $form->createView(),
-                'eventTitle' => $event->getTitle(),
                 'event' => $event,
             ));
         }
@@ -390,19 +304,15 @@ class EventsController extends Controller
      *      })
      * @Method({"GET", "HEAD"})
      */
-    public function icalAction($id)
+    public function ical(EventsService $eventsService, $id)
     {
-        //Gets the Service
-        $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
-
         //Gets the event
         $event = $eventsService->load($id);
 
         //Returns the ical
         return new Response(
             $this->renderView(
-                '@c975LEvents/eventIcal.ics.twig',
-                array(
+                '@c975LEvents/eventIcal.ics.twig', array(
                     'event' => $event,
                 )),
             200,
@@ -410,46 +320,12 @@ class EventsController extends Controller
         );
     }
 
-//CAROUSEL
-    /**
-     * @Route("/events/carousel/{number}",
-     *      name="events_carousel")
-     * @Method({"GET", "HEAD"})
-     */
-    public function carouselAction($number)
-    {
-        //Trigers deprecates
-        @trigger_error('The use of Route "events_carousel" is deprecated since v1.13 and will be removed in 2.0. Use Twig function "events_carousel()" instead.', E_USER_DEPRECATED);
-
-        //Gets the manager
-        $em = $this->getDoctrine()->getManager();
-
-        //Gets repository
-        $repository = $em->getRepository('c975LEventsBundle:Event');
-
-        //Loads from DB
-        $events = $repository->findForCarousel($number);
-
-        //Gets the Service
-        $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
-
-        //Assigns picture
-        foreach ($events as $event) {
-            $eventsService->setPicture($event);
-        }
-
-        //Returns the carousel
-        return $this->render('@c975LEvents/pages/carousel.html.twig', array(
-            'events' => $events,
-        ));
-    }
-
 //ALL
     /**
      * @Route("/events")
      * @Method({"GET", "HEAD"})
      */
-    public function redirectAllAction()
+    public function redirectAll()
     {
         return $this->redirectToRoute('events_all');
     }
@@ -458,16 +334,13 @@ class EventsController extends Controller
      *      name="events_all")
      * @Method({"GET", "HEAD"})
      */
-    public function allAction(Request $request)
+    public function all(Request $request)
     {
-        //Gets the manager
-        $em = $this->getDoctrine()->getManager();
-
-        //Gets repository
-        $repository = $em->getRepository('c975LEventsBundle:Event');
-
         //Gets the events
-        $events = $repository->findAllEvents();
+        $events = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('c975LEventsBundle:Event')
+            ->findAllEvents();
 
         return $this->render('@c975LEvents/pages/eventsAll.html.twig', array(
             'events' => $events,
@@ -480,16 +353,13 @@ class EventsController extends Controller
      *      name="events_finished")
      * @Method({"GET", "HEAD"})
      */
-    public function finishedAction(Request $request)
+    public function finished(Request $request)
     {
-        //Gets the manager
-        $em = $this->getDoctrine()->getManager();
-
-        //Gets repository
-        $repository = $em->getRepository('c975LEventsBundle:Event');
-
         //Gets the events
-        $events = $repository->findAllFinishedEvents();
+        $events = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('c975LEventsBundle:Event')
+            ->findAllFinishedEvents();
 
         //Pagination
         $paginator  = $this->get('knp_paginator');
@@ -510,11 +380,8 @@ class EventsController extends Controller
      *      name="events_slug")
      * @Method({"POST"})
      */
-    public function slugAction($text)
+    public function slug(EventsService $eventsService, $text)
     {
-        //Gets the Service
-        $eventsService = $this->get(\c975L\EventsBundle\Service\EventsService::class);
-
         return $this->json(array('a' => $eventsService->slugify($text)));
     }
 
@@ -524,10 +391,10 @@ class EventsController extends Controller
      *      name="events_help")
      * @Method({"GET", "HEAD"})
      */
-    public function helpAction()
+    public function help()
     {
         //Returns the help
-        if ($this->getUser() !== null && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
+        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
             return $this->render('@c975LEvents/pages/help.html.twig');
         }
 

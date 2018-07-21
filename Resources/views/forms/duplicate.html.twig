@@ -7,9 +7,9 @@
 {# Toolbar #}
     {{ toolbar_display('@c975LEvents/tools.html.twig', 'duplicate', 'md', event) }}
 {# Picture #}
-    {% if eventPicture != null %}
+    {% if event.picture != null %}
         <p class="text-center">
-            <img src="{{ asset(eventPicture) }}" class="img-responsive img-thumbnail center-block" alt="{{ event.title }}" title="{{ event.title }}" />
+            <img src="{{ asset(event.picture) }}" class="img-responsive img-thumbnail center-block" alt="{{ event.title }}" title="{{ event.title }}" />
         </p>
     {% endif %}
 {# Form #}

@@ -1,15 +1,15 @@
 {% extends "@c975LEvents/layout.html.twig" %}
 {% trans_default_domain 'events' %}
-{% set title = 'label.modify'|trans({}, 'toolbar') ~ ' "' ~ eventTitle ~ '"' %}
+{% set title = 'label.modify'|trans({}, 'toolbar') ~ ' "' ~ event.title ~ '"' %}
 
 {% block events_content %}
     {{ include('@c975LEvents/tinymceInit.html.twig') }}
 {# Toolbar #}
     {{ toolbar_display('@c975LEvents/tools.html.twig', 'modify', 'md', event) }}
 {# Picture #}
-    {% if eventPicture != null %}
+    {% if event.picture != null %}
         <p class="text-center">
-            <img src="{{ asset(eventPicture) }}" class="img-responsive img-thumbnail center-block" alt="{{ event.title }}" title="{{ event.title }}" />
+            <img src="{{ asset(event.picture) }}" class="img-responsive img-thumbnail center-block" alt="{{ event.title }}" title="{{ event.title }}" />
         </p>
     {% endif %}
 {# Form #}

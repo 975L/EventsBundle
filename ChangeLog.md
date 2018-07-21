@@ -1,5 +1,16 @@
 # Changelog
 
+v1.15
+-----
+- Removed required in composer.json (22/05/2018)
+- Removed `Action` in controller method name as not requested anymore (21/07/2018)
+- Corrected meta in `layout.html.twig` (21/07/2018)
+- Injected EventService in Controller methods (21/07/2018)
+- Use of Yoda notation (21/07/2018)
+- Added data for Symfony 4 (21/07/2018)
+- Renamed `setPicture()` method to `defineImage()` (21/07/2018)
+- Removed events_carousel Route [BC-break] (21/07/2018)
+
 v1.14.3
 -------
 - Corrected `tools.html.twig` (13/05/2018)

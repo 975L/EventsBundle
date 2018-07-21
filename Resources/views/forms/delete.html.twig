@@ -1,6 +1,6 @@
 {% extends "@c975LEvents/layout.html.twig" %}
 {% trans_default_domain 'events' %}
-{% set title = 'label.delete'|trans({}, 'toolbar') ~ ' "' ~ eventTitle ~ '"' %}
+{% set title = 'label.delete'|trans({}, 'toolbar') ~ ' "' ~ event.title ~ '"' %}
 
 {% block events_content %}
 {# Toolbar #}

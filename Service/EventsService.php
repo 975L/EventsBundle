@@ -10,6 +10,7 @@
 namespace c975L\EventsBundle\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 use Cocur\Slugify\Slugify;
 use c975L\EventsBundle\Entity\Event;
 
@@ -28,16 +29,33 @@ class EventsService
     }
 
     //Defines the picture related to Event
-    public function setPicture($event)
+    public function defineImage($event)
     {
         //Gets the FileSystem
         $fs = new Filesystem();
 
-        $folderPath = $this->container->getParameter('kernel.root_dir') . '/../web/images/' . $this->container->getParameter('c975_l_events.folderPictures') . '/';
-        $picture = $folderPath . $event->getSlug() . '-' . $event->getId() . '.jpg';
-        if ($fs->exists($picture)) {
-            $event->setPicture('images/' . $this->container->getParameter('c975_l_events.folderPictures') . '/' . $event->getSlug() . '-' . $event->getId() . '.jpg');
+        $image = $this->getImagesFolder() . $event->getSlug() . '-' . $event->getId() . '.jpg';
+        if ($fs->exists($image)) {
+            $event->setPicture($this->getImagesWebFolder() . $event->getSlug() . '-' . $event->getId() . '.jpg');
+        } else {
+            $event->setPicture(null);
         }
+    }
+
+    //Returns the images folder
+    public function getImagesFolder()
+    {
+        if (substr(\Symfony\Component\HttpKernel\Kernel::VERSION, 0, 1) == 4) {
+            return $this->container->getParameter('kernel.root_dir') . '/../public/images/' . $this->container->getParameter('c975_l_events.folderPictures') . '/';
+        }
+
+        return $this->container->getParameter('kernel.root_dir') . '/../web/images/' . $this->container->getParameter('c975_l_events.folderPictures') . '/';
+    }
+
+    //Returns the images web folder
+    public function getImagesWebFolder()
+    {
+        return 'images/' . $this->container->getParameter('c975_l_events.folderPictures') . '/';
     }
 
     //Loads event
@@ -54,90 +72,103 @@ class EventsService
         return $event;
     }
 
+    //Deletes picture file
+    public function deleteImage($event)
+    {
+        $fs = new Filesystem();
+        $image = $this->getImagesFolder() . $event->getSlug() . '-' . $event->getId() . '.jpg';
+
+        if ($fs->exists($image)) {
+            $fs->remove($image);
+        }
+    }
+
     //Resizes picture
     public function resizeImage($file, $finalFileName)
     {
-        //Defines data
-        $extension = is_object($file) ? strtolower($file->guessExtension()) : substr($file, strrpos($file, '.') + 1, 3);
-        $finalHeight = 400;
-        $format = 'jpg';
+        if (null !== $file) {
+            //Defines data
+            $extension = is_object($file) ? strtolower($file->guessExtension()) : substr($file, strrpos($file, '.') + 1, 3);
+            $finalHeight = 400;
+            $format = 'jpg';
 
-        //Rotates (if needed) and resizes
-        if (in_array($extension, array('jpeg', 'jpg', 'png')) === true) {
-            $fileData = getimagesize($file);
-            //Also used to reduces poster issued from video
-            $filename = is_object($file) ? $file->getRealPath() : $file;
-            //Use of of @ avoids errors of type IFD bad offset...
-            $exifData = @exif_read_data($filename, 0, true);
+            //Rotates (if needed) and resizes
+            if (in_array($extension, array('jpeg', 'jpg', 'png')) === true) {
+                $fileData = getimagesize($file);
+                //Also used to reduces poster issued from video
+                $filename = is_object($file) ? $file->getRealPath() : $file;
+                //Use of of @ avoids errors of type IFD bad offset...
+                $exifData = @exif_read_data($filename, 0, true);
 
-            //Creates the final picture
-            if (is_array($fileData)) {
-                //Defines data
-                $compressionJpg = 75;
-                $width = $fileData[0];
-                $height = $fileData[1];
+                //Creates the final picture
+                if (is_array($fileData)) {
+                    //Defines data
+                    $compressionJpg = 75;
+                    $width = $fileData[0];
+                    $height = $fileData[1];
 
-                //Resizes image
-                $newHeight = $finalHeight;
-                $newWidth = (int) round(($width * $newHeight) / $height);
-                $degree = 0;
+                    //Resizes image
+                    $newHeight = $finalHeight;
+                    $newWidth = (int) round(($width * $newHeight) / $height);
+                    $degree = 0;
 
-                //JPEG format
-                if ($fileData[2] == 2) {
-                    $fileSource = imagecreatefromjpeg($filename);
-                    //Rotates (if needed)
-                    if (isset($exifData['IFD0']['Orientation'])) {
-                        switch ($exifData['IFD0']['Orientation']) {
-                            case 1:
-                                $degree = 0;
-                                break;
-                            case 3:
-                                $degree = 180;
-                                break;
-                            case 6:
-                                $degree = 270;
-                                $newWidth = (int) round(($height * $newHeight) / $width);
-                                break;
-                            case 8:
-                                $degree = 90;
-                                $newWidth = (int) round(($height * $newHeight) / $width);
-                                break;
+                    //JPEG format
+                    if ($fileData[2] == 2) {
+                        $fileSource = imagecreatefromjpeg($filename);
+                        //Rotates (if needed)
+                        if (isset($exifData['IFD0']['Orientation'])) {
+                            switch ($exifData['IFD0']['Orientation']) {
+                                case 1:
+                                    $degree = 0;
+                                    break;
+                                case 3:
+                                    $degree = 180;
+                                    break;
+                                case 6:
+                                    $degree = 270;
+                                    $newWidth = (int) round(($height * $newHeight) / $width);
+                                    break;
+                                case 8:
+                                    $degree = 90;
+                                    $newWidth = (int) round(($height * $newHeight) / $width);
+                                    break;
+                            }
+                            $fileSource = imagerotate($fileSource, $degree, 0);
                         }
-                        $fileSource = imagerotate($fileSource, $degree, 0);
                     }
-                }
-                //PNG format
-                elseif ($fileData[2] == 3) {
-                    $fileSource = imagecreatefrompng($filename);
-                }
+                    //PNG format
+                    elseif ($fileData[2] == 3) {
+                        $fileSource = imagecreatefrompng($filename);
+                    }
 
-                //Resizes
-                $newPicture = imagecreatetruecolor($newWidth, $newHeight);
-                if ($format == 'jpg') {
-                    $whiteBackground = imagecolorallocate($newPicture, 255, 255, 255);
-                    imagefill($newPicture, 0, 0, $whiteBackground);
+                    //Resizes
+                    $newPicture = imagecreatetruecolor($newWidth, $newHeight);
+                    if ($format == 'jpg') {
+                        $whiteBackground = imagecolorallocate($newPicture, 255, 255, 255);
+                        imagefill($newPicture, 0, 0, $whiteBackground);
+                    }
+                    if ($degree == 90 || $degree == 270) {
+                        imagecopyresampled($newPicture, $fileSource, 0, 0, 0, 0, $newWidth, $newHeight, $height, $width);
+                    } else {
+                        imagecopyresampled($newPicture, $fileSource, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+                    }
+
+                    //Saves the picture - JPEG format
+                    if ($format == 'jpg') {
+                        imagejpeg($newPicture, str_replace('jpeg', 'jpg', $filename), $compressionJpg);
+                    }
+
+                    //Destroy picture
+                    imagedestroy($newPicture);
+
+                    //Gets the FileSystem
+                    $fs = new Filesystem();
+
+                    //Saves the file in the right place
+                    $folderPath = $this->getImagesFolder();
+                    $fs->mkdir($folderPath, 0770);
+                    $file->move($folderPath, $finalFileName . '.jpg');
                 }
-                if ($degree == 90 || $degree == 270) {
-                    imagecopyresampled($newPicture, $fileSource, 0, 0, 0, 0, $newWidth, $newHeight, $height, $width);
-                } else {
-                    imagecopyresampled($newPicture, $fileSource, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-                }
-
-                //Saves the picture - JPEG format
-                if ($format == 'jpg') {
-                    imagejpeg($newPicture, str_replace('jpeg', 'jpg', $filename), $compressionJpg);
-                }
-
-                //Destroy picture
-                imagedestroy($newPicture);
-
-                //Gets the FileSystem
-                $fs = new Filesystem();
-
-                //Saves the file in the right place
-                $folderPath = $this->container->getParameter('kernel.root_dir') . '/../web/images/' . $this->container->getParameter('c975_l_events.folderPictures');
-                $fs->mkdir($folderPath, 0770);
-                $file->move($folderPath, $finalFileName . '.jpg');
             }
         }
     }
