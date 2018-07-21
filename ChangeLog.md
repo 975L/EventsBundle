@@ -1,5 +1,9 @@
 # Changelog
 
+v1.15.2
+-------
+- Removed `SubmitType` in EventType and replaced by adding button in template as it's not a "Best Practice" (Revert of v1.13.6) (21/07/2018)
+
 v1.15.1
 -------
 - Corrected TwigExtension `EventsCarousel` (21/07/2018)

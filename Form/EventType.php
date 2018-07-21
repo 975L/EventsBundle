@@ -13,7 +13,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -26,8 +25,6 @@ class EventType extends AbstractType
     {
         $disabled = $options['eventConfig']['action'] == 'delete' ? true : false;
         $requiredImage = $options['data']->getPicture() !== null ? false : true;
-        $submitLabel = $options['eventConfig']['action'] == 'delete' ? 'delete' : 'validate';
-        $submitClass = $options['eventConfig']['action'] == 'delete' ? 'btn-danger' : 'btn-primary';
 
         $builder
             ->add('title', TextType::class, array(
@@ -114,13 +111,6 @@ class EventType extends AbstractType
                     )))
             ;
         }
-        $builder
-            ->add('submit', SubmitType::class, array(
-                'label' => 'label.' . $submitLabel,
-                'translation_domain' => 'toolbar',
-                'attr' => array('class' => 'btn btn-block btn-lg ' . $submitClass),
-            ))
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
