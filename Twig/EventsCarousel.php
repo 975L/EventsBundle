@@ -43,15 +43,12 @@ class EventsCarousel extends \Twig_Extension
 
     public function Carousel(\Twig_Environment $environment, $number)
     {
-        //Gets repository
-        $repository = $this->em->getRepository('c975LEventsBundle:Event');
-
-        //Loads from DB
-        $events = $repository->findForCarousel($number);
+        //Gets events
+        $events = $this->em->getRepository('c975LEventsBundle:Event')->findForCarousel($number);
 
         //Defines picture
         foreach ($events as $event) {
-            $this->service->setPicture($event);
+            $this->service->defineImage($event);
         }
 
         //Returns the carousel

@@ -1,5 +1,9 @@
 # Changelog
 
+v1.15.1
+-------
+- Corrected TwigExtension `EventsCarousel` (21/07/2018)
+
 v1.15
 -----
 - Removed required in composer.json (22/05/2018)
