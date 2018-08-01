@@ -1,6 +1,6 @@
 {% extends "@c975LEvents/layout.html.twig" %}
 {% trans_default_domain 'events' %}
-{% set title = 'label.duplicate'|trans({}, 'toolbar') ~ ' "' ~ title ~ '"' %}
+{% set title = 'label.duplicate'|trans({}, 'toolbar') ~ ' "' ~ event.id ~ '"' %}
 
 {% block events_content %}
     {{ include('@c975LEvents/tinymceInit.html.twig') }}

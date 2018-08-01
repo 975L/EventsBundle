@@ -1,5 +1,16 @@
 # Changelog
 
+v1.16
+-----
+- Made use of ParamConverter (30/07/2018)
+- Corrected services.yml (31/07/2018)
+- Made use of Voters for access rights (01/08/2018)
+- Renamed `new` to `add` to avoid using php reserved word (01/08/2018)
+- Added missing @Method in @Route (01/08/2018)
+- Suppressed toolbar in display when user hasn't signed in (01/08/2018)
+- Renamed `$event` to `$eventObject` to avoid problems with `$event` Symfony object (01/08/2018)
+- Corrected toolbar (01/08/2018)
+
 v1.15.2
 -------
 - Removed `SubmitType` in EventType and replaced by adding button in template as it's not a "Best Practice" (Revert of v1.13.6) (21/07/2018)

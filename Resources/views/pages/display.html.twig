@@ -11,7 +11,9 @@
 
 {% block events_content %}
 {# Toolbar #}
-    {{ toolbar_display('@c975LEvents/tools.html.twig', 'display', 'md', event) }}
+    {% if is_granted('ROLE_USER') %}
+        {{ toolbar_display('@c975LEvents/tools.html.twig', 'display', 'md', event) }}
+    {% endif %}
     <div class="text-center">
 {# Picture #}
         {% if event.picture != null %}

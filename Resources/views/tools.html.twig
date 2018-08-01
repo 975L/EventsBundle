@@ -5,17 +5,17 @@
 {{ toolbar_button(path('events_dashboard'), 'dashboard', 'label.events'|trans) }}
 
 {# Display #}
-{% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'new' %}
+{% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'new' and type != 'duplicate' %}
     {{ toolbar_button(path('events_display', {'slug': object.slug, 'id': object.id}), 'display') }}
 {% endif %}
 
 {# New #}
 {% if type != 'new' %}
-    {{ toolbar_button(path('events_new'), 'new') }}
+    {{ toolbar_button(path('events_add'), 'new') }}
 {% endif %}
 
 {# Modify #}
-{% if type != 'dashboard' and type != 'modify' and type != 'help' and type != 'new' %}
+{% if type != 'dashboard' and type != 'modify' and type != 'help' and type != 'new' and type != 'duplicate' %}
     {{ toolbar_button(path('events_modify', {'slug': object.slug, 'id': object.id}), 'modify') }}
 {% endif %}
 
@@ -30,7 +30,7 @@
 {% endif %}
 
 {# Delete #}
-{% if type != 'dashboard' and type != 'delete' and type != 'help' and type != 'new' %}
+{% if type != 'dashboard' and type != 'delete' and type != 'help' and type != 'new' and type != 'duplicate' %}
     {{ toolbar_button(path('events_delete', {'slug': object.slug, 'id': object.id}), 'delete') }}
 {% endif %}
 

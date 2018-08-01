@@ -10,6 +10,7 @@
 namespace c975L\EventsBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\GoneHttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Cocur\Slugify\Slugify;
 use c975L\EventsBundle\Entity\Event;
 use c975L\EventsBundle\Service\EventsService;
@@ -33,30 +36,27 @@ class EventsController extends Controller
      */
     public function dashboard(Request $request)
     {
-        //Returns the dashboard content
-        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Gets the events
-            $events = $this->getDoctrine()
-                ->getManager()
-                ->getRepository('c975LEventsBundle:Event')
-                ->findAllEvents();
+        $this->denyAccessUnlessGranted('dashboard', null);
 
-            //Pagination
-            $paginator  = $this->get('knp_paginator');
-            $pagination = $paginator->paginate(
-                $events,
-                $request->query->getInt('p', 1),
-                10
-            );
+        //Gets the events
+        $events = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('c975LEventsBundle:Event')
+            ->findAllEvents()
+            ;
 
-            //Returns the dashboard
-            return $this->render('@c975LEvents/pages/dashboard.html.twig', array(
-                'events' => $pagination,
-            ));
-        }
+        //Pagination
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $events,
+            $request->query->getInt('p', 1),
+            10
+        );
 
-        //Access is denied
-        throw $this->createAccessDeniedException();
+        //Renders the dashboard
+        return $this->render('@c975LEvents/pages/dashboard.html.twig', array(
+            'events' => $pagination,
+        ));
     }
 
 //DISPLAY
@@ -69,66 +69,63 @@ class EventsController extends Controller
      *      })
      * @Method({"GET", "HEAD"})
      */
-    public function display(EventsService $eventsService, $id)
+    public function display(EventsService $eventsService, Event $eventObject)
     {
-        //Gets the event
-        $event = $eventsService->load($id);
-        $eventsService->defineImage($event);
+        //Defines image
+        $eventsService->defineImage($eventObject);
 
         //Deleted event
-        if (true === $event->getSuppressed()) {
-            throw new HttpException(410);
+        if (true === $eventObject->getSuppressed()) {
+            throw new GoneHttpException();
         }
 
+        //Renders the event
         return $this->render('@c975LEvents/pages/display.html.twig', array(
-            'event' => $event,
+            'event' => $eventObject,
         ));
     }
 
-//NEW
+//ADD
     /**
      * @Route("/events/new",
-     *      name="events_new")
+     *      name="events_add")
+     * @Method({"GET", "HEAD", "POST"})
      */
-    public function new(Request $request, EventsService $eventsService)
+    public function add(Request $request, EventsService $eventsService)
     {
-        //Defines the form
-        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Defines form
-            $event = new Event();
-            $eventConfig = array('action' => 'new');
-            $form = $this->createForm(EventType::class, $event, array('eventConfig' => $eventConfig));
-            $form->handleRequest($request);
+        $eventObject = new Event();
+        $this->denyAccessUnlessGranted('add', $eventObject);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                //Adjust slug in case of not accepted signs
-                $event->setSlug($eventsService->slugify($form->getData()->getSlug()));
+        //Defines form
+        $eventConfig = array('action' => 'add');
+        $form = $this->createForm(EventType::class, $eventObject, array('eventConfig' => $eventConfig));
+        $form->handleRequest($request);
 
-                //Persists data in DB
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($event);
-                $em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Adjust slug in case of not accepted signs
+            $eventObject->setSlug($eventsService->slugify($form->getData()->getSlug()));
 
-                //Resizes and renames the picture
-                $eventsService->resizeImage($form->getData()->getPicture(), $event->getSlug() . '-' . $event->getId());
+            //Persists data in DB
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($eventObject);
+            $em->flush();
 
-                //Redirects to the event
-                return $this->redirectToRoute('events_display', array(
-                    'slug' => $event->getSlug(),
-                    'id' => $event->getId(),
-                ));
-            }
+            //Resizes and renames the picture
+            $eventsService->resizeImage($form->getData()->getPicture(), $eventObject->getSlug() . '-' . $eventObject->getId());
 
-            //Returns the form to edit content
-            return $this->render('@c975LEvents/forms/new.html.twig', array(
-                'form' => $form->createView(),
-                'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
-                'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+            //Redirects to the event
+            return $this->redirectToRoute('events_display', array(
+                'slug' => $eventObject->getSlug(),
+                'id' => $eventObject->getId(),
             ));
         }
 
-        //Access is denied
-        throw $this->createAccessDeniedException();
+        //Renders the add form
+        return $this->render('@c975LEvents/forms/add.html.twig', array(
+            'form' => $form->createView(),
+            'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
+            'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+        ));
     }
 
 //MODIFY
@@ -139,53 +136,46 @@ class EventsController extends Controller
      *          "slug": "^([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
+     * @Method({"GET", "HEAD", "POST"})
+     * @ParamConverter("Event", options={"mapping": {"id": "id"}})
      */
-    public function modify(Request $request, EventsService $eventsService, $slug, $id)
+    public function modify(Request $request, EventsService $eventsService, Event $eventObject)
     {
-        //Defines the form
-        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Gets the event
-            $event = $eventsService->load($id);
-            $originalSlug = $event->getSlug();
+        $this->denyAccessUnlessGranted('modify', $eventObject);
 
-            //Gets the existing picture
-            $eventsService->defineImage($event);
+        //Defines form
+        $originalSlug = $eventObject->getSlug();
+        $eventsService->defineImage($eventObject);
+        $eventConfig = array('action' => 'modify');
+        $form = $this->createForm(EventType::class, $eventObject, array('eventConfig' => $eventConfig));
+        $form->handleRequest($request);
 
-            //Defines form
-            $eventConfig = array('action' => 'modify');
-            $form = $this->createForm(EventType::class, $event, array('eventConfig' => $eventConfig));
-            $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Adjust slug in case of not accepted signs
+            $eventObject->setSlug($eventsService->slugify($form->getData()->getSlug()));
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                //Adjust slug in case of not accepted signs
-                $event->setSlug($eventsService->slugify($form->getData()->getSlug()));
+            //Persists data in DB
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($eventObject);
+            $em->flush();
 
-                //Persists data in DB
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($event);
-                $em->flush();
+            //Resizes and renames the picture
+            $eventsService->resizeImage($form->getData()->getPicture(), $eventObject->getSlug() . '-' . $eventObject->getId());
 
-                //Resizes and renames the picture
-                $eventsService->resizeImage($form->getData()->getPicture(), $event->getSlug() . '-' . $event->getId());
-
-                //Redirects to the event
-                return $this->redirectToRoute('events_display', array(
-                    'slug' => $event->getSlug(),
-                    'id' => $event->getId(),
-                ));
-            }
-
-            //Returns the form to modify content
-            return $this->render('@c975LEvents/forms/modify.html.twig', array(
-                'form' => $form->createView(),
-                'event' => $event,
-                'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
-                'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+            //Redirects to the event
+            return $this->redirectToRoute('events_display', array(
+                'slug' => $eventObject->getSlug(),
+                'id' => $eventObject->getId(),
             ));
         }
 
-        //Access is denied
-        throw $this->createAccessDeniedException();
+        //Returns the modify form
+        return $this->render('@c975LEvents/forms/modify.html.twig', array(
+            'form' => $form->createView(),
+            'event' => $eventObject,
+            'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
+            'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+        ));
     }
 
 //DUPLICATE
@@ -197,54 +187,46 @@ class EventsController extends Controller
      *      })
      * @Method({"GET", "HEAD", "POST"})
      */
-    public function duplicate(Request $request, EventsService $eventsService, $id)
+    public function duplicate(Request $request, EventsService $eventsService, Event $eventObject)
     {
-        //Defines the form
-        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Gets the event
-            $event = $eventsService->load($id);
-            $originalSlug = $event->getSlug();
+        $this->denyAccessUnlessGranted('duplicate', $eventObject);
 
-            //Defines form
-            $eventClone = clone $event;
-            $eventClone
-                ->setTitle(null)
-                ->setSlug(null)
-            ;
-            $eventConfig = array('action' => 'duplicate');
-            $form = $this->createForm(EventType::class, $eventClone, array('eventConfig' => $eventConfig));
-            $form->handleRequest($request);
+        //Defines form
+        $eventClone = clone $eventObject;
+        $eventClone
+            ->setTitle(null)
+            ->setSlug(null)
+        ;
+        $eventConfig = array('action' => 'duplicate');
+        $form = $this->createForm(EventType::class, $eventClone, array('eventConfig' => $eventConfig));
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                //Adjust slug in case of not accepted signs
-                $eventClone->setSlug($eventsService->slugify($form->getData()->getSlug()));
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Adjust slug in case of not accepted signs
+            $eventClone->setSlug($eventsService->slugify($form->getData()->getSlug()));
 
-                //Persists data in DB
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($eventClone);
-                $em->flush();
+            //Persists data in DB
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($eventClone);
+            $em->flush();
 
-                //Resizes and renames the picture
-                $eventsService->resizeImage($form->getData()->getPicture(), $eventClone->getSlug() . '-' . $eventClone->getId());
+            //Resizes and renames the picture
+            $eventsService->resizeImage($form->getData()->getPicture(), $eventClone->getSlug() . '-' . $eventClone->getId());
 
-                //Redirects to the event
-                return $this->redirectToRoute('events_display', array(
-                    'slug' => $eventClone->getSlug(),
-                    'id' => $eventClone->getId(),
-                ));
-            }
-
-            //Returns the form to duplicate content
-            return $this->render('@c975LEvents/forms/duplicate.html.twig', array(
-                'form' => $form->createView(),
-                'event' => $eventClone,
-                'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
-                'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+            //Redirects to the event
+            return $this->redirectToRoute('events_display', array(
+                'slug' => $eventClone->getSlug(),
+                'id' => $eventClone->getId(),
             ));
         }
 
-        //Access is denied
-        throw $this->createAccessDeniedException();
+        //Returns the duplicate form
+        return $this->render('@c975LEvents/forms/duplicate.html.twig', array(
+            'form' => $form->createView(),
+            'event' => $eventClone,
+            'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
+            'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+        ));
     }
 
 //DELETE
@@ -255,43 +237,38 @@ class EventsController extends Controller
      *          "slug": "^([a-z0-9\-]+)",
      *          "id": "^([0-9]+)"
      *      })
+     * @Method({"GET", "HEAD", "POST"})
+     * @ParamConverter("Event", options={"mapping": {"id": "id"}})
      */
-    public function delete(Request $request, EventsService $eventsService, $id)
+    public function delete(Request $request, EventsService $eventsService, Event $eventObject)
     {
-        //Defines the form
-        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            //Gets the event
-            $event = $eventsService->load($id);
-            $eventsService->defineImage($event);
+        $this->denyAccessUnlessGranted('delete', $eventObject);
 
-            //Defines form
-            $eventConfig = array('action' => 'delete');
-            $form = $this->createForm(EventType::class, $event, array('eventConfig' => $eventConfig));
-            $form->handleRequest($request);
+        //Defines form
+        $eventsService->defineImage($eventObject);
+        $eventConfig = array('action' => 'delete');
+        $form = $this->createForm(EventType::class, $eventObject, array('eventConfig' => $eventConfig));
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                //Deletes picture file
-                $eventsService->deleteImage($event);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Deletes picture file
+            $eventsService->deleteImage($eventObject);
 
-                //Persists data in DB
-                $event->setSuppressed(true);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($event);
-                $em->flush();
+            //Persists data in DB
+            $eventObject->setSuppressed(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($eventObject);
+            $em->flush();
 
-                //Redirects to the dashboard
-                return $this->redirectToRoute('events_dashboard');
-            }
-
-            //Returns the form to delete content
-            return $this->render('@c975LEvents/forms/delete.html.twig', array(
-                'form' => $form->createView(),
-                'event' => $event,
-            ));
+            //Redirects to the dashboard
+            return $this->redirectToRoute('events_dashboard');
         }
 
-        //Access is denied
-        throw $this->createAccessDeniedException();
+        //Renders the delete form
+        return $this->render('@c975LEvents/forms/delete.html.twig', array(
+            'form' => $form->createView(),
+            'event' => $eventObject,
+        ));
     }
 
 //ICAL
@@ -303,20 +280,18 @@ class EventsController extends Controller
      *          "id": "^([0-9]+)"
      *      })
      * @Method({"GET", "HEAD"})
+     * @ParamConverter("Event", options={"mapping": {"id": "id"}})
      */
-    public function ical(EventsService $eventsService, $id)
+    public function ical(EventsService $eventsService, Event $eventObject)
     {
-        //Gets the event
-        $event = $eventsService->load($id);
-
-        //Returns the ical
+        //Renders the ical
         return new Response(
             $this->renderView(
                 '@c975LEvents/eventIcal.ics.twig', array(
-                    'event' => $event,
+                    'event' => $eventObject,
                 )),
             200,
-            array('Content-Type' => 'text/calendar', 'Content-Disposition' => 'inline; filename=' . $event->getSlug() . '.ics')
+            array('Content-Type' => 'text/calendar', 'Content-Disposition' => 'inline; filename=' . $eventObject->getSlug() . '.ics')
         );
     }
 
@@ -340,8 +315,10 @@ class EventsController extends Controller
         $events = $this->getDoctrine()
             ->getManager()
             ->getRepository('c975LEventsBundle:Event')
-            ->findAllEvents();
+            ->findAllEvents()
+            ;
 
+        //Renders the list of events
         return $this->render('@c975LEvents/pages/eventsAll.html.twig', array(
             'events' => $events,
             ));
@@ -359,7 +336,8 @@ class EventsController extends Controller
         $events = $this->getDoctrine()
             ->getManager()
             ->getRepository('c975LEventsBundle:Event')
-            ->findAllFinishedEvents();
+            ->findAllFinishedEvents()
+            ;
 
         //Pagination
         $paginator  = $this->get('knp_paginator');
@@ -369,6 +347,7 @@ class EventsController extends Controller
             10
         );
 
+        //Renders the list of events
         return $this->render('@c975LEvents/pages/eventsFinished.html.twig', array(
             'events' => $pagination,
             ));
@@ -393,12 +372,9 @@ class EventsController extends Controller
      */
     public function help()
     {
-        //Returns the help
-        if (null !== $this->getUser() && $this->get('security.authorization_checker')->isGranted($this->getParameter('c975_l_events.roleNeeded'))) {
-            return $this->render('@c975LEvents/pages/help.html.twig');
-        }
+        $this->denyAccessUnlessGranted('help', null);
 
-        //Access is denied
-        throw $this->createAccessDeniedException();
+        //Renders the help
+        return $this->render('@c975LEvents/pages/help.html.twig');
     }
 }

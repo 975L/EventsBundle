@@ -65,7 +65,7 @@ c975_l_events:
     #Path where the pictures will be stored. The full path ('web/images/[folderPictures]') has to be added to .gitignore if Git is used
     folderPictures: 'events'
     #User's role needed to enable access to the edition of page
-    roleNeeded: 'ROLE_ADMIN' #default 'ROLE-ADMIN'
+    roleNeeded: 'ROLE_ADMIN' #default 'ROLE_ADMIN'
     #Base url for sitemap creation without leading slash
     sitemapBaseUrl: 'http://example.com'
     #(Optional) Array of available languages of the website

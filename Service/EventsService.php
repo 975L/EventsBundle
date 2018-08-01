@@ -29,17 +29,17 @@ class EventsService
     }
 
     //Defines the picture related to Event
-    public function defineImage($event)
+    public function defineImage($eventObject)
     {
         //Gets the FileSystem
         $fs = new Filesystem();
 
-        $image = $this->getImagesFolder() . $event->getSlug() . '-' . $event->getId() . '.jpg';
+        $image = $this->getImagesFolder() . $eventObject->getSlug() . '-' . $eventObject->getId() . '.jpg';
         if ($fs->exists($image)) {
-            $event->setPicture($this->getImagesWebFolder() . $event->getSlug() . '-' . $event->getId() . '.jpg');
-        } else {
-            $event->setPicture(null);
+            $eventObject->setPicture($this->getImagesWebFolder() . $eventObject->getSlug() . '-' . $eventObject->getId() . '.jpg');
         }
+
+        $eventObject->setPicture(null);
     }
 
     //Returns the images folder
@@ -58,25 +58,11 @@ class EventsService
         return 'images/' . $this->container->getParameter('c975_l_events.folderPictures') . '/';
     }
 
-    //Loads event
-    public function load($id)
-    {
-        //Loads from DB
-        $event = $this->em->getRepository('c975LEventsBundle:Event')->findOneById($id);
-
-        //Not existing event
-        if (!$event instanceof Event) {
-            throw $this->createNotFoundException();
-        }
-
-        return $event;
-    }
-
     //Deletes picture file
-    public function deleteImage($event)
+    public function deleteImage($eventObject)
     {
         $fs = new Filesystem();
-        $image = $this->getImagesFolder() . $event->getSlug() . '-' . $event->getId() . '.jpg';
+        $image = $this->getImagesFolder() . $eventObject->getSlug() . '-' . $eventObject->getId() . '.jpg';
 
         if ($fs->exists($image)) {
             $fs->remove($image);
