@@ -138,7 +138,7 @@ Link to a page, in Twig, can be done by `<a href="{{ path('events_display', { 's
 
 The different Routes (naming self-explanatory) available are:
 - events_display
-- events_new
+- events_create
 - events_modify
 - events_duplicate
 - events_delete

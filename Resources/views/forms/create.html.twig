@@ -1,11 +1,11 @@
 {% extends "@c975LEvents/layout.html.twig" %}
 {% trans_default_domain 'events' %}
-{% set title = 'label.new'|trans({}, 'toolbar') %}
+{% set title = 'label.create'|trans({}, 'toolbar') %}
 
 {% block events_content %}
     {{ include('@c975LEvents/tinymceInit.html.twig') }}
 {# Toolbar #}
-    {{ toolbar_display('@c975LEvents/tools.html.twig', 'new', 'md') }}
+    {{ toolbar_display('@c975LEvents/tools.html.twig', 'create', 'md') }}
 {# Form #}
     {{ form_start(form) }}
         {{ form_widget(form) }}

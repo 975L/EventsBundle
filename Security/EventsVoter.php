@@ -19,20 +19,20 @@ class EventsVoter extends Voter
     private $decisionManager;
     private $roleNeeded;
 
+    public const CREATE = 'create';
     public const DASHBOARD = 'dashboard';
-    public const ADD = 'add';
-    public const MODIFY = 'modify';
-    public const DUPLICATE = 'duplicate';
     public const DELETE = 'delete';
+    public const DUPLICATE = 'duplicate';
     public const HELP = 'help';
+    public const MODIFY = 'modify';
 
     private const ATTRIBUTES = array(
+        self::CREATE,
         self::DASHBOARD,
-        self::ADD,
-        self::MODIFY,
-        self::DUPLICATE,
         self::DELETE,
+        self::DUPLICATE,
         self::HELP,
+        self::MODIFY,
     );
 
     public function __construct(AccessDecisionManagerInterface $decisionManager, string $roleNeeded)
@@ -52,16 +52,14 @@ class EventsVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        $user = $token->getUser();
-
         //Defines access rights
         switch ($attribute) {
+            case self::CREATE:
             case self::DASHBOARD:
-            case self::ADD:
-            case self::MODIFY:
-            case self::DUPLICATE:
             case self::DELETE:
+            case self::DUPLICATE:
             case self::HELP:
+            case self::MODIFY:
                 return $this->decisionManager->decide($token, array($this->roleNeeded));
         }
 

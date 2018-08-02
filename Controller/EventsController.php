@@ -85,19 +85,19 @@ class EventsController extends Controller
         ));
     }
 
-//ADD
+//CREATE
     /**
-     * @Route("/events/new",
-     *      name="events_add")
+     * @Route("/events/create",
+     *      name="events_create")
      * @Method({"GET", "HEAD", "POST"})
      */
-    public function add(Request $request, EventsService $eventsService)
+    public function create(Request $request, EventsService $eventsService)
     {
         $eventObject = new Event();
-        $this->denyAccessUnlessGranted('add', $eventObject);
+        $this->denyAccessUnlessGranted('create', $eventObject);
 
         //Defines form
-        $eventConfig = array('action' => 'add');
+        $eventConfig = array('action' => 'create');
         $form = $this->createForm(EventType::class, $eventObject, array('eventConfig' => $eventConfig));
         $form->handleRequest($request);
 
@@ -120,8 +120,8 @@ class EventsController extends Controller
             ));
         }
 
-        //Renders the add form
-        return $this->render('@c975LEvents/forms/add.html.twig', array(
+        //Renders the create form
+        return $this->render('@c975LEvents/forms/create.html.twig', array(
             'form' => $form->createView(),
             'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
             'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),

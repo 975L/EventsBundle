@@ -1,5 +1,13 @@
 # Changelog
 
+v1.16.1
+-------
+- Update slugify method to check unicity of slug (02/08/2018)
+- Changed order (alphabetical) for `deleteImage()` method (02/08/2018)
+- Renamed `findAllAvailable()` method (02/08/2018)
+- Renamed things link to `add` to `create` (02/08/2018)
+- Ordered in alphabetical Voters constants (02/08/2018)
+
 v1.16
 -----
 - Made use of ParamConverter (30/07/2018)

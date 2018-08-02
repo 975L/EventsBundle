@@ -42,6 +42,17 @@ class EventsService
         $eventObject->setPicture(null);
     }
 
+    //Deletes picture file
+    public function deleteImage($eventObject)
+    {
+        $fs = new Filesystem();
+        $image = $this->getImagesFolder() . $eventObject->getSlug() . '-' . $eventObject->getId() . '.jpg';
+
+        if ($fs->exists($image)) {
+            $fs->remove($image);
+        }
+    }
+
     //Returns the images folder
     public function getImagesFolder()
     {
@@ -56,17 +67,6 @@ class EventsService
     public function getImagesWebFolder()
     {
         return 'images/' . $this->container->getParameter('c975_l_events.folderPictures') . '/';
-    }
-
-    //Deletes picture file
-    public function deleteImage($eventObject)
-    {
-        $fs = new Filesystem();
-        $image = $this->getImagesFolder() . $eventObject->getSlug() . '-' . $eventObject->getId() . '.jpg';
-
-        if ($fs->exists($image)) {
-            $fs->remove($image);
-        }
     }
 
     //Resizes picture
@@ -159,10 +159,41 @@ class EventsService
         }
     }
 
-    //Slugify
+    //Slugify function - https://github.com/cocur/slugify
     public function slugify($text)
     {
         $slugify = new Slugify();
-        return $slugify->slugify($text);
+        $slug = $slugify->slugify($text);
+
+        //Checks unicity of slug
+        $finalSlug = $slug;
+        $slugExists = true;
+        $i = 1;
+        do {
+            $slugExists = $this->slugExists($finalSlug);
+            if ($slugExists) {
+                $finalSlug = $slug . '-' . $i++;
+            }
+        } while (false !== $slugExists);
+
+        return $finalSlug;
+    }
+
+    //Checks if slug already exists
+    public function slugExists($slug)
+    {
+        //Gets the events
+        $events = $this->em
+            ->getRepository('c975LEventsBundle:Event')
+            ->findAllEvents()
+            ;
+
+        foreach ($events as $event) {
+            if ($event->getSlug() == $slug) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
