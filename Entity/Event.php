@@ -13,7 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Event
+ * Entity Event (linked to DB table `events`)
+ * @author Laurent Marquet <laurent.marquet@laposte.net>
+ * @copyright 2017 975L <contact@975l.com>
  *
  * @ORM\Table(name="events")
  * @ORM\Entity(repositoryClass="c975L\EventsBundle\Repository\EventRepository")
@@ -21,6 +23,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Event
 {
     /**
+     * Event unique id
+     * @var int
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -28,57 +33,84 @@ class Event
     protected $id;
 
     /**
+     * If Event is marked as suppressed
+     * @var bool
+     *
      * @ORM\Column(name="suppressed", type="boolean", options={"default":"0"})
      */
     protected $suppressed;
 
     /**
+     * Title of the Event
+     * @var string
+     *
      * @Assert\NotBlank()
      * @ORM\Column(name="title", type="string", length=128)
      */
     protected $title;
 
     /**
+     * Slug for the Event
+     * @var string
+     *
      * @Assert\NotBlank()
      * @ORM\Column(name="slug", type="string", length=128)
      */
     protected $slug;
 
     /**
+     * Start date for the Event
      * @var \DateTime
+     *
      * @ORM\Column(name="start_date", type="datetime")
      */
     protected $startDate;
 
     /**
+     * Start Time for the Event
+     * @var \DateTime
+     *
      * @ORM\Column(name="start_time", type="datetime", nullable=true)
      */
     protected $startTime;
 
     /**
+     * End date for the Event
      * @var \DateTime
+     *
      * @ORM\Column(name="end_date", type="datetime", nullable=true)
      */
     protected $endDate;
 
     /**
+     * End time for the Event
+     * @var \DateTime
      * @ORM\Column(name="end_time", type="datetime", nullable=true)
      */
     protected $endTime;
 
     /**
+     * Place for the Event
+     * @var string
+     *
      * @Assert\NotBlank()
      * @ORM\Column(name="place", type="string", length=256, nullable=true)
      */
     protected $place;
 
     /**
+     * Description for the Event
+     * @var string
+     *
      * @Assert\NotBlank()
      * @ORM\Column(name="description", type="string", nullable=true)
      */
     protected $description;
 
     /**
+     * Picture for the Event (not mapped in DB)
+     * @var mixed
+     *
      * @Assert\Image
      */
     protected $picture;
@@ -86,8 +118,7 @@ class Event
 
     /**
      * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -96,7 +127,7 @@ class Event
 
     /**
      * Set suppressed
-     *
+     * @param bool
      * @return Event
      */
     public function setSuppressed($suppressed)
@@ -108,8 +139,7 @@ class Event
 
     /**
      * Get suppressed
-     *
-     * @return string
+     * @return bool
      */
     public function getSuppressed()
     {
@@ -118,8 +148,8 @@ class Event
 
     /**
      * Set title
-     *
-     * @return Events
+     * @param string
+     * @return Event
      */
     public function setTitle($title)
     {
@@ -130,7 +160,6 @@ class Event
 
     /**
      * Get title
-     *
      * @return string
      */
     public function getTitle()
@@ -140,8 +169,8 @@ class Event
 
     /**
      * Set slug
-     *
-     * @return Events
+     * @param string
+     * @return Event
      */
     public function setSlug($slug)
     {
@@ -152,7 +181,6 @@ class Event
 
     /**
      * Get slug
-     *
      * @return string
      */
     public function getSlug()
@@ -162,8 +190,8 @@ class Event
 
     /**
      * Set startDate
-     *
-     * @return Events
+     * @param \DateTime
+     * @return Event
      */
     public function setStartDate($startDate)
     {
@@ -174,7 +202,6 @@ class Event
 
     /**
      * Get startDate
-     *
      * @return \DateTime
      */
     public function getStartDate()
@@ -184,8 +211,8 @@ class Event
 
     /**
      * Set startTime
-     *
-     * @return Events
+     * @param \DateTime
+     * @return Event
      */
     public function setStartTime($startTime)
     {
@@ -196,7 +223,6 @@ class Event
 
     /**
      * Get startTime
-     *
      * @return \DateTime
      */
     public function getStartTime()
@@ -206,8 +232,8 @@ class Event
 
     /**
      * Set endDate
-     *
-     * @return Events
+     * @param \DateTime
+     * @return Event
      */
     public function setEndDate($endDate)
     {
@@ -218,7 +244,6 @@ class Event
 
     /**
      * Get endDate
-     *
      * @return \DateTime
      */
     public function getEndDate()
@@ -228,8 +253,8 @@ class Event
 
     /**
      * Set endTime
-     *
-     * @return Events
+     * @param \DateTime
+     * @return Event
      */
     public function setEndTime($endTime)
     {
@@ -240,7 +265,6 @@ class Event
 
     /**
      * Get endTime
-     *
      * @return \DateTime
      */
     public function getEndTime()
@@ -250,8 +274,8 @@ class Event
 
     /**
      * Set place
-     *
-     * @return Events
+     * @param string
+     * @return Event
      */
     public function setPlace($place)
     {
@@ -262,7 +286,6 @@ class Event
 
     /**
      * Get place
-     *
      * @return string
      */
     public function getPlace()
@@ -272,8 +295,8 @@ class Event
 
     /**
      * Set description
-     *
-     * @return Events
+     * @param string
+     * @return Event
      */
     public function setDescription($description)
     {
@@ -284,7 +307,6 @@ class Event
 
     /**
      * Get description
-     *
      * @return string
      */
     public function getDescription()
@@ -294,10 +316,8 @@ class Event
 
     /**
      * Set picture
-     *
-     * @param string $picture
-     *
-     * @return User
+     * @param string
+     * @return Event
      */
     public function setPicture($picture)
     {
@@ -308,7 +328,6 @@ class Event
 
     /**
      * Get picture
-     *
      * @return string
      */
     public function getPicture()

@@ -1,10 +1,23 @@
 <?php
+/*
+ * (c) 2017: 975L <contact@975l.com>
+ * (c) 2017: Laurent Marquet <laurent.marquet@laposte.net>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace c975L\EventsBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Console command to create sitemap of events, executed with 'events:createSitemap'
+ * @author Laurent Marquet <laurent.marquet@laposte.net>
+ * @copyright 2017 975L <contact@975l.com>
+ */
 class SitemapCreateCommand extends ContainerAwareCommand
 {
     protected function configure()
@@ -28,7 +41,7 @@ class SitemapCreateCommand extends ContainerAwareCommand
         $repository = $em->getRepository('c975LEventsBundle:Event');
 
         //Gets the events
-        $eventsList = $repository->findAllEvents()->getQuery()->getResult();
+        $eventsList = $repository->findAllEventsNotFinished()->getQuery()->getResult();
 
         //Defines data related to events
         $events = array();

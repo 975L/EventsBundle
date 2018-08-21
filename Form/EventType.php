@@ -18,9 +18,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Event FormType
+ * @author Laurent Marquet <laurent.marquet@laposte.net>
+ * @copyright 2018 975L <contact@975l.com>
+ */
 class EventType extends AbstractType
 {
-    //Builds the form
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $disabled = $options['eventConfig']['action'] == 'delete' ? true : false;
@@ -47,6 +51,7 @@ class EventType extends AbstractType
                 ->add('picture', FileType::class, array(
                     'label' => 'label.picture',
                     'required' => $requiredImage,
+                    'data_class' => null,
                     ))
             ;
         }

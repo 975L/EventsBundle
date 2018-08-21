@@ -26,6 +26,9 @@
                         <td class="text-center">
                             <strong><a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans({}, 'toolbar') }}">{{ event.title }}</a></strong>
                             <br />
+{# Add to calendar #}
+                            <a href="{{ path('events_ical', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
+                                <span class="fas fa-calendar-plus"></span> {{'label.add_to_calendar'|trans }}</a>
                         </td>
 {# StartDate and Time #}
                         <td class="text-center">
@@ -48,20 +51,8 @@
                             {{ event.place }}
                         </td>
                     </tr>
-{# Add to calendar #}
-                    <tr>
-                        <td colspan="4" class="text-center">
-                            <a href="{{ path('events_ical', {'slug': event.slug, 'id': event.id}) }}" class="btn btn-primary" title="{{'label.add_to_calendar'|trans }}" role="button">
-                                <span class="fas fa-calendar-plus"></span> {{'label.add_to_calendar'|trans }}</a>
-                        </td>
-                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% endif %}
-{# Events finished #}
-    <p class="text-center">
-        <a href="{{ path('events_finished') }}">
-            {{'label.finished_events'|trans }}</a>
-    </p>
 {% endblock %}

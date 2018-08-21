@@ -1,5 +1,22 @@
 # Changelog
 
+v1.17
+-----
+- Added Voter for Slug Route (02/08/2018)
+- Removed FQCN (21/08/2018)
+- Added documentation (21/08/2018)
+- Added link to BuyMeCoffee (21/08/2018)
+- Added link to apidoc (21/08/2018)
+- Split `EventsService` in multiple files and creation of related Interfaces (21/08/2018)
+- Injected Services in place of using `container->get()` (21/08/2018)
+- Made redirection slug indicated in url and the one registered don't match (21/08/2018)
+- Added all events in dashboard, even those suppressed (21/08/2018)
+- Added Stardt date in Dashboard (21/08/2018)
+- Removed id and semantic url from Dashboard (21/08/2018)
+- Corrected sorting options in Dashboard (21/08/2018)
+- Removed Route `events_finished` as they are now included in Dashboard (21/08/2018)
+- For `events_all`, moved "Add to calendar" button under the title of the Event (21/08/2018)
+
 v1.16.1
 -------
 - Update slugify method to check unicity of slug (02/08/2018)

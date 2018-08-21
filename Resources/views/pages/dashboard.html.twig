@@ -13,9 +13,8 @@
         <table class="table table-hover table-condensed table-responsive">
             <thead>
                 <tr>
-                    <th class="text-center">{{ knp_pagination_sortable(events, 'Id', 'e.id') }}&nbsp;<span class="fas fa-sort"></span></th>
-                    <th class="text-center"><span class="fas fa-eye"></span>&nbsp;{{ knp_pagination_sortable(events, 'label.title'|trans, 'e.title') }}&nbsp;<span class="fas fa-sort"></span></th>
-                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.semantic_url'|trans, 'e.slug') }}&nbsp;<span class="fas fa-sort"></span></th>
+                    <th class="text-center"><span class="fas fa-eye"></span>&nbsp;{{ knp_pagination_sortable(events, 'label.title'|trans, 'title') }}&nbsp;<span class="fas fa-sort"></span></th>
+                    <th class="text-center">{{ knp_pagination_sortable(events, 'label.start_date'|trans, 'startDate') }}&nbsp;<span class="fas fa-sort"></span></th>
                     <th class="text-center"><span class="fas fa-pencil-alt"></span>&nbsp;{{ 'label.modify'|trans({}, 'toolbar') }}</th>
                     <th class="text-center"><span class="fas fa-copy"></span>&nbsp;{{ 'label.duplicate'|trans({}, 'toolbar') }}</th>
                     <th class="text-center"><span class="fas fa-trash"></span>&nbsp;{{ 'label.delete'|trans({}, 'toolbar') }}</th>
@@ -24,21 +23,21 @@
             <tbody>
                 {% for event in events %}
                     <tr>
-{# Id #}
-                        <td class="text-center">
-                            {{ event.id }}
-                        </td>
 {# Title & Display #}
                         <td class="text-center">
                             <a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans({}, 'toolbar') }}">{{ event.title }}</a>
                         </td>
-{# Slug #}
+{# Start Date #}
                         <td class="text-center">
-                            {{ event.slug }}
+                            {{ event.startDate|localizeddate('medium', 'none') }}
                         </td>
 {# Modify #}
                         <td class="text-center">
-                            <a href="{{ path('events_modify', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.modify'|trans({}, 'toolbar') }}">{{ 'label.modify'|trans({}, 'toolbar') }}</a>
+                            {% if event.suppressed == false %}
+                                <a href="{{ path('events_modify', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.modify'|trans({}, 'toolbar') }}">{{ 'label.modify'|trans({}, 'toolbar') }}</a>
+                            {% else %}
+                                {{ 'label.suppressed'|trans }}
+                            {% endif %}
                         </td>
 {# Duplicate #}
                         <td class="text-center">
@@ -46,7 +45,11 @@
                         </td>
 {# Delete #}
                         <td class="text-center">
-                            <a href="{{ path('events_delete', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.delete'|trans({}, 'toolbar') }}" class="text-danger">{{ 'label.delete'|trans({}, 'toolbar') }}</a>
+                            {% if event.suppressed == false %}
+                                <a href="{{ path('events_delete', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.delete'|trans({}, 'toolbar') }}" class="text-danger">{{ 'label.delete'|trans({}, 'toolbar') }}</a>
+                            {% else %}
+                                {{ 'label.suppressed'|trans }}
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

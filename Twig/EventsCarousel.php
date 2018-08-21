@@ -10,21 +10,36 @@
 namespace c975L\EventsBundle\Twig;
 
 use Symfony\Component\HttpFoundation\Response;
-use c975L\EventsBundle\Service\EventsService;
+use Doctrine\ORM\EntityManagerInterface;
+use c975L\EventsBundle\Service\Image\EventsImageInterface;
 use c975L\EventsBundle\Entity\Event;
 
+/**
+ * Twig extension to display the carousel using `events_carousel`
+ * @author Laurent Marquet <laurent.marquet@laposte.net>
+ * @copyright 2018 975L <contact@975l.com>
+ */
 class EventsCarousel extends \Twig_Extension
 {
+    /**
+     * Stores EntityManager
+     * @var EntityManagerInterface
+     */
     private $em;
-    private $service;
+
+    /**
+     * Stores EventsImage Service
+     * @var EventsImageInterface
+     */
+    private $eventsImage;
 
     public function __construct(
-        \Doctrine\ORM\EntityManagerInterface $em,
-        \c975L\EventsBundle\Service\EventsService $service
-        )
+        EntityManagerInterface $em,
+        EventsImageInterface $eventsImage
+    )
     {
         $this->em = $em;
-        $this->service = $service;
+        $this->eventsImage = $eventsImage;
     }
 
     public function getFunctions()
@@ -41,14 +56,20 @@ class EventsCarousel extends \Twig_Extension
         );
     }
 
-    public function Carousel(\Twig_Environment $environment, $number)
+    /**
+     * Renders the Carousel with $number of Events
+     */
+    public function Carousel(\Twig_Environment $environment, int $number)
     {
-        //Gets events
-        $events = $this->em->getRepository('c975LEventsBundle:Event')->findForCarousel($number);
+        //Gets Events
+        $events = $this->em
+            ->getRepository('c975LEventsBundle:Event')
+            ->findForCarousel($number)
+        ;
 
-        //Defines picture
+        //Defines pictures
         foreach ($events as $event) {
-            $this->service->defineImage($event);
+            $this->eventsImage->define($event);
         }
 
         //Returns the carousel

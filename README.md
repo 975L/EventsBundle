@@ -11,7 +11,9 @@ EventsBundle does the following:
 
 This Bundle relies on the use of [TinyMce](https://www.tinymce.com/), [jQuery](https://jquery.com/), [Bootstrap](http://getbootstrap.com/) and [Bootstrap DatePicker](https://github.com/uxsolutions/bootstrap-datepicker) and requires Twig/Extensions for localizing dates and time.
 
-[Events Bundle dedicated web page](https://975l.com/en/pages/events-bundle).
+[EventsBundle dedicated web page](https://975l.com/en/pages/events-bundle).
+
+[EventsBundle API documentation](https://975l.com/apidoc/c975L/EventsBundle.html).
 
 Bundle installation
 ===================
@@ -156,3 +158,5 @@ Create Sitemap
 --------------
 In a console use `php bin/console events:createSitemap` to create a `sitemap-events.xml` in the `web` folder of your project. You can use a crontab to generate it every day.
 You can add this file in a `sitemap-index.xml`that groups all your sitemaps or directly use it if you have only one.
+
+**If this project help you to reduce time to develop, you can [buy me a coffee](https://www.buymeacoffee.com/LaurentMarquet) :)**
