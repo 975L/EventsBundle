@@ -1,5 +1,10 @@
 # Changelog
 
+v1.17.1
+-------
+- Re-ordered Controller > `display()` (22/08/2018)
+- Added redirct to good slug on `events_ical` Route (22/08/2018)
+
 v1.17
 -----
 - Added Voter for Slug Route (02/08/2018)

@@ -111,21 +111,19 @@ class EventsController extends Controller
      */
     public function display(Event $eventObject, $slug)
     {
-        //Defines image
-        $this->eventsImage->define($eventObject);
-
-        //Deleted event
-        if (true === $eventObject->getSuppressed()) {
-            throw new GoneHttpException();
-        }
-
         //Redirects to good slug
         $redirectUrl = $this->eventsSlug->match('events_display', $eventObject, $slug);
         if (null !== $redirectUrl) {
             return new RedirectResponse($redirectUrl);
         }
 
-        //Renders the event
+        //Deleted Event
+        if (true === $eventObject->getSuppressed()) {
+            throw new GoneHttpException();
+        }
+
+        //Renders the Event
+        $this->eventsImage->define($eventObject);
         return $this->render('@c975LEvents/pages/display.html.twig', array(
             'event' => $eventObject,
         ));
@@ -335,8 +333,14 @@ class EventsController extends Controller
      * @Method({"GET", "HEAD"})
      * @ParamConverter("Event", options={"mapping": {"id": "id"}})
      */
-    public function iCal(Event $eventObject)
+    public function iCal(Event $eventObject, $slug)
     {
+        //Redirects to good slug
+        $redirectUrl = $this->eventsSlug->match('events_ical', $eventObject, $slug);
+        if (null !== $redirectUrl) {
+            return new RedirectResponse($redirectUrl);
+        }
+
         //Renders the iCal
         return new Response(
             $this->renderView(
