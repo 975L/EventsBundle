@@ -15,7 +15,7 @@ use c975L\EventsBundle\Service\Image\EventsImageInterface;
 use c975L\EventsBundle\Entity\Event;
 
 /**
- * Twig extension to display the carousel using `events_carousel`
+ * Twig extension to display the carousel using `events_carousel($number)`
  * @author Laurent Marquet <laurent.marquet@laposte.net>
  * @copyright 2018 975L <contact@975l.com>
  */
@@ -57,7 +57,8 @@ class EventsCarousel extends \Twig_Extension
     }
 
     /**
-     * Renders the Carousel with $number of Events
+     * Returns the xhtml code for the Carousel with $number of Events
+     * @return string
      */
     public function Carousel(\Twig_Environment $environment, int $number)
     {

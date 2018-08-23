@@ -12,7 +12,7 @@ namespace c975L\EventsBundle\Service;
 use c975L\EventsBundle\Entity\Event;
 
 /**
- * Interface to be called for DI for ContactForm Main related services
+ * Interface to be called for DI for Events Main related services
  * @author Laurent Marquet <laurent.marquet@laposte.net>
  * @copyright 2018 975L <contact@975l.com>
  */

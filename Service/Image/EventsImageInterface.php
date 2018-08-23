@@ -12,7 +12,7 @@ namespace c975L\EventsBundle\Service\Image;
 use c975L\EventsBundle\Entity\Event;
 
 /**
- * Interface to be called for DI for ContactForm Image related services
+ * Interface to be called for DI for Events Image related services
  * @author Laurent Marquet <laurent.marquet@laposte.net>
  * @copyright 2018 975L <contact@975l.com>
  */

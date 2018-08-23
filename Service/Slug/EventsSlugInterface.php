@@ -12,13 +12,12 @@ namespace c975L\EventsBundle\Service\Slug;
 use c975L\EventsBundle\Entity\Event;
 
 /**
- * Interface to be called for DI for ContactForm Main related services
+ * Interface to be called for DI for Events Slug related services
  * @author Laurent Marquet <laurent.marquet@laposte.net>
  * @copyright 2018 975L <contact@975l.com>
  */
 interface EventsSlugInterface
 {
-
     /**
      * Checks if slug already exists
      * @return bool

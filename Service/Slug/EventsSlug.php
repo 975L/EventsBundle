@@ -48,7 +48,7 @@ class EventsSlug implements EventsSlugInterface
         //Gets the events
         $events = $this->em
             ->getRepository('c975LEventsBundle:Event')
-            ->findNotSuppressed()
+            ->findAll()
         ;
 
         foreach ($events as $event) {

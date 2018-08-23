@@ -1,5 +1,10 @@
 # Changelog
 
+v1.17.1.1
+---------
+- Corrected documentation (22/08/2018)
+- Changed method to test if slug exists (23/08/2018)
+
 v1.17.1
 -------
 - Re-ordered Controller > `display()` (22/08/2018)
