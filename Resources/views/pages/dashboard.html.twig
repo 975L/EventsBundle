@@ -25,7 +25,7 @@
                     <tr>
 {# Title & Display #}
                         <td class="text-center">
-                            <a href="{{ path('events_display', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.display'|trans({}, 'toolbar') }}">{{ event.title }}</a>
+                            {{ toolbar_button_text(path('events_display', {'slug': event.slug, 'id': event.id}), 'display', 'sm', 'true', 'right', event.title) }}
                         </td>
 {# Start Date #}
                         <td class="text-center">
@@ -34,19 +34,19 @@
 {# Modify #}
                         <td class="text-center">
                             {% if event.suppressed == false %}
-                                <a href="{{ path('events_modify', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.modify'|trans({}, 'toolbar') }}">{{ 'label.modify'|trans({}, 'toolbar') }}</a>
+                                {{ toolbar_button_text(path('events_modify', {'slug': event.slug, 'id': event.id}), 'modify', 'sm') }}
                             {% else %}
                                 {{ 'label.suppressed'|trans }}
                             {% endif %}
                         </td>
 {# Duplicate #}
                         <td class="text-center">
-                            <a href="{{ path('events_duplicate', {'id': event.id}) }}" title="{{ 'label.duplicate'|trans({}, 'toolbar') }}">{{ 'label.duplicate'|trans({}, 'toolbar') }}</a>
+                            {{ toolbar_button_text(path('events_duplicate', {'id': event.id}), 'duplicate', 'sm') }}
                         </td>
 {# Delete #}
                         <td class="text-center">
                             {% if event.suppressed == false %}
-                                <a href="{{ path('events_delete', {'slug': event.slug, 'id': event.id}) }}" title="{{ 'label.delete'|trans({}, 'toolbar') }}" class="text-danger">{{ 'label.delete'|trans({}, 'toolbar') }}</a>
+                                {{ toolbar_button_text(path('events_delete', {'slug': event.slug, 'id': event.id}), 'delete', 'sm') }}
                             {% else %}
                                 {{ 'label.suppressed'|trans }}
                             {% endif %}

@@ -1,5 +1,9 @@
 # Changelog
 
+v1.17.2
+-------
+- Replaced links in dashboard by buttons (25/08/2018)
+
 v1.17.1.1
 ---------
 - Corrected documentation (22/08/2018)
