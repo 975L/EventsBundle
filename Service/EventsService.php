@@ -10,9 +10,10 @@
 namespace c975L\EventsBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use c975L\EventsBundle\Entity\Event;
-use c975L\EventsBundle\Service\Image\EventsImageInterface;
-use c975L\EventsBundle\Service\Slug\EventsSlugInterface;
+use c975L\ServicesBundle\Service\ServiceImageInterface;
+use c975L\ServicesBundle\Service\ServiceSlugInterface;
 use c975L\EventsBundle\Service\EventsServiceInterface;
 
 /**
@@ -23,32 +24,52 @@ use c975L\EventsBundle\Service\EventsServiceInterface;
 class EventsService implements EventsServiceInterface
 {
     /**
+     * Stores ContainerInterface
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
      * Stores EntityManager
      * @var EntityManagerInterface
      */
     private $em;
 
     /**
-     * Stores EventsImage Service
-     * @var EventsImageInterface
+     * Stores ServiceImageInterface
+     * @var ServiceImageInterface
      */
-    private $eventsImage;
+    private $serviceImage;
 
     /**
-     * Stores EventsSlug Service
-     * @var EventsSlugInterface
+     * Stores ServiceSlugInterface
+     * @var ServiceSlugInterface
      */
-    private $eventsSlug;
+    private $serviceSlug;
 
     public function __construct(
+        ContainerInterface $container,
         EntityManagerInterface $em,
-        EventsImageInterface $eventsImage,
-        EventsSlugInterface $eventsSlug
+        ServiceImageInterface $serviceImage,
+        ServiceSlugInterface $serviceSlug
     )
     {
+        $this->container = $container;
         $this->em = $em;
-        $this->eventsImage = $eventsImage;
-        $this->eventsSlug = $eventsSlug;
+        $this->serviceImage = $serviceImage;
+        $this->serviceSlug = $serviceSlug;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function defineImage(Event $eventObject)
+    {
+        if (is_file($this->getPicturePath($eventObject))) {
+            $eventObject->setPicture('images/' . $this->getFolderPictures() . $eventObject->getSlug() . '-' . $eventObject->getId() . '.jpg');
+        } else {
+            $eventObject->setPicture(null);
+        }
     }
 
     /**
@@ -57,12 +78,42 @@ class EventsService implements EventsServiceInterface
     public function delete(Event $eventObject)
     {
         //Deletes picture file
-        $this->eventsImage->delete($eventObject);
+        $this->serviceImage->delete($this->getPicturePath($eventObject));
 
         //Persists data in DB
         $eventObject->setSuppressed(true);
         $this->em->persist($eventObject);
         $this->em->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFolderPictures()
+    {
+        $folderPictures = $this->container->getParameter('c975_l_events.folderPictures');
+
+        if (false === strrpos($folderPictures, '/')) {
+            $folderPictures .= '/';
+        }
+
+        return $folderPictures;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPictureName(Event $eventObject)
+    {
+        return $eventObject->getSlug() . '-' . $eventObject->getId() . '.jpg';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPicturePath(Event $eventObject)
+    {
+        return $this->serviceImage->getFolder($this->getFolderPictures()) . $this->getPictureName($eventObject);
     }
 
     /**
@@ -93,12 +144,17 @@ class EventsService implements EventsServiceInterface
     public function register(Event $eventObject)
     {
         //Adjust slug in case of not accepted signs that has been added by user
-        $eventObject->setSlug($this->eventsSlug->slugify($eventObject->getSlug()));
+        $uow = $this->em->getUnitOfWork();
+        $uow->computeChangeSets();
+        if (isset($uow->getEntityChangeSet($eventObject)['slug'])) {
+            $eventObject->setSlug($this->serviceSlug->slugify('c975LEventsBundle:Event', $eventObject->getSlug()));
+        }
+
         $eventObject->setSuppressed(false);
 
         //Resizes and renames the picture
-        $this->eventsImage->resize($eventObject->getPicture(), $eventObject->getSlug() . '-' . $eventObject->getId());
-        $this->eventsImage->define($eventObject);
+        $this->serviceImage->resize($eventObject->getPicture(), $this->serviceImage->getFolder($this->getFolderPictures()), $this->getPictureName($eventObject), 'jpg', 400, 75);
+        $this->defineImage($eventObject);
 
         //Persists data in DB
         $this->em->persist($eventObject);

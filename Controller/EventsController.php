@@ -27,11 +27,10 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Cocur\Slugify\Slugify;
 use Knp\Component\Pager\PaginatorInterface;
+use c975L\ServicesBundle\Service\ServiceSlugInterface;
 use c975L\EventsBundle\Entity\Event;
 use c975L\EventsBundle\Form\EventType;
 use c975L\EventsBundle\Service\EventsServiceInterface;
-use c975L\EventsBundle\Service\Image\EventsImageInterface;
-use c975L\EventsBundle\Service\Slug\EventsSlugInterface;
 
 /**
  * Main Controller class
@@ -47,26 +46,18 @@ class EventsController extends Controller
     private $eventsService;
 
     /**
-     * Stores EventsImage Service
-     * @var EventsImageInterface
+     * Stores ServiceSlugInterface
+     * @var ServiceSlugInterface
      */
-    private $eventsImage;
-
-    /**
-     * Stores EventsSlug Service
-     * @var EventsSlugInterface
-     */
-    private $eventsSlug;
+    private $serviceSlug;
 
     public function __construct(
         EventsServiceInterface $eventsService,
-        EventsImageInterface $eventsImage,
-        EventsSlugInterface $eventsSlug
+        ServiceSlugInterface $serviceSlug
     )
     {
         $this->eventsService = $eventsService;
-        $this->eventsImage = $eventsImage;
-        $this->eventsSlug = $eventsSlug;
+        $this->serviceSlug = $serviceSlug;
     }
 
 //DASHBOARD
@@ -112,18 +103,18 @@ class EventsController extends Controller
     public function display(Event $eventObject, $slug)
     {
         //Redirects to good slug
-        $redirectUrl = $this->eventsSlug->match('events_display', $eventObject, $slug);
+        $redirectUrl = $this->serviceSlug->match('events_display', $eventObject, $slug);
         if (null !== $redirectUrl) {
             return new RedirectResponse($redirectUrl);
         }
 
         //Deleted Event
-        if (true === $eventObject->getSuppressed()) {
+        if ($eventObject->getSuppressed()) {
             throw new GoneHttpException();
         }
 
         //Renders the Event
-        $this->eventsImage->define($eventObject);
+        $this->eventsService->defineImage($eventObject);
         return $this->render('@c975LEvents/pages/display.html.twig', array(
             'event' => $eventObject,
         ));
@@ -189,16 +180,14 @@ class EventsController extends Controller
         $this->denyAccessUnlessGranted('modify', $eventObject);
 
         //Redirects to good slug
-        $redirectUrl = $this->eventsSlug->match('events_modify', $eventObject, $slug);
+        $redirectUrl = $this->serviceSlug->match('events_modify', $eventObject, $slug);
         if (null !== $redirectUrl) {
             return new RedirectResponse($redirectUrl);
         }
 
         //Defines form
-        $originalSlug = $eventObject->getSlug();
-        $this->eventsImage->define($eventObject);
+        $this->eventsService->defineImage($eventObject);
         $eventConfig = array('action' => 'modify');
-
         $form = $this->createForm(EventType::class, $eventObject, array('eventConfig' => $eventConfig));
         $form->handleRequest($request);
 
@@ -291,13 +280,13 @@ class EventsController extends Controller
         $this->denyAccessUnlessGranted('delete', $eventObject);
 
         //Redirects to good slug
-        $redirectUrl = $this->eventsSlug->match('events_delete', $eventObject, $slug);
+        $redirectUrl = $this->serviceSlug->match('events_delete', $eventObject, $slug);
         if (null !== $redirectUrl) {
             return new RedirectResponse($redirectUrl);
         }
 
         //Defines form
-        $this->eventsImage->define($eventObject);
+        $this->eventsService->defineImage($eventObject);
         $eventConfig = array('action' => 'delete');
         $form = $this->createForm(EventType::class, $eventObject, array('eventConfig' => $eventConfig));
         $form->handleRequest($request);
@@ -336,7 +325,7 @@ class EventsController extends Controller
     public function iCal(Event $eventObject, $slug)
     {
         //Redirects to good slug
-        $redirectUrl = $this->eventsSlug->match('events_ical', $eventObject, $slug);
+        $redirectUrl = $this->serviceSlug->match('events_ical', $eventObject, $slug);
         if (null !== $redirectUrl) {
             return new RedirectResponse($redirectUrl);
         }
@@ -393,7 +382,7 @@ class EventsController extends Controller
     {
         $this->denyAccessUnlessGranted('slug', null);
 
-        return $this->json(array('a' => $this->eventsSlug->slugify($text)));
+        return $this->json(array('a' => $this->serviceSlug->slugify('c975LEventsBundle:Event', $text)));
     }
 
 //HELP

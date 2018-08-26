@@ -50,8 +50,8 @@ class EventRepository extends EntityRepository
             ->where('e.startDate >= :currentDate OR e.endDate >= :currentDate')
             ->andwhere('e.suppressed = 0')
             ->setParameter('currentDate', new \Datetime())
-            ->orderBy('e.startDate', 'ASC')
-            ->orderBy('e.startTime', 'ASC')
+            ->addOrderBy('e.startDate', 'ASC')
+            ->addOrderBy('e.startTime', 'ASC')
             ;
 
         return $qb->getQuery()->getResult();
@@ -65,8 +65,8 @@ class EventRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('e');
         $qb->select('e')
-            ->orderBy('e.startDate', 'ASC')
-            ->orderBy('e.startTime', 'ASC')
+            ->addOrderBy('e.startDate', 'ASC')
+            ->addOrderBy('e.startTime', 'ASC')
             ;
 
         return $qb->getQuery()->getResult();
@@ -81,8 +81,8 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
         $qb->select('e')
             ->where('e.suppressed = 0')
-            ->orderBy('e.startDate', 'ASC')
-            ->orderBy('e.startTime', 'ASC')
+            ->addOrderBy('e.startDate', 'ASC')
+            ->addOrderBy('e.startTime', 'ASC')
             ;
 
         return $qb->getQuery()->getResult();

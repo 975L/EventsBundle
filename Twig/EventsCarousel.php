@@ -11,7 +11,7 @@ namespace c975L\EventsBundle\Twig;
 
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
-use c975L\EventsBundle\Service\Image\EventsImageInterface;
+use c975L\EventsBundle\Service\EventsServiceInterface;
 use c975L\EventsBundle\Entity\Event;
 
 /**
@@ -22,24 +22,24 @@ use c975L\EventsBundle\Entity\Event;
 class EventsCarousel extends \Twig_Extension
 {
     /**
-     * Stores EntityManager
+     * Stores EntityManagerInterface
      * @var EntityManagerInterface
      */
     private $em;
 
     /**
-     * Stores EventsImage Service
-     * @var EventsImageInterface
+     * Stores EventsServiceInterface
+     * @var EventsServiceInterface
      */
-    private $eventsImage;
+    private $eventsService;
 
     public function __construct(
         EntityManagerInterface $em,
-        EventsImageInterface $eventsImage
+        EventsServiceInterface $eventsService
     )
     {
         $this->em = $em;
-        $this->eventsImage = $eventsImage;
+        $this->eventsService = $eventsService;
     }
 
     public function getFunctions()
@@ -70,7 +70,7 @@ class EventsCarousel extends \Twig_Extension
 
         //Defines pictures
         foreach ($events as $event) {
-            $this->eventsImage->define($event);
+            $this->eventsService->defineImage($event);
         }
 
         //Returns the carousel

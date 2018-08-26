@@ -19,9 +19,32 @@ use c975L\EventsBundle\Entity\Event;
 interface EventsServiceInterface
 {
     /**
+     * Defins the image for the Event
+     */
+    public function defineImage(Event $eventObject);
+
+    /**
      * Deletes the Event
      */
     public function delete(Event $eventObject);
+
+    /**
+     * Gets pictures folder from config
+     * @return string
+     */
+    public function getFolderPictures();
+
+    /**
+     * Get filename for the picture
+     * @return string
+     */
+    public function getPictureName(Event $eventObject);
+
+    /**
+     * Get full picture path
+     * @return string
+     */
+    public function getPicturePath(Event $eventObject);
 
     /**
      * Gets all the Events, even those suppressed

@@ -1,5 +1,12 @@
 # Changelog
 
+v1.17.3
+-------
+- Removed 'true ===' as not needed (25/08/2018)
+- Added dependency on "c975l/config-bundle" and "c975l/services-bundle" (26/08/2018)
+- Corrected modify method as it was creating another event due to test of slug's 'unicity (26/08/2018)
+- Corrected Repository methods orderBy (26/08/2018)
+
 v1.17.2
 -------
 - Replaced links in dashboard by buttons (25/08/2018)
@@ -12,7 +19,7 @@ v1.17.1.1
 v1.17.1
 -------
 - Re-ordered Controller > `display()` (22/08/2018)
-- Added redirct to good slug on `events_ical` Route (22/08/2018)
+- Added redirect to good slug on `events_ical` Route (22/08/2018)
 
 v1.17
 -----
