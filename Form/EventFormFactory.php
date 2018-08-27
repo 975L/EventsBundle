@@ -38,7 +38,17 @@ class EventFormFactory implements EventFormFactoryInterface
      */
     public function create(string $name, Event $eventObject)
     {
-        $config = array('action' => $name);
+        switch ($name) {
+            case 'create':
+            case 'modify':
+            case 'duplicate':
+            case 'delete':
+                $config = array('action' => $name);
+                break;
+            default:
+                $config = array();
+                break;
+        }
 
         return $this->formFactory->create(EventType::class, $eventObject, array('config' => $config));
     }

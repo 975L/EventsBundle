@@ -1,5 +1,9 @@
 # Changelog
 
+v1.17.4.2
+---------
+- Used a `switch()` for the FormFactory more readable (27/08/2018)
+
 v1.17.4.1
 ---------
 - Removed ContainerInterface in EventFormFacory as not used (27/08/2018)
