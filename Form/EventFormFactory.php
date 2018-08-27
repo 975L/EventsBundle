@@ -9,7 +9,6 @@
 
 namespace c975L\EventsBundle\Form;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use c975L\EventsBundle\Entity\Event;
@@ -24,17 +23,13 @@ use c975L\EventsBundle\Form\EventFormFactoryInterface;
 class EventFormFactory implements EventFormFactoryInterface
 {
     /**
-     * Stores container
-     * @var ContainerInterface
+     * Stores FormFactoryInterface
+     * @var FormFactoryInterface
      */
-    private $container;
+    private $formFactory;
 
-    public function __construct(
-        ContainerInterface $container,
-        FormFactoryInterface $formFactory
-    )
+    public function __construct(FormFactoryInterface $formFactory)
     {
-        $this->container = $container;
         $this->formFactory = $formFactory;
     }
 

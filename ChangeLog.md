@@ -1,5 +1,9 @@
 # Changelog
 
+v1.17.4.1
+---------
+- Removed ContainerInterface in EventFormFacory as not used (27/08/2018)
+
 v1.17.4
 -------
 - Added EventFormFactory + Interface (27/08/2018)
