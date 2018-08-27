@@ -2,7 +2,7 @@
 
 {% spaceless %}
 {# Dashboard #}
-{{ toolbar_button(path('events_dashboard'), 'dashboard', 'label.events'|trans) }}
+{{ toolbar_button(path('events_dashboard'), 'dashboard', 'md', 'label.events'|trans) }}
 
 {# Display #}
 {% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'create' and type != 'duplicate' %}

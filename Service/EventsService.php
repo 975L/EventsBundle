@@ -12,6 +12,7 @@ namespace c975L\EventsBundle\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use c975L\EventsBundle\Entity\Event;
+use c975L\EventsBundle\Form\EventFormFactoryInterface;
 use c975L\ServicesBundle\Service\ServiceImageInterface;
 use c975L\ServicesBundle\Service\ServiceSlugInterface;
 use c975L\EventsBundle\Service\EventsServiceInterface;
@@ -30,10 +31,16 @@ class EventsService implements EventsServiceInterface
     private $container;
 
     /**
-     * Stores EntityManager
+     * Stores EntityManagerInterface
      * @var EntityManagerInterface
      */
     private $em;
+
+    /**
+     * Stores EventFormFactoryInterface
+     * @var EventFormFactoryInterface
+     */
+    private $eventFormFactory;
 
     /**
      * Stores ServiceImageInterface
@@ -50,14 +57,38 @@ class EventsService implements EventsServiceInterface
     public function __construct(
         ContainerInterface $container,
         EntityManagerInterface $em,
+        EventFormFactoryInterface $eventFormFactory,
         ServiceImageInterface $serviceImage,
         ServiceSlugInterface $serviceSlug
     )
     {
         $this->container = $container;
         $this->em = $em;
+        $this->eventFormFactory = $eventFormFactory;
         $this->serviceImage = $serviceImage;
         $this->serviceSlug = $serviceSlug;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function cloneObject(Event $eventObject)
+    {
+        $eventClone = clone $eventObject;
+        $eventClone
+            ->setTitle(null)
+            ->setSlug(null)
+        ;
+
+        return $eventClone;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createForm(string $name, Event $eventObject)
+    {
+        return $this->eventFormFactory->create($name, $eventObject);
     }
 
     /**

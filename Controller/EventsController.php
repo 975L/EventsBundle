@@ -40,7 +40,7 @@ use c975L\EventsBundle\Service\EventsServiceInterface;
 class EventsController extends Controller
 {
     /**
-     * Stores EventsService
+     * Stores EventsServiceInterface
      * @var EventsServiceInterface
      */
     private $eventsService;
@@ -136,8 +136,7 @@ class EventsController extends Controller
         $this->denyAccessUnlessGranted('create', $eventObject);
 
         //Defines form
-        $eventConfig = array('action' => 'create');
-        $form = $this->createForm(EventType::class, $eventObject, array('eventConfig' => $eventConfig));
+        $form = $this->eventsService->createForm('create', $eventObject);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -187,8 +186,7 @@ class EventsController extends Controller
 
         //Defines form
         $this->eventsService->defineImage($eventObject);
-        $eventConfig = array('action' => 'modify');
-        $form = $this->createForm(EventType::class, $eventObject, array('eventConfig' => $eventConfig));
+        $form = $this->eventsService->createForm('modify', $eventObject);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -230,13 +228,8 @@ class EventsController extends Controller
         $this->denyAccessUnlessGranted('duplicate', $eventObject);
 
         //Defines form
-        $eventClone = clone $eventObject;
-        $eventClone
-            ->setTitle(null)
-            ->setSlug(null)
-        ;
-        $eventConfig = array('action' => 'duplicate');
-        $form = $this->createForm(EventType::class, $eventClone, array('eventConfig' => $eventConfig));
+        $eventClone = $this->eventsService->cloneObject($eventObject);
+        $form = $this->eventsService->createForm('duplicate', $eventClone);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -287,8 +280,7 @@ class EventsController extends Controller
 
         //Defines form
         $this->eventsService->defineImage($eventObject);
-        $eventConfig = array('action' => 'delete');
-        $form = $this->createForm(EventType::class, $eventObject, array('eventConfig' => $eventConfig));
+        $form = $this->eventsService->createForm('delete', $eventObject);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

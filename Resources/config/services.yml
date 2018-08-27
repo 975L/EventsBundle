@@ -9,6 +9,9 @@ services:
     c975L\EventsBundle\Controller\:
         resource: '../../Controller/*'
 
+    c975L\EventsBundle\Form\:
+        resource: '../../Form/*'
+
     c975L\EventsBundle\Security\:
         resource: '../../Security/*'
         bind:

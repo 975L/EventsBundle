@@ -1,5 +1,10 @@
 # Changelog
 
+v1.17.4
+-------
+- Added EventFormFactory + Interface (27/08/2018)
+- Added 'clone' Service (27/08/2018)
+
 v1.17.3
 -------
 - Removed 'true ===' as not needed (25/08/2018)

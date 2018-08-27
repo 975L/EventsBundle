@@ -27,7 +27,7 @@ class EventType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $disabled = $options['eventConfig']['action'] == 'delete' ? true : false;
+        $disabled = $options['config']['action'] == 'delete' ? true : false;
         $requiredImage = $options['data']->getPicture() !== null ? false : true;
 
         $builder
@@ -126,6 +126,6 @@ class EventType extends AbstractType
             'translation_domain' => 'events',
         ));
 
-        $resolver->setRequired('eventConfig');
+        $resolver->setRequired('config');
     }
 }

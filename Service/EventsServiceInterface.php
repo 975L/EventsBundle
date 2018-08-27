@@ -19,7 +19,19 @@ use c975L\EventsBundle\Entity\Event;
 interface EventsServiceInterface
 {
     /**
-     * Defins the image for the Event
+     * Clones the object
+     * @return Event
+     */
+    public function cloneObject(Event $eventObject);
+
+    /**
+     * Shortcut to call EventFormFactory to create Form
+     * @return Form
+     */
+    public function createForm(string $name, Event $eventObject);
+
+    /**
+     * Defines the image for the Event
      */
     public function defineImage(Event $eventObject);
 
