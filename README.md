@@ -25,8 +25,8 @@ Use [Composer](https://getcomposer.org) to install the library
     composer require c975l/evebts-bundle
 ```
 
-Step 2: Enable the Bundles
---------------------------
+Step 2: Enable the Bundle
+-------------------------
 Then, enable the bundles by adding them to the list of registered bundles in the `app/AppKernel.php` file of your project:
 
 ```php
@@ -37,7 +37,6 @@ class AppKernel extends Kernel
     {
         $bundles = [
             // ...
-            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new c975L\EventsBundle\c975LEventsBundle(),
         ];
     }
