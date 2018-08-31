@@ -46,11 +46,13 @@ class AppKernel extends Kernel
 
 Step 3: Configure the Bundles
 -----------------------------
-Check [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) for its specific configuration.
+Check dependencies for their configuration:
+- [Doctrine](https://github.com/doctrine/DoctrineBundle)
+- [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle)
 
 v2.0+ of c975LEventsBundle uses [c975L/ConfigBundle](https://github.com/975L/ConfigBundle) to manage configuration parameters. Use the Route "/events/config" with the proper user role to modify them.
 
-**Upgrading from v1.x? Check UPGRADE.md.**
+**Upgrading from v1.x? Check [UPGRADE.md](UPGRADE.md).**
 
 **If you use Git for version control, you need to add the full path `web/images/[folderPictures]` in the `.gitignore`, otherwise all the content will be altered by Git.**
 
