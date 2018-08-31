@@ -10,7 +10,7 @@
 namespace c975L\EventsBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use c975L\ConfigBundle\Service\ConfigServiceInterface;
 use c975L\EventsBundle\Entity\Event;
 use c975L\EventsBundle\Form\EventFormFactoryInterface;
 use c975L\ServicesBundle\Service\ServiceImageInterface;
@@ -25,10 +25,10 @@ use c975L\EventsBundle\Service\EventsServiceInterface;
 class EventsService implements EventsServiceInterface
 {
     /**
-     * Stores ContainerInterface
-     * @var ContainerInterface
+     * Stores ConfigServiceInterface
+     * @var ConfigServiceInterface
      */
-    private $container;
+    private $configService;
 
     /**
      * Stores EntityManagerInterface
@@ -55,14 +55,14 @@ class EventsService implements EventsServiceInterface
     private $serviceSlug;
 
     public function __construct(
-        ContainerInterface $container,
+        ConfigServiceInterface $configService,
         EntityManagerInterface $em,
         EventFormFactoryInterface $eventFormFactory,
         ServiceImageInterface $serviceImage,
         ServiceSlugInterface $serviceSlug
     )
     {
-        $this->container = $container;
+        $this->configService = $configService;
         $this->em = $em;
         $this->eventFormFactory = $eventFormFactory;
         $this->serviceImage = $serviceImage;
@@ -122,7 +122,7 @@ class EventsService implements EventsServiceInterface
      */
     public function getFolderPictures()
     {
-        $folderPictures = $this->container->getParameter('c975_l_events.folderPictures');
+        $folderPictures = $this->configService->getParameter('c975LEvents.folderPictures');
 
         if (false === strrpos($folderPictures, '/')) {
             $folderPictures .= '/';

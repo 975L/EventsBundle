@@ -14,8 +14,6 @@ services:
 
     c975L\EventsBundle\Security\:
         resource: '../../Security/*'
-        bind:
-            $roleNeeded: '%c975_l_events.roleNeeded%'
 
     c975L\EventsBundle\Service\:
         resource: '../../Service/*'

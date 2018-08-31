@@ -22,27 +22,6 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('c975_l_events');
-
-        $rootNode
-            ->children()
-                ->scalarNode('roleNeeded')
-                    ->defaultValue('ROLE_ADMIN')
-                ->end()
-                ->scalarNode('folderPictures')
-                    ->defaultValue('events')
-                ->end()
-                ->scalarNode('sitemapBaseUrl')
-                ->end()
-                ->arrayNode('sitemapLanguages')
-                    ->prototype('scalar')->end()
-                    ->defaultValue(array())
-                ->end()
-                ->scalarNode('tinymceLanguage')
-                    ->defaultNull()
-                ->end()
-            ->end()
-        ;
 
         return $treeBuilder;
     }

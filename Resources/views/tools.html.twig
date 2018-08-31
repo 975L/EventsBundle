@@ -5,7 +5,7 @@
 {{ toolbar_button(path('events_dashboard'), 'dashboard', 'md', 'label.events'|trans) }}
 
 {# Display #}
-{% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'create' and type != 'duplicate' %}
+{% if type != 'dashboard' and type != 'display' and type != 'help' and type != 'create' and type != 'duplicate' and type != 'config' %}
     {{ toolbar_button(path('events_display', {'slug': object.slug, 'id': object.id}), 'display') }}
 {% endif %}
 
@@ -15,7 +15,7 @@
 {% endif %}
 
 {# Modify #}
-{% if type != 'dashboard' and type != 'modify' and type != 'help' and type != 'create' and type != 'duplicate' %}
+{% if type != 'dashboard' and type != 'modify' and type != 'help' and type != 'create' and type != 'duplicate' and type != 'config' %}
     {{ toolbar_button(path('events_modify', {'slug': object.slug, 'id': object.id}), 'modify') }}
 {% endif %}
 
@@ -30,8 +30,13 @@
 {% endif %}
 
 {# Delete #}
-{% if type != 'dashboard' and type != 'delete' and type != 'help' and type != 'create' and type != 'duplicate' %}
+{% if type != 'dashboard' and type != 'delete' and type != 'help' and type != 'create' and type != 'duplicate' and type != 'config' %}
     {{ toolbar_button(path('events_delete', {'slug': object.slug, 'id': object.id}), 'delete') }}
+{% endif %}
+
+{# Config #}
+{% if type != 'config' %}
+    {{ toolbar_button(path('events_config'), 'config') }}
 {% endif %}
 
 {# Help #}

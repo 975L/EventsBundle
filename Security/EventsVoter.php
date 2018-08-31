@@ -12,6 +12,7 @@ namespace c975L\EventsBundle\Security;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use c975L\ConfigBundle\Service\ConfigServiceInterface;
 use c975L\EventsBundle\Entity\Event;
 
 /**
@@ -22,15 +23,22 @@ use c975L\EventsBundle\Entity\Event;
 class EventsVoter extends Voter
 {
     /**
+     * Stores ConfigServiceInterface
+     * @var ConfigServiceInterface
+     */
+    private $configService;
+
+    /**
+     * Stores AccessDecisionManagerInterface
      * @var AccessDecisionManagerInterface
      */
     private $decisionManager;
 
     /**
-     * The role needed to be allowed access (defined in config)
+     * Used for access to config
      * @var string
      */
-    private $roleNeeded;
+    public const CONFIG = 'c975LEvents-config';
 
     /**
      * Used for access to create
@@ -79,6 +87,7 @@ class EventsVoter extends Voter
      * @var array
      */
     private const ATTRIBUTES = array(
+        self::CONFIG,
         self::CREATE,
         self::DASHBOARD,
         self::DELETE,
@@ -88,16 +97,19 @@ class EventsVoter extends Voter
         self::SLUG,
     );
 
+    public function __construct(
+        ConfigServiceInterface $configService,
+        AccessDecisionManagerInterface $decisionManager
+    )
+    {
+        $this->configService = $configService;
+        $this->decisionManager = $decisionManager;
+    }
+
     /**
      * Checks if attribute and subject are supported
      * @return bool
      */
-    public function __construct(AccessDecisionManagerInterface $decisionManager, string $roleNeeded)
-    {
-        $this->decisionManager = $decisionManager;
-        $this->roleNeeded = $roleNeeded;
-    }
-
     protected function supports($attribute, $subject)
     {
         if (null !== $subject) {
@@ -116,6 +128,7 @@ class EventsVoter extends Voter
     {
         //Defines access rights
         switch ($attribute) {
+            case self::CONFIG:
             case self::CREATE:
             case self::DASHBOARD:
             case self::DELETE:
@@ -123,7 +136,7 @@ class EventsVoter extends Voter
             case self::HELP:
             case self::MODIFY:
             case self::SLUG:
-                return $this->decisionManager->decide($token, array($this->roleNeeded));
+                return $this->decisionManager->decide($token, array($this->configService->getParameter('c975LEvents.roleNeeded', 'c975l/events-bundle')));
                 break;
         }
 

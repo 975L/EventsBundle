@@ -29,14 +29,5 @@ class c975LEventsExtension extends Extension
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.yml');
-
-        $configuration = new Configuration();
-        $processedConfig = $this->processConfiguration($configuration, $configs);
-
-        $container->setParameter('c975_l_events.roleNeeded', $processedConfig['roleNeeded']);
-        $container->setParameter('c975_l_events.folderPictures', $processedConfig['folderPictures']);
-        $container->setParameter('c975_l_events.sitemapBaseUrl', $processedConfig['sitemapBaseUrl']);
-        $container->setParameter('c975_l_events.sitemapLanguages', $processedConfig['sitemapLanguages']);
-        $container->setParameter('c975_l_events.tinymceLanguage', $processedConfig['tinymceLanguage']);
     }
 }

@@ -1,5 +1,18 @@
 # Changelog
 
+v2.0
+----
+**Upgrading from v1.x? Check UPGRADE.md**
+- Created branch 1.x (31/08/2018)
+- Made use of c975L/ConfigBundle (31/08/2018)
+- Added Route `events_config` (31/08/2018)
+- Removed declaration of parameters in Configuration class as they are end-user parameters and defined in c975L/ConfigBundle (31/08/2018)
+- Added `bundle.yaml` (31/08/2018)
+- Updated `README.md` (31/08/2018)
+- Added `UPGRADE.md` (31/08/2018)
+- Injected Services in `SitemapCreateCommand` (31/08/2018)
+- Made `SitemapCreateCommand` working for sf4 (31/08/2018)
+
 v1.17.5
 -------
 - Fixed Voter constants (31/08/2018)

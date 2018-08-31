@@ -48,33 +48,9 @@ Step 3: Configure the Bundles
 -----------------------------
 Check [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle) for its specific configuration.
 
-Setup your Tinymce API key if you use the cloud version, in `parameters.yml`
-```yml
-    #(Optional) Your Tinymce Api key if you use the cloud version
-    #tinymceApiKey: 'YOUR_API_KEY'
-```
+v2.0+ of c975LEventsBundle uses [c975L/ConfigBundle](https://github.com/975L/ConfigBundle) to manage configuration parameters. Use the Route "/events/config" with the proper user role to modify them.
 
-And then in `parameters.yml.dist`
-```yml
-    #(Optional) Your Tinymce Api key if you use the cloud version
-    #tinymceApiKey:     ~
-```
-
-Then, in the `app/config.yml` file of your project, define the following:
-
-```yml
-c975_l_events:
-    #Path where the pictures will be stored. The full path ('web/images/[folderPictures]') has to be added to .gitignore if Git is used
-    folderPictures: 'events'
-    #User's role needed to enable access to the edition of page
-    roleNeeded: 'ROLE_ADMIN' #default 'ROLE_ADMIN'
-    #Base url for sitemap creation without leading slash
-    sitemapBaseUrl: 'http://example.com'
-    #(Optional) Array of available languages of the website
-    sitemapLanguages: ['en', 'fr', 'es']
-    #(Optional) Your tinymce language if you use one, MUST BE placed in 'web/vendor/tinymce/[tinymceLanguage].js'
-    tinymceLanguage: 'fr_FR' #default null
-```
+**Upgrading from v1.x? Check UPGRADE.md.**
 
 **If you use Git for version control, you need to add the full path `web/images/[folderPictures]` in the `.gitignore`, otherwise all the content will be altered by Git.**
 
@@ -140,6 +116,7 @@ Link to a page, in Twig, can be done by `<a href="{{ path('events_display', { 's
 
 The different Routes (naming self-explanatory) available are:
 - events_display
+- events_config
 - events_create
 - events_modify
 - events_duplicate

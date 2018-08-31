@@ -26,7 +26,7 @@
         "cocur/slugify": "^2",
         "c975l/toolbar-bundle": "^1",
         "c975l/includelibrary-bundle": "^1",
-        "c975l/config-bundle": "^1",
+        "c975l/config-bundle": "^2",
         "c975l/services-bundle": "^1"
     },
     "minimum-stability": "dev",

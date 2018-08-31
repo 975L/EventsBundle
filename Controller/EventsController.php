@@ -27,6 +27,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Cocur\Slugify\Slugify;
 use Knp\Component\Pager\PaginatorInterface;
+use c975L\ConfigBundle\Service\ConfigServiceInterface;
 use c975L\ServicesBundle\Service\ServiceSlugInterface;
 use c975L\EventsBundle\Entity\Event;
 use c975L\EventsBundle\Form\EventType;
@@ -130,7 +131,7 @@ class EventsController extends Controller
      *      name="events_create")
      * @Method({"GET", "HEAD", "POST"})
      */
-    public function create(Request $request)
+    public function create(Request $request, ConfigServiceInterface $configService)
     {
         $eventObject = new Event();
         $this->denyAccessUnlessGranted('c975LEvents-create', $eventObject);
@@ -153,8 +154,8 @@ class EventsController extends Controller
         //Renders the create form
         return $this->render('@c975LEvents/forms/create.html.twig', array(
             'form' => $form->createView(),
-            'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
-            'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+            'tinymceApiKey' => $configService->getParameter('c975LEvents.tinymceApiKey'),
+            'tinymceLanguage' => $configService->getParameter('c975LEvents.tinymceLanguage'),
         ));
     }
 
@@ -174,7 +175,7 @@ class EventsController extends Controller
      * @Method({"GET", "HEAD", "POST"})
      * @ParamConverter("Event", options={"mapping": {"id": "id"}})
      */
-    public function modify(Request $request, Event $eventObject, $slug)
+    public function modify(Request $request, Event $eventObject, ConfigServiceInterface $configService, $slug)
     {
         $this->denyAccessUnlessGranted('c975LEvents-modify', $eventObject);
 
@@ -204,8 +205,8 @@ class EventsController extends Controller
         return $this->render('@c975LEvents/forms/modify.html.twig', array(
             'form' => $form->createView(),
             'event' => $eventObject,
-            'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
-            'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+            'tinymceApiKey' => $configService->getParameter('c975LEvents.tinymceApiKey'),
+            'tinymceLanguage' => $configService->getParameter('c975LEvents.tinymceLanguage'),
         ));
     }
 
@@ -223,7 +224,7 @@ class EventsController extends Controller
      *      })
      * @Method({"GET", "HEAD", "POST"})
      */
-    public function duplicate(Request $request, Event $eventObject)
+    public function duplicate(Request $request, Event $eventObject, ConfigServiceInterface $configService)
     {
         $this->denyAccessUnlessGranted('c975LEvents-duplicate', $eventObject);
 
@@ -247,8 +248,8 @@ class EventsController extends Controller
         return $this->render('@c975LEvents/forms/duplicate.html.twig', array(
             'form' => $form->createView(),
             'event' => $eventClone,
-            'tinymceApiKey' => $this->container->hasParameter('tinymceApiKey') ? $this->getParameter('tinymceApiKey') : null,
-            'tinymceLanguage' => $this->getParameter('c975_l_events.tinymceLanguage'),
+            'tinymceApiKey' => $configService->getParameter('c975LEvents.tinymceApiKey'),
+            'tinymceLanguage' => $configService->getParameter('c975LEvents.tinymceLanguage'),
         ));
     }
 
@@ -295,6 +296,39 @@ class EventsController extends Controller
         return $this->render('@c975LEvents/forms/delete.html.twig', array(
             'form' => $form->createView(),
             'event' => $eventObject,
+        ));
+    }
+
+//CONFIG
+    /**
+     * Displays the configuration
+     * @return Response
+     * @throws AccessDeniedException
+     *
+     * @Route("/events/config",
+     *      name="events_config")
+     * @Method({"GET", "HEAD", "POST"})
+     */
+    public function config(Request $request, ConfigServiceInterface $configService)
+    {
+        $this->denyAccessUnlessGranted('c975LEvents-config', null);
+
+        //Defines form
+        $form = $configService->createForm('c975l/events-bundle');
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Validates config
+            $configService->setConfig($form);
+
+            //Redirects
+            return $this->redirectToRoute('events_dashboard');
+        }
+
+        //Renders the config form
+        return $this->render('@c975LConfig/forms/config.html.twig', array(
+            'form' => $form->createView(),
+            'toolbar' => '@c975LEvents',
         ));
     }
 

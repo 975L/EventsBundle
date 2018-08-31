@@ -9,9 +9,15 @@
 
 namespace c975L\EventsBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Kernel;
+use Twig_Environment;
+use c975L\ConfigBundle\Service\ConfigServiceInterface;
+use c975L\EventsBundle\Entity\Event;
 
 /**
  * Console command to create sitemap of events, executed with 'events:createSitemap'
@@ -20,6 +26,44 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SitemapCreateCommand extends ContainerAwareCommand
 {
+    /**
+     * Stores ConfigServiceInterface
+     * @var ConfigServiceInterface
+     */
+    private $configService;
+
+    /**
+     * Stores ContainerInterface
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * Stores EntityManagerInterface
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * Stores Twig_Environment
+     * @var Twig_Environment
+     */
+    private $templating;
+
+    public function __construct(
+        ConfigServiceInterface $configService,
+        ContainerInterface $container,
+        EntityManagerInterface $em,
+        Twig_Environment $templating
+    )
+    {
+        parent::__construct();
+        $this->configService = $configService;
+        $this->container = $container;
+        $this->em = $em;
+        $this->templating = $templating;
+    }
+
     protected function configure()
     {
         $this
@@ -30,28 +74,21 @@ class SitemapCreateCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        //Gets the container
-        $container = $this->getContainer();
-
-        //Gets the manager
-        $em = $container->get('doctrine')
-            ->getManager();
-
-        //Gets repository
-        $repository = $em->getRepository('c975LEventsBundle:Event');
-
         //Gets the events
-        $eventsList = $repository->findAllEventsNotFinished()->getQuery()->getResult();
+        $eventsList = $this->em
+            ->getRepository('c975LEventsBundle:Event')
+            ->findNotFinished()
+        ;
 
         //Defines data related to events
         $events = array();
-        $languages = $container->getParameter('c975_l_events.sitemapLanguages');
+        $languages = $this->configService->getParameter('c975LEvents.sitemapLanguages');
 
         foreach ($eventsList as $event) {
             //Defines data
-            if (!empty($languages)) {
+            if (null !== $languages) {
                 foreach ($languages as $language) {
-                    $url = $container->getParameter('c975_l_events.sitemapBaseUrl');
+                    $url = $this->configService->getParameter('c975LEvents.sitemapBaseUrl');
                     $url .= '/' . $language;
                     $url .= '/events/' . $event->getSlug() . '/' . $event->getId();
                     $events[]= array(
@@ -61,7 +98,7 @@ class SitemapCreateCommand extends ContainerAwareCommand
                     );
                 }
             } else {
-                $url = $container->getParameter('c975_l_events.sitemapBaseUrl');
+                $url = $this->configService->getParameter('c975LEvents.sitemapBaseUrl');
                 $url .= '/events/' . $event->getSlug() . '/' . $event->getId();
                 $events[]= array(
                     'url' => $url,
@@ -72,11 +109,10 @@ class SitemapCreateCommand extends ContainerAwareCommand
         }
 
         //Writes file
-        $sitemapContent = $container->get('templating')->render(
-            '@c975LEvents/sitemap.xml.twig',
-            array('events' => $events)
-        );
-        $sitemapFile = $container->getParameter('kernel.root_dir') . '/../web/sitemap-events.xml';
+        $sitemapContent = $this->templating->render('@c975LEvents/sitemap.xml.twig', array('events' => $events));
+
+        $rootFolder = $this->container->getParameter('kernel.root_dir');
+        $sitemapFile = '4' === substr(Kernel::VERSION, 0, 1) ? $rootFolder . '/../public/sitemap-events.xml' : $rootFolder . '/../web/sitemap-events.xml';
         file_put_contents($sitemapFile, $sitemapContent);
 
         //Ouputs message
