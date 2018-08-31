@@ -72,7 +72,7 @@ class EventsController extends Controller
      */
     public function dashboard(Request $request, PaginatorInterface $paginator)
     {
-        $this->denyAccessUnlessGranted('dashboard', null);
+        $this->denyAccessUnlessGranted('c975LEvents-dashboard', null);
 
         //Renders the dashboard
         $events = $paginator->paginate(
@@ -133,7 +133,7 @@ class EventsController extends Controller
     public function create(Request $request)
     {
         $eventObject = new Event();
-        $this->denyAccessUnlessGranted('create', $eventObject);
+        $this->denyAccessUnlessGranted('c975LEvents-create', $eventObject);
 
         //Defines form
         $form = $this->eventsService->createForm('create', $eventObject);
@@ -176,7 +176,7 @@ class EventsController extends Controller
      */
     public function modify(Request $request, Event $eventObject, $slug)
     {
-        $this->denyAccessUnlessGranted('modify', $eventObject);
+        $this->denyAccessUnlessGranted('c975LEvents-modify', $eventObject);
 
         //Redirects to good slug
         $redirectUrl = $this->serviceSlug->match('events_modify', $eventObject, $slug);
@@ -225,7 +225,7 @@ class EventsController extends Controller
      */
     public function duplicate(Request $request, Event $eventObject)
     {
-        $this->denyAccessUnlessGranted('duplicate', $eventObject);
+        $this->denyAccessUnlessGranted('c975LEvents-duplicate', $eventObject);
 
         //Defines form
         $eventClone = $this->eventsService->cloneObject($eventObject);
@@ -270,7 +270,7 @@ class EventsController extends Controller
      */
     public function delete(Request $request, Event $eventObject, $slug)
     {
-        $this->denyAccessUnlessGranted('delete', $eventObject);
+        $this->denyAccessUnlessGranted('c975LEvents-delete', $eventObject);
 
         //Redirects to good slug
         $redirectUrl = $this->serviceSlug->match('events_delete', $eventObject, $slug);
@@ -372,7 +372,7 @@ class EventsController extends Controller
      */
     public function slug($text)
     {
-        $this->denyAccessUnlessGranted('slug', null);
+        $this->denyAccessUnlessGranted('c975LEvents-slug', null);
 
         return $this->json(array('a' => $this->serviceSlug->slugify('c975LEventsBundle:Event', $text)));
     }
@@ -389,7 +389,7 @@ class EventsController extends Controller
      */
     public function help()
     {
-        $this->denyAccessUnlessGranted('help', null);
+        $this->denyAccessUnlessGranted('c975LEvents-help', null);
 
         //Renders the help
         return $this->render('@c975LEvents/pages/help.html.twig');

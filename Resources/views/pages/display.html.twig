@@ -11,7 +11,7 @@
 
 {% block events_content %}
 {# Toolbar #}
-    {% if is_granted('ROLE_USER') %}
+    {% if is_granted('ROLE_ADMIN') %}
         {{ toolbar_display('@c975LEvents/tools.html.twig', 'display', 'md', event) }}
     {% endif %}
     <div class="text-center">

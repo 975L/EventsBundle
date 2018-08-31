@@ -36,43 +36,43 @@ class EventsVoter extends Voter
      * Used for access to create
      * @var string
      */
-    public const CREATE = 'create';
+    public const CREATE = 'c975LEvents-create';
 
     /**
      * Used for access to dashboard
      * @var string
      */
-    public const DASHBOARD = 'dashboard';
+    public const DASHBOARD = 'c975LEvents-dashboard';
 
     /**
      * Used for access to delete
      * @var string
      */
-    public const DELETE = 'delete';
+    public const DELETE = 'c975LEvents-delete';
 
     /**
      * Used for access to duplicate
      * @var string
      */
-    public const DUPLICATE = 'duplicate';
+    public const DUPLICATE = 'c975LEvents-duplicate';
 
     /**
      * Used for access to help
      * @var string
      */
-    public const HELP = 'help';
+    public const HELP = 'c975LEvents-help';
 
     /**
      * Used for access to modify
      * @var string
      */
-    public const MODIFY = 'modify';
+    public const MODIFY = 'c975LEvents-modify';
 
     /**
      * Used for access to slug
      * @var string
      */
-    public const SLUG = 'slug';
+    public const SLUG = 'c975LEvents-slug';
 
     /**
      * Contains all the available attributes to check with in supports()
@@ -124,6 +124,7 @@ class EventsVoter extends Voter
             case self::MODIFY:
             case self::SLUG:
                 return $this->decisionManager->decide($token, array($this->roleNeeded));
+                break;
         }
 
         throw new \LogicException('Invalid attribute: ' . $attribute);
