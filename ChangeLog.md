@@ -2,6 +2,7 @@
 
 - Updated `README.md` (31/08/2018)
 - Updated `UPGRADE.md` (01/09/2018)
+- Updated composer.json (01/09/2018)
 
 v2.0
 ----
