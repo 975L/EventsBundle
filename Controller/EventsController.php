@@ -154,8 +154,8 @@ class EventsController extends Controller
         //Renders the create form
         return $this->render('@c975LEvents/forms/create.html.twig', array(
             'form' => $form->createView(),
-            'tinymceApiKey' => $configService->getParameter('c975LEvents.tinymceApiKey'),
-            'tinymceLanguage' => $configService->getParameter('c975LEvents.tinymceLanguage'),
+            'tinymceApiKey' => $configService->getParameter('c975LCommon.tinymceApiKey'),
+            'tinymceLanguage' => $configService->getParameter('c975LCommon.tinymceLanguage'),
         ));
     }
 
@@ -205,8 +205,8 @@ class EventsController extends Controller
         return $this->render('@c975LEvents/forms/modify.html.twig', array(
             'form' => $form->createView(),
             'event' => $eventObject,
-            'tinymceApiKey' => $configService->getParameter('c975LEvents.tinymceApiKey'),
-            'tinymceLanguage' => $configService->getParameter('c975LEvents.tinymceLanguage'),
+            'tinymceApiKey' => $configService->getParameter('c975LCommon.tinymceApiKey'),
+            'tinymceLanguage' => $configService->getParameter('c975LCommon.tinymceLanguage'),
         ));
     }
 
@@ -248,8 +248,8 @@ class EventsController extends Controller
         return $this->render('@c975LEvents/forms/duplicate.html.twig', array(
             'form' => $form->createView(),
             'event' => $eventClone,
-            'tinymceApiKey' => $configService->getParameter('c975LEvents.tinymceApiKey'),
-            'tinymceLanguage' => $configService->getParameter('c975LEvents.tinymceLanguage'),
+            'tinymceApiKey' => $configService->getParameter('c975LCommon.tinymceApiKey'),
+            'tinymceLanguage' => $configService->getParameter('c975LCommon.tinymceLanguage'),
         ));
     }
 
