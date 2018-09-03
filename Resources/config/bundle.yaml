@@ -19,6 +19,7 @@ c975LEvents:
         required: false
         default: null
         info: "Array of available languages of the website: ['en', 'fr', 'es']"
+c975LCommon:
     tinymceApiKey:
         type: string
         required: false
