@@ -1,0 +1,21 @@
+{# Updates when title changes #}
+$('#event_title')
+    .change(function() {
+        updateSlug($('#event_title').val())
+    });
+{# Updates when slug changes #}
+$('#event_slug')
+    .change(function() {
+        updateSlug($('#event_slug').val())
+    });
+{# Updates slug #}
+function updateSlug(text) {
+    var slugUrl = '{{ absolute_url(path('events_slug', {'text': 'TEXT'})) }}';
+    var slug = $.post(slugUrl.replace('TEXT', text));
+    slug.done(function(data) {
+        if (data.a != 'false') {
+            $('#event_slug')
+                .val(data.a);
+        }
+    });
+};
