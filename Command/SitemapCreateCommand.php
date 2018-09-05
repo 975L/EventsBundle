@@ -84,11 +84,12 @@ class SitemapCreateCommand extends ContainerAwareCommand
         $events = array();
         $languages = $this->configService->getParameter('c975LEvents.sitemapLanguages');
 
+        $urlRoot = $this->configService->getParameter('c975LEvents.sitemapBaseUrl');
         foreach ($eventsList as $event) {
             //Defines data
             if (null !== $languages) {
                 foreach ($languages as $language) {
-                    $url = $this->configService->getParameter('c975LEvents.sitemapBaseUrl');
+                    $url = $urlRoot;
                     $url .= '/' . $language;
                     $url .= '/events/' . $event->getSlug() . '/' . $event->getId();
                     $events[]= array(
@@ -98,7 +99,7 @@ class SitemapCreateCommand extends ContainerAwareCommand
                     );
                 }
             } else {
-                $url = $this->configService->getParameter('c975LEvents.sitemapBaseUrl');
+                $url = $urlRoot;
                 $url .= '/events/' . $event->getSlug() . '/' . $event->getId();
                 $events[]= array(
                     'url' => $url,
