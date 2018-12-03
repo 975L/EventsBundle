@@ -2,6 +2,7 @@
 
 - Set javascript code in separate files (04/09/2018)
 - Updated `SitemapCreateCommand` (05/09/2018)
+- Corrected `UPGRADE.md` for `php bin/console config:create` (03/12/2018)
 
 v2.1
 ----
