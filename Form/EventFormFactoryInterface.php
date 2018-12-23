@@ -9,8 +9,8 @@
 
 namespace c975L\EventsBundle\Form;
 
-use Symfony\Component\Form\Form;
 use c975L\EventsBundle\Entity\Event;
+use Symfony\Component\Form\Form;
 
 /**
  * Interface to be called for DI for EventFormFactoryInterface related services

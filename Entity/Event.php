@@ -9,6 +9,7 @@
 
 namespace c975L\EventsBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -60,7 +61,7 @@ class Event
 
     /**
      * Start date for the Event
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="start_date", type="datetime")
      */
@@ -68,7 +69,7 @@ class Event
 
     /**
      * Start Time for the Event
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="start_time", type="datetime", nullable=true)
      */
@@ -76,7 +77,7 @@ class Event
 
     /**
      * End date for the Event
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="end_date", type="datetime", nullable=true)
      */
@@ -84,7 +85,7 @@ class Event
 
     /**
      * End time for the Event
-     * @var \DateTime
+     * @var DateTime
      * @ORM\Column(name="end_time", type="datetime", nullable=true)
      */
     protected $endTime;
@@ -114,7 +115,6 @@ class Event
      * @Assert\Image
      */
     protected $picture;
-
 
     /**
      * Get id
@@ -190,7 +190,7 @@ class Event
 
     /**
      * Set startDate
-     * @param \DateTime
+     * @param DateTime
      * @return Event
      */
     public function setStartDate($startDate)
@@ -202,7 +202,7 @@ class Event
 
     /**
      * Get startDate
-     * @return \DateTime
+     * @return DateTime
      */
     public function getStartDate()
     {
@@ -211,7 +211,7 @@ class Event
 
     /**
      * Set startTime
-     * @param \DateTime
+     * @param DateTime
      * @return Event
      */
     public function setStartTime($startTime)
@@ -223,7 +223,7 @@ class Event
 
     /**
      * Get startTime
-     * @return \DateTime
+     * @return DateTime
      */
     public function getStartTime()
     {
@@ -232,7 +232,7 @@ class Event
 
     /**
      * Set endDate
-     * @param \DateTime
+     * @param DateTime
      * @return Event
      */
     public function setEndDate($endDate)
@@ -244,7 +244,7 @@ class Event
 
     /**
      * Get endDate
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEndDate()
     {
@@ -253,7 +253,7 @@ class Event
 
     /**
      * Set endTime
-     * @param \DateTime
+     * @param DateTime
      * @return Event
      */
     public function setEndTime($endTime)
@@ -265,7 +265,7 @@ class Event
 
     /**
      * Get endTime
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEndTime()
     {

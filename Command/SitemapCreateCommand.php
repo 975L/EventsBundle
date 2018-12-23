@@ -9,22 +9,21 @@
 
 namespace c975L\EventsBundle\Command;
 
+use c975L\ConfigBundle\Service\ConfigServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Twig_Environment;
-use c975L\ConfigBundle\Service\ConfigServiceInterface;
-use c975L\EventsBundle\Entity\Event;
 
 /**
  * Console command to create sitemap of events, executed with 'events:createSitemap'
  * @author Laurent Marquet <laurent.marquet@laposte.net>
  * @copyright 2017 975L <contact@975l.com>
  */
-class SitemapCreateCommand extends ContainerAwareCommand
+class SitemapCreateCommand extends Command
 {
     /**
      * Stores ConfigServiceInterface

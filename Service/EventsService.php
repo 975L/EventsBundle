@@ -9,13 +9,12 @@
 
 namespace c975L\EventsBundle\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
 use c975L\ConfigBundle\Service\ConfigServiceInterface;
 use c975L\EventsBundle\Entity\Event;
 use c975L\EventsBundle\Form\EventFormFactoryInterface;
 use c975L\ServicesBundle\Service\ServiceImageInterface;
 use c975L\ServicesBundle\Service\ServiceSlugInterface;
-use c975L\EventsBundle\Service\EventsServiceInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Main services related to Events

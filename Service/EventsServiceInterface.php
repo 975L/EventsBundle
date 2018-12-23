@@ -10,6 +10,7 @@
 namespace c975L\EventsBundle\Service;
 
 use c975L\EventsBundle\Entity\Event;
+use Symfony\Component\Form\Form;
 
 /**
  * Interface to be called for DI for Events Main related services

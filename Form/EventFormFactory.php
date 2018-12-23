@@ -9,11 +9,8 @@
 
 namespace c975L\EventsBundle\Form;
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormFactoryInterface;
 use c975L\EventsBundle\Entity\Event;
-use c975L\EventsBundle\Form\EventType;
-use c975L\EventsBundle\Form\EventFormFactoryInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 
 /**
  * EventFormFactory class
