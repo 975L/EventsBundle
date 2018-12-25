@@ -13,6 +13,7 @@ use c975L\EventsBundle\Service\EventsServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Twig_Environment;
 use Twig_Extension;
+use Twig_SimpleFunction;
 
 /**
  * Twig extension to display the carousel using `events_carousel($number)`

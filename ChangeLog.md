@@ -1,5 +1,9 @@
 # Changelog
 
+v2.1.2
+------
+- Added missing use (25/12/2018)
+
 v2.1.1
 ------
 - Set javascript code in separate files (04/09/2018)
