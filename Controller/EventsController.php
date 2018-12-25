@@ -55,6 +55,7 @@ class EventsController extends Controller
     }
 
 //DASHBOARD
+
     /**
      * Displays the dashboard
      * @return Response
@@ -80,6 +81,7 @@ class EventsController extends Controller
     }
 
 //DISPLAY
+
     /**
      * Displays the Event using its unique id
      * @return Response
@@ -115,6 +117,7 @@ class EventsController extends Controller
     }
 
 //CREATE
+
     /**
      * Creates the Event
      * @return Response
@@ -153,6 +156,7 @@ class EventsController extends Controller
     }
 
 //MODIFY
+
     /**
      * Modifies the Event using its unique id
      * @return Response
@@ -204,6 +208,7 @@ class EventsController extends Controller
     }
 
 //DUPLICATE
+
     /**
      * Duplicates the Event using its unique id
      * @return Response
@@ -247,6 +252,7 @@ class EventsController extends Controller
     }
 
 //DELETE
+
     /**
      * Marks the Event as deleted using its unique id
      * @return Response
@@ -293,6 +299,7 @@ class EventsController extends Controller
     }
 
 //CONFIG
+
     /**
      * Displays the configuration
      * @return Response
@@ -326,6 +333,7 @@ class EventsController extends Controller
     }
 
 //ICAL
+
     /**
      * Returns the iCal version of the Event using its unique id
      * @return Response
@@ -361,6 +369,7 @@ class EventsController extends Controller
     }
 
 //ALL
+
     /**
      * Redirects to `events_all` Route
      *
@@ -371,6 +380,7 @@ class EventsController extends Controller
     {
         return $this->redirectToRoute('events_all');
     }
+
     /**
      * Displays all the Events NOT finished
      * @return Response
@@ -388,6 +398,7 @@ class EventsController extends Controller
     }
 
 //SLUG
+
     /**
      * Returns the slug corresponding to the text provided
      * @return JsonResponse
@@ -405,6 +416,7 @@ class EventsController extends Controller
     }
 
 //HELP
+
     /**
      * Displays the help
      * @return Response
