@@ -14,10 +14,9 @@ use c975L\EventsBundle\Entity\Event;
 use c975L\EventsBundle\Service\EventsServiceInterface;
 use c975L\ServicesBundle\Service\ServiceSlugInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +30,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  * @author Laurent Marquet <laurent.marquet@laposte.net>
  * @copyright 2017 975L <contact@975l.com>
  */
-class EventsController extends Controller
+class EventsController extends AbstractController
 {
     /**
      * Stores EventsServiceInterface
@@ -62,8 +61,8 @@ class EventsController extends Controller
      * @throws AccessDeniedException
      *
      * @Route("/events/dashboard",
-     *      name="events_dashboard")
-     * @Method({"GET", "HEAD"})
+     *    name="events_dashboard",
+     *    methods={"HEAD", "GET"})
      */
     public function dashboard(Request $request, PaginatorInterface $paginator)
     {
@@ -89,12 +88,12 @@ class EventsController extends Controller
      * @throws NotFoundHttpException
      *
      * @Route("/events/{slug}/{id}",
-     *      name="events_display",
-     *      requirements={
-     *          "slug": "^(?!carousel|duplicate)([a-z0-9\-]+)",
-     *          "id": "^([0-9]+)"
-     *      })
-     * @Method({"GET", "HEAD"})
+     *    name="events_display",
+     *    requirements={
+     *        "slug": "^(?!carousel|duplicate)([a-z0-9\-]+)",
+     *        "id": "^([0-9]+)"
+     *    },
+     *    methods={"HEAD", "GET"})
      */
     public function display(Event $eventObject, $slug)
     {
@@ -124,8 +123,8 @@ class EventsController extends Controller
      * @throws AccessDeniedException
      *
      * @Route("/events/create",
-     *      name="events_create")
-     * @Method({"GET", "HEAD", "POST"})
+     *    name="events_create",
+     *    methods={"HEAD", "GET", "POST"})
      */
     public function create(Request $request, ConfigServiceInterface $configService)
     {
@@ -164,12 +163,12 @@ class EventsController extends Controller
      * @throws NotFoundHttpException
      *
      * @Route("/events/modify/{slug}/{id}",
-     *      name="events_modify",
-     *      requirements={
-     *          "slug": "^([a-z0-9\-]+)",
-     *          "id": "^([0-9]+)"
-     *      })
-     * @Method({"GET", "HEAD", "POST"})
+     *    name="events_modify",
+     *    requirements={
+     *        "slug": "^([a-z0-9\-]+)",
+     *        "id": "^([0-9]+)"
+     *    },
+     *    methods={"HEAD", "GET", "POST"})
      * @ParamConverter("Event", options={"mapping": {"id": "id"}})
      */
     public function modify(Request $request, Event $eventObject, ConfigServiceInterface $configService, $slug)
@@ -216,11 +215,9 @@ class EventsController extends Controller
      * @throws NotFoundHttpException
      *
      * @Route("/events/duplicate/{id}",
-     *      name="events_duplicate",
-     *      requirements={
-     *          "id": "^[0-9]+$"
-     *      })
-     * @Method({"GET", "HEAD", "POST"})
+     *    name="events_duplicate",
+     *    requirements={"id": "^[0-9]+$"},
+     *    methods={"HEAD", "GET", "POST"})
      */
     public function duplicate(Request $request, Event $eventObject, ConfigServiceInterface $configService)
     {
@@ -260,12 +257,12 @@ class EventsController extends Controller
      * @throws NotFoundHttpException
      *
      * @Route("/events/delete/{slug}/{id}",
-     *      name="events_delete",
-     *      requirements={
-     *          "slug": "^([a-z0-9\-]+)",
-     *          "id": "^([0-9]+)"
-     *      })
-     * @Method({"GET", "HEAD", "POST"})
+     *    name="events_delete",
+     *    requirements={
+     *        "slug": "^([a-z0-9\-]+)",
+     *        "id": "^([0-9]+)"
+     *    },
+     *    methods={"HEAD", "GET", "POST"})
      * @ParamConverter("Event", options={"mapping": {"id": "id"}})
      */
     public function delete(Request $request, Event $eventObject, $slug)
@@ -306,8 +303,8 @@ class EventsController extends Controller
      * @throws AccessDeniedException
      *
      * @Route("/events/config",
-     *      name="events_config")
-     * @Method({"GET", "HEAD", "POST"})
+     *    name="events_config",
+     *    methods={"HEAD", "GET", "POST"})
      */
     public function config(Request $request, ConfigServiceInterface $configService)
     {
@@ -341,12 +338,12 @@ class EventsController extends Controller
      * @throws NotFoundHttpException
      *
      * @Route("/events/ical/{slug}/{id}",
-     *      name="events_ical",
-     *      requirements={
-     *          "slug": "^([a-z0-9\-]+)",
-     *          "id": "^([0-9]+)"
-     *      })
-     * @Method({"GET", "HEAD"})
+     *    name="events_ical",
+     *    requirements={
+     *        "slug": "^([a-z0-9\-]+)",
+     *        "id": "^([0-9]+)"
+     *    },
+     *    methods={"HEAD", "GET"})
      * @ParamConverter("Event", options={"mapping": {"id": "id"}})
      */
     public function iCal(Event $eventObject, $slug)
@@ -373,8 +370,8 @@ class EventsController extends Controller
     /**
      * Redirects to `events_all` Route
      *
-     * @Route("/events")
-     * @Method({"GET", "HEAD"})
+     * @Route("/events",
+     *    methods={"HEAD", "GET"})
      */
     public function redirectAll()
     {
@@ -386,8 +383,8 @@ class EventsController extends Controller
      * @return Response
      *
      * @Route("/events/all",
-     *      name="events_all")
-     * @Method({"GET", "HEAD"})
+     *    name="events_all",
+     *    methods={"HEAD", "GET"})
      */
     public function all(Request $request)
     {
@@ -405,8 +402,8 @@ class EventsController extends Controller
      * @throws AccessDeniedException
      *
      * @Route("/events/slug/{text}",
-     *      name="events_slug")
-     * @Method({"POST"})
+     *    name="events_slug",
+     *    methods={"POST"})
      */
     public function slug($text)
     {
@@ -423,8 +420,8 @@ class EventsController extends Controller
      * @throws AccessDeniedException
      *
      * @Route("/events/help",
-     *      name="events_help")
-     * @Method({"GET", "HEAD"})
+     *    name="events_help",
+     *    methods={"HEAD", "GET"})
      */
     public function help()
     {

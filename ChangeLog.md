@@ -1,5 +1,11 @@
 # Changelog
 
+v2.1.5
+------
+- Removed deprecations for @Method (13/02/2019)
+- Implemented AstractController instead of Controller (13/02/2019)
+- Modified Dependencyinjection rootNode to be not empty (13/02/2019)
+
 v2.1.4
 ------
 - Updated composer.json (15/01/2019)
