@@ -22,6 +22,6 @@ CREATE TABLE `events` (
   `end_date` date DEFAULT NULL,
   `end_time` time DEFAULT NULL,
   `place` varchar(256) DEFAULT NULL,
-  `description` blob DEFAULT NULL,
+  `description` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;

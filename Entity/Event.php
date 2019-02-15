@@ -104,7 +104,7 @@ class Event
      * @var string
      *
      * @Assert\NotBlank()
-     * @ORM\Column(name="description", type="string", nullable=true)
+     * @ORM\Column(name="description", type="text", length=65000, nullable=true)
      */
     protected $description;
 
@@ -120,7 +120,7 @@ class Event
      * Get id
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -130,7 +130,7 @@ class Event
      * @param bool
      * @return Event
      */
-    public function setSuppressed($suppressed)
+    public function setSuppressed(?bool $suppressed)
     {
         $this->suppressed = $suppressed;
 
@@ -141,7 +141,7 @@ class Event
      * Get suppressed
      * @return bool
      */
-    public function getSuppressed()
+    public function getSuppressed(): ?bool
     {
         return $this->suppressed;
     }
@@ -151,7 +151,7 @@ class Event
      * @param string
      * @return Event
      */
-    public function setTitle($title)
+    public function setTitle(?string $title)
     {
         $this->title = $title;
 
@@ -162,7 +162,7 @@ class Event
      * Get title
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -172,7 +172,7 @@ class Event
      * @param string
      * @return Event
      */
-    public function setSlug($slug)
+    public function setSlug(?string $slug)
     {
         $this->slug = $slug;
 
@@ -183,7 +183,7 @@ class Event
      * Get slug
      * @return string
      */
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -193,7 +193,7 @@ class Event
      * @param DateTime
      * @return Event
      */
-    public function setStartDate($startDate)
+    public function setStartDate(?DateTime $startDate)
     {
         $this->startDate = $startDate;
 
@@ -204,7 +204,7 @@ class Event
      * Get startDate
      * @return DateTime
      */
-    public function getStartDate()
+    public function getStartDate(): ?DateTime
     {
         return $this->startDate;
     }
@@ -214,7 +214,7 @@ class Event
      * @param DateTime
      * @return Event
      */
-    public function setStartTime($startTime)
+    public function setStartTime(?DateTime $startTime)
     {
         $this->startTime = $startTime;
 
@@ -225,7 +225,7 @@ class Event
      * Get startTime
      * @return DateTime
      */
-    public function getStartTime()
+    public function getStartTime(): ?DateTime
     {
         return $this->startTime;
     }
@@ -235,7 +235,7 @@ class Event
      * @param DateTime
      * @return Event
      */
-    public function setEndDate($endDate)
+    public function setEndDate(?DateTime $endDate)
     {
         $this->endDate = $endDate;
 
@@ -246,7 +246,7 @@ class Event
      * Get endDate
      * @return DateTime
      */
-    public function getEndDate()
+    public function getEndDate(): ?DateTime
     {
         return $this->endDate;
     }
@@ -256,7 +256,7 @@ class Event
      * @param DateTime
      * @return Event
      */
-    public function setEndTime($endTime)
+    public function setEndTime(?DateTime $endTime)
     {
         $this->endTime = $endTime;
 
@@ -267,7 +267,7 @@ class Event
      * Get endTime
      * @return DateTime
      */
-    public function getEndTime()
+    public function getEndTime(): ?DateTime
     {
         return $this->endTime;
     }
@@ -277,7 +277,7 @@ class Event
      * @param string
      * @return Event
      */
-    public function setPlace($place)
+    public function setPlace(?string $place)
     {
         $this->place = $place;
 
@@ -288,7 +288,7 @@ class Event
      * Get place
      * @return string
      */
-    public function getPlace()
+    public function getPlace(): ?string
     {
         return $this->place;
     }
@@ -298,7 +298,7 @@ class Event
      * @param string
      * @return Event
      */
-    public function setDescription($description)
+    public function setDescription(?string $description)
     {
         $this->description = $description;
 
@@ -309,7 +309,7 @@ class Event
      * Get description
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -319,7 +319,7 @@ class Event
      * @param string
      * @return Event
      */
-    public function setPicture($picture)
+    public function setPicture(?string $picture)
     {
         $this->picture = $picture;
 
@@ -330,7 +330,7 @@ class Event
      * Get picture
      * @return string
      */
-    public function getPicture()
+    public function getPicture(): ?string
     {
         return $this->picture;
     }

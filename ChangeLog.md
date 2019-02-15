@@ -1,5 +1,11 @@
 # Changelog
 
+v2.2
+----
+- Modified Entity to specify lengths for strings (15/02/2019)
+- Modified Entity to use typehint (15/02/2019)
+- Documented the possibility to use `php bin/console make:migration` (15/02/2019)
+
 v2.1.5
 ------
 - Removed deprecations for @Method (13/02/2019)

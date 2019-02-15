@@ -73,7 +73,7 @@ c975_l_events:
 
 Step 5: Create MySql table
 --------------------------
-- Use `/Resources/sql/events.sql` to create the table `events`. The `DROP TABLE` is commented to avoid dropping by mistake.
+You can use `php bin/console make:migration` to create the migration file as documented in [Symfony's Doctrine docs](https://symfony.com/doc/current/doctrine.html) OR use `/Resources/sql/events.sql` to create the table `events`. The `DROP TABLE` is commented to avoid dropping by mistake.
 
 Step 6: Link and initialization of TinyMce
 ------------------------------------------
