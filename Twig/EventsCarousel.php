@@ -11,16 +11,16 @@ namespace c975L\EventsBundle\Twig;
 
 use c975L\EventsBundle\Service\EventsServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Twig_Environment;
-use Twig_Extension;
-use Twig_SimpleFunction;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Twig extension to display the carousel using `events_carousel($number)`
  * @author Laurent Marquet <laurent.marquet@laposte.net>
  * @copyright 2018 975L <contact@975l.com>
  */
-class EventsCarousel extends Twig_Extension
+class EventsCarousel extends AbstractExtension
 {
     /**
      * Stores EntityManagerInterface
@@ -46,7 +46,7 @@ class EventsCarousel extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new Twig_SimpleFunction(
+            new TwigFunction(
                 'events_carousel',
                 array($this, 'Carousel'),
                 array(
@@ -61,7 +61,7 @@ class EventsCarousel extends Twig_Extension
      * Returns the xhtml code for the Carousel with $number of Events
      * @return string
      */
-    public function Carousel(Twig_Environment $environment, int $number)
+    public function Carousel(Environment $environment, int $number)
     {
         //Gets Events
         $events = $this->em

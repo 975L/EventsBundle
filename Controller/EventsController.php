@@ -54,7 +54,6 @@ class EventsController extends AbstractController
     }
 
 //DASHBOARD
-
     /**
      * Displays the dashboard
      * @return Response
@@ -80,7 +79,6 @@ class EventsController extends AbstractController
     }
 
 //DISPLAY
-
     /**
      * Displays the Event using its unique id
      * @return Response
@@ -116,7 +114,6 @@ class EventsController extends AbstractController
     }
 
 //CREATE
-
     /**
      * Creates the Event
      * @return Response
@@ -155,7 +152,6 @@ class EventsController extends AbstractController
     }
 
 //MODIFY
-
     /**
      * Modifies the Event using its unique id
      * @return Response
@@ -207,7 +203,6 @@ class EventsController extends AbstractController
     }
 
 //DUPLICATE
-
     /**
      * Duplicates the Event using its unique id
      * @return Response
@@ -249,7 +244,6 @@ class EventsController extends AbstractController
     }
 
 //DELETE
-
     /**
      * Marks the Event as deleted using its unique id
      * @return Response
@@ -296,7 +290,6 @@ class EventsController extends AbstractController
     }
 
 //CONFIG
-
     /**
      * Displays the configuration
      * @return Response
@@ -330,7 +323,6 @@ class EventsController extends AbstractController
     }
 
 //ICAL
-
     /**
      * Returns the iCal version of the Event using its unique id
      * @return Response
@@ -366,7 +358,6 @@ class EventsController extends AbstractController
     }
 
 //ALL
-
     /**
      * Redirects to `events_all` Route
      *
@@ -413,7 +404,6 @@ class EventsController extends AbstractController
     }
 
 //HELP
-
     /**
      * Displays the help
      * @return Response

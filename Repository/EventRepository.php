@@ -10,7 +10,7 @@
 namespace c975L\EventsBundle\Repository;
 
 use c975L\EventsBundle\Entity\Event;
-use Datetime;
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -30,7 +30,7 @@ class EventRepository extends EntityRepository
         $qb->select('e')
             ->where('e.startDate >= :currentDate OR e.endDate >= :currentDate')
             ->andwhere('e.suppressed = 0')
-            ->setParameter('currentDate', new Datetime())
+            ->setParameter('currentDate', new DateTime())
             ->orderBy('e.startDate', 'ASC')
             ->orderBy('e.startTime', 'ASC')
             ->setMaxResults($number)
@@ -49,7 +49,7 @@ class EventRepository extends EntityRepository
         $qb->select('e')
             ->where('e.startDate >= :currentDate OR e.endDate >= :currentDate')
             ->andwhere('e.suppressed = 0')
-            ->setParameter('currentDate', new Datetime())
+            ->setParameter('currentDate', new DateTime())
             ->addOrderBy('e.startDate', 'ASC')
             ->addOrderBy('e.startTime', 'ASC')
             ;

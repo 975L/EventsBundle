@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * Console command to create sitemap of events, executed with 'events:createSitemap'
@@ -44,23 +44,23 @@ class SitemapCreateCommand extends Command
     private $em;
 
     /**
-     * Stores Twig_Environment
-     * @var Twig_Environment
+     * Stores Environment
+     * @var Environment
      */
-    private $templating;
+    private $environment;
 
     public function __construct(
         ConfigServiceInterface $configService,
         ContainerInterface $container,
         EntityManagerInterface $em,
-        Twig_Environment $templating
+        Environment $environment
     )
     {
         parent::__construct();
         $this->configService = $configService;
         $this->container = $container;
         $this->em = $em;
-        $this->templating = $templating;
+        $this->environment = $environment;
     }
 
     protected function configure()
@@ -109,7 +109,7 @@ class SitemapCreateCommand extends Command
         }
 
         //Writes file
-        $sitemapContent = $this->templating->render('@c975LEvents/sitemap.xml.twig', array('events' => $events));
+        $sitemapContent = $this->environment->render('@c975LEvents/sitemap.xml.twig', array('events' => $events));
 
         $rootFolder = $this->container->getParameter('kernel.root_dir');
         $sitemapFile = '4' === substr(Kernel::VERSION, 0, 1) ? $rootFolder . '/../public/sitemap-events.xml' : $rootFolder . '/../web/sitemap-events.xml';
