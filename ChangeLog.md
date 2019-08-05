@@ -1,5 +1,9 @@
 # Changelog
 
+v2.3
+----
+- Made use of apply spaceless (05/08/2019)
+
 v2.2.2
 ------
 - Added new naming for TinyMce (29/06/2019)

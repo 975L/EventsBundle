@@ -26,7 +26,7 @@
         "cocur/slugify": "^3",
         "doctrine/doctrine-bundle": "^1",
         "doctrine/orm": "^2",
-        "knplabs/knp-paginator-bundle": "^2",
+        "knplabs/knp-paginator-bundle": "^4",
         "symfony/form": "*",
         "symfony/security": "*",
         "twig/extensions": "^1",
