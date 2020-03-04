@@ -54,8 +54,7 @@ class SitemapCreateCommand extends Command
         ContainerInterface $container,
         EntityManagerInterface $em,
         Environment $environment
-    )
-    {
+    ) {
         parent::__construct();
         $this->configService = $configService;
         $this->container = $container;
@@ -71,6 +70,9 @@ class SitemapCreateCommand extends Command
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         //Gets the events
@@ -100,7 +102,7 @@ class SitemapCreateCommand extends Command
             } else {
                 $url = $urlRoot;
                 $url .= '/events/' . $event->getSlug() . '/' . $event->getId();
-                $events[]= array(
+                $events[] = array(
                     'url' => $url,
                     'changeFrequency' => 'monthly',
                     'priority' => '0.7',

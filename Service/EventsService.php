@@ -95,10 +95,9 @@ class EventsService implements EventsServiceInterface
      */
     public function defineImage(Event $eventObject)
     {
+        $eventObject->setPicture(null);
         if (is_file($this->getPicturePath($eventObject))) {
             $eventObject->setPicture('images/' . $this->getFolderPictures() . $eventObject->getSlug() . '-' . $eventObject->getId() . '.jpg');
-        } else {
-            $eventObject->setPicture(null);
         }
     }
 

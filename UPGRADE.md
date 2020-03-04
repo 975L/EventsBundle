@@ -1,13 +1,14 @@
 # UPGRADE
 
-v2.0 > v2.1.x
--------------
+## v2.0 > v2.1.x
+
 The following parameters have been set to `c975LCommon` root, so you can delete them from your auto-generated file `config_bundles.yaml` or left them here (they won't be used'), but you have to re-set them in the `events_config` Route:
+
 - tinymceApiKey
 - tinymceLanguage
 
-v1.x > v2.x
------------
+## v1.x > v2.x
+
 When upgrading from v1.x to v2.x you should(must) do the following if they apply to your case:
 
 - The parameters entered in `config.yml` are not used anymore as they are managed by c975L/ConfigBundle, so you can delete them.

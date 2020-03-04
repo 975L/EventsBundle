@@ -47,8 +47,7 @@ class EventsController extends AbstractController
     public function __construct(
         EventsServiceInterface $eventsService,
         ServiceSlugInterface $serviceSlug
-    )
-    {
+    ) {
         $this->eventsService = $eventsService;
         $this->serviceSlug = $serviceSlug;
     }
@@ -73,9 +72,11 @@ class EventsController extends AbstractController
             $request->query->getInt('p', 1),
             15
         );
-        return $this->render('@c975LEvents/pages/dashboard.html.twig', array(
-            'events' => $events,
-        ));
+        return $this->render(
+            '@c975LEvents/pages/dashboard.html.twig',
+            array(
+                'events' => $events,
+            ));
     }
 
 //DISPLAY
@@ -108,9 +109,11 @@ class EventsController extends AbstractController
 
         //Renders the Event
         $this->eventsService->defineImage($eventObject);
-        return $this->render('@c975LEvents/pages/display.html.twig', array(
-            'event' => $eventObject,
-        ));
+        return $this->render(
+            '@c975LEvents/pages/display.html.twig',
+            array(
+                'event' => $eventObject,
+            ));
     }
 
 //CREATE
@@ -144,11 +147,13 @@ class EventsController extends AbstractController
         }
 
         //Renders the create form
-        return $this->render('@c975LEvents/forms/create.html.twig', array(
-            'form' => $form->createView(),
-            'tinymceApiKey' => $configService->getParameter('c975LCommon.tinymceApiKey'),
-            'tinymceLanguage' => $configService->getParameter('c975LCommon.tinymceLanguage'),
-        ));
+        return $this->render(
+            '@c975LEvents/forms/create.html.twig',
+            array(
+                'form' => $form->createView(),
+                'tinymceApiKey' => $configService->getParameter('c975LCommon.tinymceApiKey'),
+                'tinymceLanguage' => $configService->getParameter('c975LCommon.tinymceLanguage'),
+            ));
     }
 
 //MODIFY
@@ -194,12 +199,14 @@ class EventsController extends AbstractController
         }
 
         //Returns the modify form
-        return $this->render('@c975LEvents/forms/modify.html.twig', array(
-            'form' => $form->createView(),
-            'event' => $eventObject,
-            'tinymceApiKey' => $configService->getParameter('c975LCommon.tinymceApiKey'),
-            'tinymceLanguage' => $configService->getParameter('c975LCommon.tinymceLanguage'),
-        ));
+        return $this->render(
+            '@c975LEvents/forms/modify.html.twig',
+            array(
+                'form' => $form->createView(),
+                'event' => $eventObject,
+                'tinymceApiKey' => $configService->getParameter('c975LCommon.tinymceApiKey'),
+                'tinymceLanguage' => $configService->getParameter('c975LCommon.tinymceLanguage'),
+            ));
     }
 
 //DUPLICATE
@@ -235,12 +242,14 @@ class EventsController extends AbstractController
         }
 
         //Returns the duplicate form
-        return $this->render('@c975LEvents/forms/duplicate.html.twig', array(
-            'form' => $form->createView(),
-            'event' => $eventClone,
-            'tinymceApiKey' => $configService->getParameter('c975LCommon.tinymceApiKey'),
-            'tinymceLanguage' => $configService->getParameter('c975LCommon.tinymceLanguage'),
-        ));
+        return $this->render(
+            '@c975LEvents/forms/duplicate.html.twig',
+            array(
+                'form' => $form->createView(),
+                'event' => $eventClone,
+                'tinymceApiKey' => $configService->getParameter('c975LCommon.tinymceApiKey'),
+                'tinymceLanguage' => $configService->getParameter('c975LCommon.tinymceLanguage'),
+            ));
     }
 
 //DELETE
@@ -283,10 +292,12 @@ class EventsController extends AbstractController
         }
 
         //Renders the delete form
-        return $this->render('@c975LEvents/forms/delete.html.twig', array(
-            'form' => $form->createView(),
-            'event' => $eventObject,
-        ));
+        return $this->render(
+            '@c975LEvents/forms/delete.html.twig',
+            array(
+                'form' => $form->createView(),
+                'event' => $eventObject,
+            ));
     }
 
 //CONFIG
@@ -316,10 +327,12 @@ class EventsController extends AbstractController
         }
 
         //Renders the config form
-        return $this->render('@c975LConfig/forms/config.html.twig', array(
-            'form' => $form->createView(),
-            'toolbar' => '@c975LEvents',
-        ));
+        return $this->render(
+            '@c975LConfig/forms/config.html.twig',
+            array(
+                'form' => $form->createView(),
+                'toolbar' => '@c975LEvents',
+            ));
     }
 
 //ICAL
@@ -349,9 +362,10 @@ class EventsController extends AbstractController
         //Renders the iCal
         return new Response(
             $this->renderView(
-                '@c975LEvents/eventIcal.ics.twig', array(
-                    'event' => $eventObject,
-                )),
+                '@c975LEvents/eventIcal.ics.twig',
+                    array(
+                        'event' => $eventObject,
+                    )),
             200,
             array('Content-Type' => 'text/calendar', 'Content-Disposition' => 'inline; filename=' . $eventObject->getSlug() . '.ics')
         );
@@ -377,11 +391,13 @@ class EventsController extends AbstractController
      *    name="events_all",
      *    methods={"HEAD", "GET"})
      */
-    public function all(Request $request)
+    public function all()
     {
         //Renders the list of events
-        return $this->render('@c975LEvents/pages/eventsAll.html.twig', array(
-            'events' => $this->eventsService->getEventsNotFinished(),
+        return $this->render(
+            '@c975LEvents/pages/eventsAll.html.twig',
+            array(
+                'events' => $this->eventsService->getEventsNotFinished(),
             ));
     }
 
