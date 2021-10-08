@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.4.2
+
+- Added return for console Command (08/10/2021)
+
 ## v2.4.1
 
 - Cosmetic changes due to Codacy review (04/03/2020)
@@ -340,7 +344,7 @@ Upgrading from v1.x? **Check UPGRADE.md**
 - Group toolbars in one file (03/07/2017)
 - Add of semantic url value in dashboard (03/07/2017)
 - Add of link to dashboard on Events label in toolbar and remove of dashboard button (03/07/2017)
-- Remove of "required" on textarea.tinymce as it won't submit for a new page, a refresh has to be done - https://github.com/tinymce/tinymce/issues/2584 (03/07/2017)
+- Remove of "required" on textarea.tinymce as it won't submit for a new page, a refresh has to be done - [#2584](https://github.com/tinymce/tinymce/issues/2584) (03/07/2017)
 - Add a Console Command to create sitemap of managed events (03/07/2017)
 
 ## v1.5

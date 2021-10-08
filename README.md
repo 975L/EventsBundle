@@ -14,9 +14,10 @@ This Bundle relies on the use of [TinyMce](https://www.tinymce.com/), [jQuery](h
 
 [EventsBundle API documentation](https://975l.com/apidoc/c975L/EventsBundle.html).
 
-## Bundle installation
+## Bundle installation
 
 ### Step 1: Download the Bundle
+
 Use [Composer](https://getcomposer.org) to install the library
 
 ```bash
@@ -50,9 +51,9 @@ Check dependencies for their configuration:
 
 v2.0+ of c975LEventsBundle uses [c975L/ConfigBundle](https://github.com/975L/ConfigBundle) to manage configuration parameters. Use the Route "/events/config" with the proper user role to modify them.
 
-**Upgrading from v1.x? Check [UPGRADE.md](UPGRADE.md).**
+Upgrading from v1.x? **Check [UPGRADE.md](UPGRADE.md).**
 
-**If you use Git for version control, you need to add the full path `web/images/[folderPictures]` in the `.gitignore`, otherwise all the content will be altered by Git.**
+If you use Git for version control, **you need to add the full path `web/images/[folderPictures]` in the `.gitignore`, otherwise all the content will be altered by Git.**
 
 ### Step 4: Enable the Routes
 

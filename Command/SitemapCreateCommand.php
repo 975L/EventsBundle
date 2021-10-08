@@ -111,13 +111,14 @@ class SitemapCreateCommand extends Command
         }
 
         //Writes file
+        $root = $this->configService->getContainerParameter('kernel.project_dir');
         $sitemapContent = $this->environment->render('@c975LEvents/sitemap.xml.twig', array('events' => $events));
-
-        $rootFolder = $this->container->getParameter('kernel.root_dir');
-        $sitemapFile = '4' === substr(Kernel::VERSION, 0, 1) ? $rootFolder . '/../public/sitemap-events.xml' : $rootFolder . '/../web/sitemap-events.xml';
+        $sitemapFile = '3' === substr(Kernel::VERSION, 0, 1) ? $root . '/../web/sitemap-events.xml' : $root . '/public/sitemap-events.xml';
         file_put_contents($sitemapFile, $sitemapContent);
 
         //Ouputs message
         $output->writeln('Sitemap created!');
+
+        return Command::SUCCESS;
     }
 }
