@@ -29,7 +29,6 @@
         "knplabs/knp-paginator-bundle": "^4",
         "symfony/form": "*",
         "symfony/security": "*",
-        "twig/extensions": "^1",
         "twig/twig": "^2"
     },
     "require-dev": {

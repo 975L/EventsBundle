@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.4.3
+
+- Removed `twig/extensions` (08/10/2021)
+
 ## v2.4.2
 
 - Added return for console Command (08/10/2021)
