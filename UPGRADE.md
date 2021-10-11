@@ -1,5 +1,9 @@
 # UPGRADE
 
+## v2.x > v3.x
+
+Changed `localizeddate` to `format_datetime`
+
 ## v2.0 > v2.1.x
 
 The following parameters have been set to `c975LCommon` root, so you can delete them from your auto-generated file `config_bundles.yaml` or left them here (they won't be used'), but you have to re-set them in the `events_config` Route:

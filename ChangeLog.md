@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0
+
+- Changed `localizeddate` to `format_datetime` (11/10/2021)
+
+Upgrading from v2.x? **Check UPGRADE.md**
+
 ## v2.4.3
 
 - Removed `twig/extensions` (08/10/2021)
