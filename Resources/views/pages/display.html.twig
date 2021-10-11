@@ -29,12 +29,12 @@
         </p>
 {# Start Date and time #}
         <p{{ finishedClass|raw }}>
-            {{ 'label.start_date'|trans }} : <strong>{{ event.startDate|localizeddate('long', 'none') }} - {{ event.startTime|localizeddate('none', 'short') }}</strong>
+            {{ 'label.start_date'|trans }} : <strong>{{ event.startDate|format_datetime('long', 'none') }} - {{ event.startTime|format_datetime('none', 'short') }}</strong>
         </p>
 {# End Date and time #}
         {% if event.endDate != null %}
             <p{{ finishedClass|raw }}>
-                {{ 'label.end_date'|trans }} : <strong>{{ event.endDate|localizeddate('long', 'none') }} - {{ event.endTime|localizeddate('none', 'short') }}</strong>
+                {{ 'label.end_date'|trans }} : <strong>{{ event.endDate|format_datetime('long', 'none') }} - {{ event.endTime|format_datetime('none', 'short') }}</strong>
             </p>
         {% endif %}
 {# Description #}
