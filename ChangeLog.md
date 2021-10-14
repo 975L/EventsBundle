@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.2
+
+- Corrected Command return for SF 4 (14/10/2021)
+
 ## v3.0.1
 
 - Changed `localizeddate` to `format_datetime` **really :)** (11/10/2021)

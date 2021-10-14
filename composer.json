@@ -23,7 +23,7 @@
         "c975l/includelibrary-bundle": "^1",
         "c975l/services-bundle": "^1",
         "c975l/toolbar-bundle": "^1",
-        "cocur/slugify": "^3",
+        "cocur/slugify": "*",
         "doctrine/doctrine-bundle": "^2",
         "doctrine/orm": "^2",
         "knplabs/knp-paginator-bundle": "^4",
